@@ -1,18 +1,12 @@
 #include <stdio.h>
 #include <iostream>
 #include "Particle.h"
+#include "Physics.h"
 #include <GLFW/glfw3.h>
 
 int main()
 {
     float deltaTime = 0.01f;
-
-    std::string input;
-    Particle p1 = Particle();
-    Particle p2 = Particle(0, 1, Vector3D(1,2,3), Vector3D(1, 2, 3), Vector3D(1, 2, 3));
-
-    std::cout << p1.to_string() << std::endl;
-    std::cout << p2.to_string() << std::endl;
     
     //GLFW initialization
     if (!glfwInit()) {
@@ -27,6 +21,14 @@ int main()
     }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
+
+    //Tests physics
+    Physics physic = Physics();
+    physic.addParticle(0, 1, Vector3D(1, 2, 3), Vector3D(1, 2, 3), Vector3D(1, 2, 3));
+    std::cout << physic.getParticle(0)->to_string() << std::endl;
+    physic.update(1);
+    std::cout << physic.getParticle(0)->to_string() << std::endl;
+    physic.removeParticle(0);
 
 	while (!glfwWindowShouldClose(window)) {
 		//Setup View
