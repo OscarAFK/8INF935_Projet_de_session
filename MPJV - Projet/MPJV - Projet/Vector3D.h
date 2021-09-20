@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef VECTOR3D_H
-#define VECTOR3D_H
-
 #include <cmath>
 #include <string>
 
@@ -45,4 +42,3 @@ class Vector3D
 
 		std::string to_string() const;
 };
-#endif

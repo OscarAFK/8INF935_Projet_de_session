@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef PARTICLE_H
-#define PARTICLE_H
-
 #include "Vector3D.h"
 
 class Particle
@@ -45,5 +42,3 @@ public:
 	//Utils
 	std::string to_string() const;
 };
-
-#endif

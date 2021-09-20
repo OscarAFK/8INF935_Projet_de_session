@@ -14,12 +14,40 @@ int main()
     std::cout << p1.to_string() << std::endl;
     std::cout << p2.to_string() << std::endl;
     
-    if (!glfwInit())
-    {
-        return -1;
+    //GLFW initialization
+    if (!glfwInit()) {
+        exit(EXIT_FAILURE);
     }
-    else std::cout << "GLFW initialized !" << std::endl;
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    GLFWwindow* window = glfwCreateWindow(480, 480, "OpenGL Example", NULL, NULL);
+    if (!window) {
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
 
+	while (!glfwWindowShouldClose(window)) {
+		//Setup View
+		float ratio;
+		int width, height;
+		glfwGetFramebufferSize(window, &width, &height);
+		ratio = width / (float)height;
+		glViewport(0, 0, width, height);
+		glClear(GL_COLOR_BUFFER_BIT);
+		
+        
+        //Swap buffer and check for events
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
+    glfwDestroyWindow(window);
+    glfwTerminate;
+    exit(EXIT_SUCCESS);
+
+    /*
     bool run = true;
     while (run)
     {
@@ -27,7 +55,7 @@ int main()
         std::cout << p2.to_string() << std::endl;
         //printf(position.to_string().c_str());*
 
-    }
+    }*/
 }
 
 
