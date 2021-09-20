@@ -83,7 +83,7 @@ void Particle::setAcceleration(const Vector3D value)
 void Particle::integrate(float deltaTime)
 {
 	m_position = m_position + m_velocity * deltaTime + 0.5 * m_acceleration * deltaTime * deltaTime;
-	m_velocity = m_velocity + m_acceleration * deltaTime;
+	m_velocity = m_velocity * m_damping + m_acceleration * deltaTime;
 }
 
 #pragma endregion
