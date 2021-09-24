@@ -3,10 +3,16 @@
 #include "Particle.h"
 #include "Physics.h"
 #include <GLFW/glfw3.h>
+
 #include "Display.h"
+#include <chrono>
+#include <thread>
 
 int main()
-{
+{   
+    using namespace std::this_thread; // sleep_for, sleep_until
+    using namespace std::chrono; // nanoseconds, system_clock, seconds
+
     float deltaTime = 0.01f;
     
     //GLFW initialization
@@ -23,7 +29,7 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    //Initializing physics and display
+  //Initializing physics and display
     Physics physic = Physics();
     std::cout << "Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x,y,z)" << std::endl;
     int choice;
@@ -36,7 +42,7 @@ int main()
         physic.addParticle(0.05, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
         break;
     case 3: std::cout << "vous avez choisi le laser" << std::endl;
-        physic.addParticle(10000, 1, Vector3D(0, 0, 0), Vector3D(20, 0, 0), Vector3D(0, 0, 0));
+        physic.addParticle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
         break;
     case 4: std::cout << "vous avez choisi la balle" << std::endl;
         physic.addParticle(0.99, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
@@ -44,9 +50,9 @@ int main()
     case 5: std::cout << "vous avez choisi le projectile personnel" << std::endl;
         break;
     }
-    Display display = Display(&physic);
-
-	while (!glfwWindowShouldClose(window)) {
+  Display display = Display(&physic);
+	
+  while (!glfwWindowShouldClose(window)) {
 		//Setup View
 		float ratio;
 		int width, height;
@@ -55,12 +61,12 @@ int main()
 		glViewport(0, 0, width, height);
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-        //Update physics and rendering
-        physic.update(0.001);
-        //std::cout << physic.getParticle(0)->to_string() << std::endl;
-        display.drawPhysics();
+    //Update physics and rendering
+    physic.update(0.001);
+    //std::cout << physic.getParticle(0)->to_string() << std::endl;
+    display.drawPhysics();
 
-        //Swap buffer and check for events
+    //Swap buffer and check for events
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
@@ -68,16 +74,6 @@ int main()
     glfwDestroyWindow(window);
     glfwTerminate;
     exit(EXIT_SUCCESS);
-
-    /*
-    bool run = true;
-    while (run)
-    {
-        p2.integrate(deltaTime);
-        std::cout << p2.to_string() << std::endl;
-        //printf(position.to_string().c_str());*
-
-    }*/
 }
 
 
