@@ -3,6 +3,7 @@
 #include "Particle.h"
 #include "Physics.h"
 #include <GLFW/glfw3.h>
+#include "Display.h"
 
 int main()
 {
@@ -22,13 +23,10 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    //Tests physics
+    //Initializing physics and display
     Physics physic = Physics();
-    physic.addParticle(0, 1, Vector3D(1, 2, 3), Vector3D(1, 2, 3), Vector3D(1, 2, 3));
-    std::cout << physic.getParticle(0)->to_string() << std::endl;
-    physic.update(1);
-    std::cout << physic.getParticle(0)->to_string() << std::endl;
-    physic.removeParticle(0);
+    physic.addParticle(0, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 3), Vector3D(1, 2, 3));
+    Display display = Display(&physic);
 
 	while (!glfwWindowShouldClose(window)) {
 		//Setup View
@@ -39,7 +37,11 @@ int main()
 		glViewport(0, 0, width, height);
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-        
+        //Update physics and rendering
+        physic.update(0.001);
+        //std::cout << physic.getParticle(0)->to_string() << std::endl;
+        display.drawPhysics();
+
         //Swap buffer and check for events
 		glfwSwapBuffers(window);
 		glfwPollEvents();

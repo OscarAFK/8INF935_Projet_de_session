@@ -29,6 +29,11 @@ std::shared_ptr<Particle> Physics::getParticle(int id)
     return std::make_shared<Particle>(m_particles[id]);
 }
 
+std::shared_ptr<std::map<int, Particle>> Physics::getAllParticle()
+{
+    return std::make_shared<std::map<int, Particle>>(m_particles);
+}
+
 #pragma endregion
 
 #pragma region Methods
