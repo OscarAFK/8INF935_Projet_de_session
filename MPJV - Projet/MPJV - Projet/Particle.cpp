@@ -106,7 +106,7 @@ bool Particle::operator==(const Particle v)
 std::string Particle::to_string() const
 {
 	char string[256];
-	sprintf_s(string, "Inverted Mass : %f\nPosition%s\nVelocity%s\nAcceleration%s\n", m_inverseMass,
+	sprintf_s(string, "Mass : %f\nPosition%s\nVelocity%s\nAcceleration%s\n", 1/m_inverseMass,
 																					  m_position.to_string().c_str(),
 																					  m_velocity.to_string().c_str(),
 																					  m_acceleration.to_string().c_str());
