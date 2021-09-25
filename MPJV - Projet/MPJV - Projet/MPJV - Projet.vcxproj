@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\ImGui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\ImGui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\ImGui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\ImGui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dependencies\ImGui\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="MPJV - Projet.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -158,6 +165,15 @@
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\ImGui\imconfig.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h" />
+    <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Physics.h" />
