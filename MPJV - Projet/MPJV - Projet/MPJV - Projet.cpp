@@ -1,3 +1,10 @@
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include <stdio.h>
 #include <iostream>
 #include <chrono>
@@ -7,59 +14,84 @@
 #include "Physics.h"
 #include "Display.h"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 
-#include <GLFW/glfw3.h>
+static unsigned int CompileShader(unsigned int type, const std::string& source) {
+	unsigned int id = glCreateShader(type);
+	const char* src = source.c_str();
+	glShaderSource(id, 1, &src, nullptr);
+	glCompileShader(id);
+	return id;
+}
 
+static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader) {
+	unsigned int program = glCreateProgram();
+	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
+	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
+
+	glAttachShader(program, vs);
+	glAttachShader(program, fs);
+	glLinkProgram(program);
+	glValidateProgram(program);
+
+	glDeleteShader(vs);
+	glDeleteShader(fs);
+
+	return program;
+}
 
 
 int main()
 {   
-    using namespace std::this_thread; // sleep_for, sleep_until
-    using namespace std::chrono; // nanoseconds, system_clock, seconds
+	using namespace std::this_thread; // sleep_for, sleep_until
+	using namespace std::chrono; // nanoseconds, system_clock, seconds
 
-    float deltaTime = 0.01f;
-    
-    //GLFW initialization
-    if (!glfwInit()) {
-        exit(EXIT_FAILURE);
-    }
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    GLFWwindow* window = glfwCreateWindow(480, 480, "OpenGL Example", NULL, NULL);
-    if (!window) {
-        glfwTerminate();
-        exit(EXIT_FAILURE);
-    }
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
+	float deltaTime = 0.01f;
+	
+	//GLFW initialization
+	if (!glfwInit()) {
+		exit(EXIT_FAILURE);
+	}
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	GLFWwindow* window = glfwCreateWindow(480, 480, "OpenGL Example", NULL, NULL);
+	if (!window) {
+		glfwTerminate();
+		exit(EXIT_FAILURE);
+	}
+	glfwMakeContextCurrent(window);
+	glfwSwapInterval(1);
 
-  //Initializing physics and display
-    Physics physic = Physics();
-    std::cout << "Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x,y,z)" << std::endl;
-    int choice;
-    std::cin >> choice;
-    switch (choice) {
-    case 1: std::cout << "vous avez choisi le boulet de canon" << std::endl;
-        physic.addParticle(0.01, 1, Vector3D(0, 0, 0), Vector3D(1, -5, 3), Vector3D(0, 0, 0));
-        break;
-    case 2: std::cout << "vous avez choisi la boule de feu" << std::endl;
-        physic.addParticle(0.05, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
-        break;
-    case 3: std::cout << "vous avez choisi le laser" << std::endl;
-        physic.addParticle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
-        break;
-    case 4: std::cout << "vous avez choisi la balle" << std::endl;
-        physic.addParticle(0.99, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
-        break;
-    case 5: std::cout << "vous avez choisi le projectile personnel" << std::endl;
-        break;
-    }
-  Display display = Display(&physic);
+	if (glewInit() != GLEW_OK) {
+		exit(EXIT_FAILURE);
+	}
 
+	//Initializing physics and display
+	Physics physic = Physics();
+	/*std::cout << "Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x,y,z)" << std::endl;
+	int choice;
+	std::cin >> choice;
+	switch (choice) {
+	case 1: std::cout << "vous avez choisi le boulet de canon" << std::endl;
+		physic.addParticle(0.01, 1, Vector3D(0, 0, 0), Vector3D(1, -5, 3), Vector3D(0, 0, 0));
+		break;
+	case 2: std::cout << "vous avez choisi la boule de feu" << std::endl;
+		physic.addParticle(0.05, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+		break;
+	case 3: std::cout << "vous avez choisi le laser" << std::endl;
+		physic.addParticle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
+		break;
+	case 4: std::cout << "vous avez choisi la balle" << std::endl;
+		physic.addParticle(0.99, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+		break;
+	case 5: std::cout << "vous avez choisi le projectile personnel" << std::endl;
+		break;
+	default:
+		return;
 
+	}*/
+	Display display = Display(&physic);
+
+	#pragma region ImGui Setup
   // Setup Dear ImGui context
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -73,32 +105,89 @@ int main()
 
   // Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForOpenGL(window, true);
-  ImGui_ImplOpenGL3_Init("#verion 330");
+  ImGui_ImplOpenGL3_Init("#version 330");
+#pragma endregion
+
+	float positions[6] = {
+		-0.5f, -0.5f,
+		0.0f,  0.5f,
+		0.5f, -0.5f
+	};
+
+	//Vertex buffer
+	unsigned int buffer;
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+	
 
 	
-  while (!glfwWindowShouldClose(window)) {
+	std::string vertexShader =
+		"#version 330\n"\
+		"layout(location=0) in vec4 position;\n"\
+		"void main(void)\n"\
+		"{\n"\
+		"   gl_Position = position;\n"\
+		"}\n";
+
+	std::string FragmentShader =
+		"#version 330\n"\
+		"layout(location=0)out vec4 color;\n"\
+		"void main(void)\n"\
+		"{\n"\
+		"   color = vec4(1.0, 0.0, 0.0, 1.0);\n"\
+		"}\n";
+
+	unsigned int shader = CreateShader(vertexShader, FragmentShader);
+	glUseProgram(shader);
+
+	while (!glfwWindowShouldClose(window)) {
 		//Setup View
 		float ratio;
 		int width, height;
 		glfwGetFramebufferSize(window, &width, &height);
 		ratio = width / (float)height;
 		glViewport(0, 0, width, height);
-		glClear(GL_COLOR_BUFFER_BIT);
-		
-    //Update physics and rendering
-    physic.update(0.001);
-    //std::cout << physic.getParticle(0)->to_string() << std::endl;
-    display.drawPhysics();
 
-    //Swap buffer and check for events
+		//Render here
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		//Create new ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::Begin("Test");
+		ImGui::Text("Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x, y, z)");
+		ImGui::End();
+		
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		//Update physics and rendering
+		physic.update(0.001f);
+		//std::cout << physic.getParticle(0)->to_string() << std::endl;
+		display.drawPhysics();
+
+		//Swap buffer and check for events
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-    glfwDestroyWindow(window);
-    glfwTerminate;
-    exit(EXIT_SUCCESS);
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
+	glfwDestroyWindow(window);
+	glDeleteProgram(shader);
+	glfwTerminate;
+	exit(EXIT_SUCCESS);
 }
+
 
 
 
