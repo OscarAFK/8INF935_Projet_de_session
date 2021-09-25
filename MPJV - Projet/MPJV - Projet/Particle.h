@@ -18,7 +18,7 @@ public:
 	~Particle();
 
 	//Accessors
-	float getInvertedMass() const;
+	float getInverseMass() const;
 	float getMass() const;
 	float getDamping() const;
 	Vector3D getPosition() const;
@@ -26,7 +26,7 @@ public:
 	Vector3D getAcceleration() const;
 
 	//Mutators
-	void setInvertedMass(const float value);
+	void setInverseMass(const float value);
 	void setMass(const float value);
 	void setDamping(const float value);
 	void setPosition(const Vector3D value);

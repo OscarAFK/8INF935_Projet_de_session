@@ -115,15 +115,13 @@ int main()
 	};
 
 	//Vertex buffer
-	unsigned int buffer;
+	/*unsigned int buffer;
 	glGenBuffers(1, &buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-	
-
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);*/
 	
 	std::string vertexShader =
 		"#version 330\n"\
@@ -138,11 +136,21 @@ int main()
 		"layout(location=0)out vec4 color;\n"\
 		"void main(void)\n"\
 		"{\n"\
-		"   color = vec4(1.0, 0.0, 0.0, 1.0);\n"\
+		"   color = vec4(1.0, 1.0, 1.0, 1.0);\n"\
 		"}\n";
 
 	unsigned int shader = CreateShader(vertexShader, FragmentShader);
 	glUseProgram(shader);
+
+	
+	std::map<std::string, Particle> projectileMap = {
+	{ "Boulet de Canon", Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(1, -5, 3), Vector3D(0, 0, 0)) },
+	{ "Boule de feu", Particle(0.05, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0)) },
+	{ "Laser", Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0))},
+	{ "Balle", Particle(0.99, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0))}
+	};
+	static _int64 selected = -1;
+	char projectileName[64] = "";
 
 	while (!glfwWindowShouldClose(window)) {
 		//Setup View
@@ -152,26 +160,54 @@ int main()
 		ratio = width / (float)height;
 		glViewport(0, 0, width, height);
 
-		//Render here
+		//Render Physics
 		glClear(GL_COLOR_BUFFER_BIT);
+		
+		//RENDER PHYSICS
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//Update physics and rendering
+		physic.update(0.001f);
+		//std::cout << physic.getParticle(0)->to_string() << std::endl;
+		display.drawPhysics();
+
+
+		//RENDER UI
 
 		//Create new ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ImGui::Begin("Test");
-		ImGui::Text("Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x, y, z)");
-		ImGui::End();
+		ImGui::Begin("Stand de tir");
+		ImGui::Text("Bienvenue au stand de tir\n");
+		ImGui::Text("Veuillez choisir votre projectile.\n");
 		
+		if (ImGui::TreeNode("Liste des projectiles"))
+		{
+			for (std::map<std::string, Particle>::iterator it = projectileMap.begin(); it != projectileMap.end(); ++it) {
+				if (ImGui::Selectable(it->first.c_str(), selected == std::distance(projectileMap.begin(), it))) {
+					selected = std::distance(projectileMap.begin(), it);
+					sprintf_s(projectileName, "%s", it->first.c_str());
+				}
+			}
+			ImGui::TreePop();
+		}
+		if (ImGui::Button("Shoot"))
+		{
+			if (selected != -1)
+			{
+				std::cout << projectileName << " shot" << std::endl;
+				physic.addParticle(projectileMap.find(projectileName)->second);
+			}
+		}
+		ImGui::End();
+
+		
+		
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		//Update physics and rendering
-		physic.update(0.001f);
-		//std::cout << physic.getParticle(0)->to_string() << std::endl;
-		display.drawPhysics();
+		
 
 		//Swap buffer and check for events
 		glfwSwapBuffers(window);

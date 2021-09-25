@@ -15,6 +15,12 @@ void Physics::addParticle(float invertedMass, float damping, Vector3D position, 
     m_incrementalId++;
 }
 
+void Physics::addParticle(Particle particle)
+{
+    m_particles[m_incrementalId] = particle;
+    m_incrementalId++;
+}
+
 void Physics::removeParticle(int id)
 {
     m_particles.erase(id);

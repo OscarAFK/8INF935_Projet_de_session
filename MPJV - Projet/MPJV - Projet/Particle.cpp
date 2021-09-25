@@ -13,7 +13,7 @@ Particle::~Particle() {}
 
 #pragma region Accessors
 
-float Particle::getInvertedMass() const
+float Particle::getInverseMass() const
 {
 	return m_inverseMass;
 }
@@ -47,7 +47,7 @@ Vector3D Particle::getAcceleration() const
 
 #pragma region Mutators
 
-void Particle::setInvertedMass(const float value)
+void Particle::setInverseMass(const float value)
 {
 	m_inverseMass = value;
 }
@@ -85,7 +85,6 @@ void Particle::integrate(float deltaTime)
 	m_position = m_position + m_velocity * deltaTime + 0.5 * m_acceleration * deltaTime * deltaTime;
 	m_velocity = m_velocity * m_damping + m_acceleration * deltaTime;
 }
-
 #pragma endregion
 
 #pragma region Operators
@@ -98,7 +97,6 @@ bool Particle::operator==(const Particle v)
 	}
 	return false;
 }
-
 #pragma endregion
 
 #pragma region Utils
