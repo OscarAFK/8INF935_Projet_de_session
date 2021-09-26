@@ -51,4 +51,10 @@ void Physics::update(float deltaTime)
     }
 }
 
+void Physics::update()
+{
+    update(timeOfLastUpdate-clock());
+    timeOfLastUpdate = clock();
+}
+
 #pragma endregion

@@ -167,7 +167,7 @@ int main()
 		//RENDER PHYSICS
 
 		//Update physics and rendering
-		physic.update(0.001f);
+		physic.update();
 		//std::cout << physic.getParticle(0)->to_string() << std::endl;
 		display.drawPhysics();
 

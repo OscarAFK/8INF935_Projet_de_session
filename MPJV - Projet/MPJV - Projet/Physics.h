@@ -3,13 +3,21 @@
 #include "Particle.h"
 #include <map>
 #include <memory>
+#include <chrono>
 
 class Physics
 {
 private:
 
+	//A variable that keep track of the id of the last particle created
 	int m_incrementalId;
+
+	//A map containing all particles, with an associated id
 	std::map<int, Particle> m_particles;
+
+	clock_t timeOfLastUpdate = clock();
+
+	void update(float deltaTime);
 
 public:
 	Physics();
@@ -20,6 +28,6 @@ public:
 	void removeParticle(int id);
 	std::shared_ptr<Particle> getParticle(int id);
 	std::shared_ptr<std::map<int, Particle>> getAllParticle();
-	void update(float deltaTime);
+	void update();
 };
 

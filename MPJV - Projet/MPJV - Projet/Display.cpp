@@ -1,5 +1,6 @@
 #include "Display.h"
 #include <iostream>
+#define SCREEN_POSITION_ADJUSTOR	1/10000.0
 
 #pragma region Constructors
 
@@ -27,7 +28,7 @@ void Display::drawPhysics()
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
 	
 	for (std::map<int, Particle>::iterator it = (*listOfParticles).begin(); it != (*listOfParticles).end(); ++it) {
-		drawCircle(it->second.getPosition().getX(), it->second.getPosition().getY(), 0.02f, 4);
+		drawCircle(it->second.getPosition().getX()* SCREEN_POSITION_ADJUSTOR, it->second.getPosition().getY()* SCREEN_POSITION_ADJUSTOR, 0.02f, 4);
 	}
 }
 
