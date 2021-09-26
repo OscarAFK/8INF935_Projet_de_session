@@ -163,6 +163,7 @@ int main()
 		//Render Physics
 		glClear(GL_COLOR_BUFFER_BIT);
 		
+
 		//RENDER PHYSICS
 
 		//Update physics and rendering
@@ -202,8 +203,6 @@ int main()
 		}
 		ImGui::End();
 
-		
-		
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
