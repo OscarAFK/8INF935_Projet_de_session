@@ -14,6 +14,8 @@
 #include "Physics.h"
 #include "Display.h"
 
+#define WINDOW_SIZE_X	480
+#define WINDOW_SIZE_Y	480
 
 static unsigned int CompileShader(unsigned int type, const std::string& source) {
 	unsigned int id = glCreateShader(type);
@@ -53,7 +55,7 @@ int main()
 	}
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-	GLFWwindow* window = glfwCreateWindow(480, 480, "OpenGL Example", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(WINDOW_SIZE_X, WINDOW_SIZE_Y, "OpenGL Example", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -89,7 +91,7 @@ int main()
 		return;
 
 	}*/
-	Display display = Display(&physic);
+	Display display = Display(&physic, WINDOW_SIZE_X, WINDOW_SIZE_Y);
 
 	#pragma region ImGui Setup
   // Setup Dear ImGui context
@@ -144,10 +146,10 @@ int main()
 
 	
 	std::map<std::string, Particle> projectileMap = {
-	{ "Boulet de Canon", Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(1, -5, 3), Vector3D(0, 0, 0)) },
-	{ "Boule de feu", Particle(0.05, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0)) },
+	{ "Boulet de Canon", Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(40, -50, 30), Vector3D(0, 0, 0)) },
+	{ "Boule de feu", Particle(0.05, 1, Vector3D(0, 0, 0), Vector3D(20, 40, 10), Vector3D(0, 0, 0)) },
 	{ "Laser", Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0))},
-	{ "Balle", Particle(0.99, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0))}
+	{ "Balle", Particle(0.99, 1, Vector3D(0, 0, 0), Vector3D(80, 80, 0), Vector3D(0, 0, 0))}
 	};
 	static _int64 selected = -1;
 	char projectileName[64] = "";

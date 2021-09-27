@@ -53,7 +53,7 @@ void Physics::update(float deltaTime)
 
 void Physics::update()
 {
-    update(timeOfLastUpdate-clock());
+    update((clock()- timeOfLastUpdate) / (double)CLOCKS_PER_SEC);
     timeOfLastUpdate = clock();
 }
 
