@@ -81,6 +81,9 @@
     <ClCompile Include="ParticleForceGenerators\ParticleAnchoredElastic.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleBuoyancy.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -144,6 +147,9 @@
       <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
     </ClInclude>
     <ClInclude Include="ParticleForceGenerators\ParticleAnchoredElastic.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleBuoyancy.h">
       <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
     </ClInclude>
   </ItemGroup>

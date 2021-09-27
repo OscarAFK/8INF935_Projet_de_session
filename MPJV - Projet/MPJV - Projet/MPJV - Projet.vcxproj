@@ -163,6 +163,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleAnchoredElastic.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleAnchoredSpring.cpp" />
+    <ClCompile Include="ParticleForceGenerators\ParticleBuoyancy.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleElastic.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleAnchoredElastic.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleAnchoredSpring.h" />
+    <ClInclude Include="ParticleForceGenerators\ParticleBuoyancy.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleDrag.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleElastic.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleForceGenerator.h" />
