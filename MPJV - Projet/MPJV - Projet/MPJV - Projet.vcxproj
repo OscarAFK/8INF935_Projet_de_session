@@ -176,6 +176,8 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleForceGenerator.h" />
+    <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
