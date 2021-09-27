@@ -67,7 +67,8 @@
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp">
-    <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp">
+    </ClCompile>
+	<ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
   </ItemGroup>
