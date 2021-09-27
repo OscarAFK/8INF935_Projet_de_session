@@ -2,5 +2,5 @@
 
 void ParticleDrag::UpdateForce(Particle* particle, float deltaTime)
 {
-	particle->addForce(-1*particle->getVelocity()*(m_k1* particle->getVelocity().normalize()+m_k2)* particle->getVelocity().normalize());
+	particle->addForce(Vector3D::dotProduct(-1 * particle->getVelocity().normalize(), m_k1 * particle->getVelocity().norm() + m_k2 * pow(particle->getVelocity().norm(),2)));
 }
