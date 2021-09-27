@@ -19,6 +19,12 @@
     <Filter Include="Fichiers d%27en-tête\ImGui">
       <UniqueIdentifier>{79089fc7-d67e-4433-95ea-94e6e8aa2c48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\ParticleForceGenerators">
+      <UniqueIdentifier>{18297a00-5453-4884-8f52-f7249e68114f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ParticleForceGenerators">
+      <UniqueIdentifier>{78f0f4d8-0ccf-47fa-b811-aca81ca3d6b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -56,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,24 @@
     </ClInclude>
     <ClInclude Include="ParticleForceRegistry.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleAnchoredSpring.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleDrag.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleForceGenerator.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleForceRegistry.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleGravity.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleSpring.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

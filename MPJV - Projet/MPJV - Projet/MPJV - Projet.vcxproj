@@ -161,6 +161,7 @@
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="MPJV - Projet.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
@@ -177,6 +178,12 @@
     <ClInclude Include="Display.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleForceGenerator.h" />
+    <ClInclude Include="ParticleForceGenerators\ParticleAnchoredSpring.h" />
+    <ClInclude Include="ParticleForceGenerators\ParticleDrag.h" />
+    <ClInclude Include="ParticleForceGenerators\ParticleForceGenerator.h" />
+    <ClInclude Include="ParticleForceGenerators\ParticleForceRegistry.h" />
+    <ClInclude Include="ParticleForceGenerators\ParticleGravity.h" />
+    <ClInclude Include="ParticleForceGenerators\ParticleSpring.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Vector3D.h" />
