@@ -148,8 +148,8 @@ int main()
 	
 	std::map<std::string, Particle> projectileMap = {
 		//Le -10 dans l'accélération représente la gravité
-	{ "Boulet de Canon", Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(40, 10, 30), Vector3D(0, -10, 0)) },
-	{ "Boule de feu", Particle(0.05, 1, Vector3D(0, 0, 0), Vector3D(20, 40, 10), Vector3D(0, -10, 0)) },
+	{ "Boulet de Canon", Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(40, 10, 0), Vector3D(0, -10, 0)) },
+	{ "Boule de feu", Particle(0.05, 1, Vector3D(0, 0, 0), Vector3D(20, 40, 0), Vector3D(0, -10, 0)) },
 	{ "Laser", Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0))},
 	{ "Balle", Particle(0.99, 1, Vector3D(0, 0, 0), Vector3D(80, 80, 0), Vector3D(0, -10, 0))}
 	};

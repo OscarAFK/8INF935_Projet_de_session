@@ -4,12 +4,15 @@
 #include <vector>
 #include <memory>
 #include <chrono>
+#include "ParticleForceGenerators/ParticleForceRegistry.h"
 
 class Physics
 {
 private:
 	//A map containing all particles, with an associated id
 	std::vector<Particle> m_particles;
+
+	ParticleForceRegistry m_particleForceRegistry;
 
 	clock_t timeOfLastUpdate = clock();
 

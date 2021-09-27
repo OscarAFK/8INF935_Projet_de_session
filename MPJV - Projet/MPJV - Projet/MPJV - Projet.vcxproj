@@ -162,6 +162,7 @@
     <ClCompile Include="MPJV - Projet.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp" />
+    <ClCompile Include="ParticleForceGenerators\ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp" />
     <ClCompile Include="Physics.cpp" />

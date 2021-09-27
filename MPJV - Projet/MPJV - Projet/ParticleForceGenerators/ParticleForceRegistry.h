@@ -7,6 +7,7 @@ class ParticleForceRegistry
 private:
 	struct ParticleForceEntry
 	{
+		ParticleForceEntry(Particle* p, ParticleForceGenerator* pfg) : particle{ p }, forceGenerator{ pfg }{};
 		Particle* particle;
 		ParticleForceGenerator* forceGenerator;
 	};
@@ -15,5 +16,8 @@ private:
 	Registry m_registry;
 
 public:
-	void UpdateForce(float deltaTime);
+	void addEntry(ParticleForceEntry entry);
+	void addEntry(Particle* particle, ParticleForceGenerator* forceGenerator);
+	void removeEntry(int index);
+	void updateForce(float deltaTime);
 };
