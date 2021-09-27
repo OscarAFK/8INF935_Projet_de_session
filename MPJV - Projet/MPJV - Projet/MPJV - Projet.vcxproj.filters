@@ -66,6 +66,9 @@
     <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -106,12 +109,6 @@
     </ClInclude>
     <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3_loader.h">
       <Filter>Fichiers d%27en-tête\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleForceGenerator.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleForceRegistry.h">
-      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="ParticleForceGenerators\ParticleAnchoredSpring.h">
       <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
