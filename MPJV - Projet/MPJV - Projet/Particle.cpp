@@ -92,8 +92,10 @@ void Particle::setForces(const Vector3D value)
 #pragma region Methods
 void Particle::integrate(float deltaTime)
 {
+	m_acceleration = m_inverseMass * m_forces;
 	m_position = m_position + m_velocity * deltaTime + 0.5 * m_acceleration * deltaTime * deltaTime;
 	m_velocity = m_velocity * m_damping + m_acceleration * deltaTime;
+	m_forces = Vector3D(0, 0, 0);
 }
 
 void Particle::addForce(const Vector3D value)
