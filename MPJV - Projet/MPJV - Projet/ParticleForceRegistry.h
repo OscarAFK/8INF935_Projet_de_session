@@ -5,13 +5,13 @@
 class ParticleForceRegistry
 {
 private:
-	struct ParticleForceENtry
+	struct ParticleForceEntry
 	{
 		Particle* particle;
 		ParticleForceGenerator* forceGenerator;
 	};
 
-	using Registry = std::vector<ParticleForceGenerator>;
+	using Registry = std::vector<ParticleForceEntry>;
 	Registry m_registry;
 
 public:
