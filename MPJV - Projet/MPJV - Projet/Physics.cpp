@@ -44,7 +44,6 @@ std::shared_ptr<std::vector<Particle>> Physics::getAllParticle()
 
 void Physics::update(float deltaTime)
 {
-    m_particleForceRegistry.updateForce(deltaTime);
     for (std::vector<Particle>::iterator it = m_particles.begin(); it != m_particles.end(); ++it) {
         it->integrate(deltaTime);
     }
