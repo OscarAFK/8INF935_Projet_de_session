@@ -43,6 +43,11 @@ Vector3D Particle::getAcceleration() const
 	return m_acceleration;
 }
 
+Vector3D Particle::getForces() const
+{
+	return m_forces;
+}
+
 #pragma endregion
 
 #pragma region Mutators
@@ -77,6 +82,11 @@ void Particle::setAcceleration(const Vector3D value)
 	m_acceleration = value;
 }
 
+void Particle::setForces(const Vector3D value)
+{
+	m_forces = value;
+}
+
 #pragma endregion
 
 #pragma region Methods
@@ -85,6 +95,12 @@ void Particle::integrate(float deltaTime)
 	m_position = m_position + m_velocity * deltaTime + 0.5 * m_acceleration * deltaTime * deltaTime;
 	m_velocity = m_velocity * m_damping + m_acceleration * deltaTime;
 }
+
+void Particle::addForce(const Vector3D value)
+{
+	m_forces += value;
+}
+
 #pragma endregion
 
 #pragma region Operators

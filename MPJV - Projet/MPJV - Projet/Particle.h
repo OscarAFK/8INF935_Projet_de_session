@@ -11,6 +11,7 @@ private:
 	Vector3D m_acceleration;
 	Vector3D m_velocity;
 	Vector3D m_position;
+	Vector3D m_forces;
 
 public:
 	//Constructors
@@ -24,6 +25,7 @@ public:
 	Vector3D getPosition() const;
 	Vector3D getVelocity() const;
 	Vector3D getAcceleration() const;
+	Vector3D getForces() const;
 
 	//Mutators
 	void setInverseMass(const float value);
@@ -32,9 +34,11 @@ public:
 	void setPosition(const Vector3D value);
 	void setVelocity(const Vector3D value);
 	void setAcceleration(const Vector3D value);
+	void setForces(const Vector3D value);
 
 	//Methods
 	void integrate(float deltaTime);
+	void addForce(const Vector3D value);
 
 	//Operators
 	bool operator==(const Particle v);
