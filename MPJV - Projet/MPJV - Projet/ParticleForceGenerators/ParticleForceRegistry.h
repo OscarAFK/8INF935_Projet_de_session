@@ -19,5 +19,5 @@ public:
 	void addEntry(ParticleForceEntry entry);
 	void addEntry(Particle* particle, ParticleForceGenerator* forceGenerator);
 	void removeEntry(int index);
-	void updateForce(float deltaTime);
+	//void updateForce(float deltaTime);
 };
