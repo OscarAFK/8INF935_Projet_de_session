@@ -84,6 +84,9 @@
     <ClCompile Include="ParticleForceGenerators\ParticleBuoyancy.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleForceRegistry.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">

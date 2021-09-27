@@ -166,6 +166,7 @@
     <ClCompile Include="ParticleForceGenerators\ParticleBuoyancy.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleElastic.cpp" />
+    <ClCompile Include="ParticleForceGenerators\ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp" />
     <ClCompile Include="Physics.cpp" />

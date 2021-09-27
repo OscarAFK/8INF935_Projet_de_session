@@ -2,5 +2,5 @@
 
 void ParticleGravity::UpdateForce(Particle* particle, float deltaTime)
 {
-	particle->addForce(m_gravity);
+	particle->addForce(particle->getMass()*m_gravity);
 }

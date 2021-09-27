@@ -38,6 +38,11 @@ std::shared_ptr<std::vector<Particle>> Physics::getAllParticle()
     return std::make_shared<std::vector<Particle>>(m_particles);
 }
 
+ParticleForceRegistry Physics::getParticleForceRegistry()
+{
+    return m_particleForceRegistry;
+}
+
 #pragma endregion
 
 #pragma region Methods

@@ -27,6 +27,7 @@ public:
 	void removeParticle(int id);
 	std::shared_ptr<Particle> getParticle(int id);
 	std::shared_ptr<std::vector<Particle>> getAllParticle();
+	ParticleForceRegistry getParticleForceRegistry();
 	void update();
 };
 

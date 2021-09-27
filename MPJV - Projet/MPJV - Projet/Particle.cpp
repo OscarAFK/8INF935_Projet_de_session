@@ -2,8 +2,8 @@
 
 #pragma region Constructors
 
-Particle::Particle(float invertedMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration) :
-	m_inverseMass(invertedMass), m_damping(damping), m_position(position), m_velocity(velocity), m_acceleration(acceleration)
+Particle::Particle(float inverseMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration) :
+	m_inverseMass(inverseMass), m_damping(damping), m_position(position), m_velocity(velocity), m_acceleration(acceleration)
 {
 }
 

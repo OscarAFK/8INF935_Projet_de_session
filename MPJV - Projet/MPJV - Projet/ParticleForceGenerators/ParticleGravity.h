@@ -6,6 +6,6 @@ class ParticleGravity : public ParticleForceGenerator
 private :
 	Vector3D m_gravity;
 public :
-	//F = particle->GetMass()*m_gravity
+	ParticleGravity(float gravity = -10) : m_gravity{ gravity } {};
 	void UpdateForce(Particle* particle, float duration);
 };

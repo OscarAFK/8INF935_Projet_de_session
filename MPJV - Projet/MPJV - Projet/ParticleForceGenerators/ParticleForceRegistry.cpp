@@ -1,5 +1,7 @@
 #include "ParticleForceRegistry.h"
 
+#pragma region Methods
+
 void ParticleForceRegistry::addEntry(ParticleForceEntry entry)
 {
 	m_registry.push_back(entry);
@@ -21,3 +23,7 @@ void ParticleForceRegistry::updateForce(float deltaTime)
 		m_registry[i].forceGenerator->UpdateForce(m_registry[i].particle, deltaTime);
 	}
 }
+#pragma endregion
+
+
+

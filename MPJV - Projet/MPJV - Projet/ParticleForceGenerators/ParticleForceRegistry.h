@@ -16,6 +16,10 @@ private:
 	Registry m_registry;
 
 public:
+	Registry getRegistry()
+	{
+		return m_registry;
+	}
 	void addEntry(ParticleForceEntry entry);
 	void addEntry(Particle* particle, ParticleForceGenerator* forceGenerator);
 	void removeEntry(int index);

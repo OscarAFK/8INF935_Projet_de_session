@@ -15,6 +15,8 @@
 #include "Physics.h"
 #include "Display.h"
 
+#include "ParticleForceGenerators/ParticleGravity.h"
+
 #define WINDOW_SIZE_X	480
 #define WINDOW_SIZE_Y	480
 
@@ -42,14 +44,33 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 	return program;
 }
 
+void ShootProjectile(Physics physic, int choiceIndex)
+{
+	Particle particle;
+	ParticleGravity gravity = ParticleGravity();
+	switch (choiceIndex) {
+	case 1: std::cout << "vous avez choisi le boulet de canon" << std::endl;
+		particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(1, -5, 3), Vector3D(0, 0, 0));
+		physic.addParticle(std::move(particle));
+		physic.getParticleForceRegistry().addEntry(physic.getParticle((int)physic.getAllParticle().get()->size() - 1).get(), &gravity);
+		break;
+	case 2: std::cout << "vous avez choisi la boule de feu" << std::endl;
+		physic.addParticle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+		break;
+	case 3: std::cout << "vous avez choisi le laser" << std::endl;
+		physic.addParticle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
+		break;
+	case 4: std::cout << "vous avez choisi la balle" << std::endl;
+		physic.addParticle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+		break;
+	default:
+		return;
+	}
+}
+
 
 int main()
 {   
-	using namespace std::this_thread; // sleep_for, sleep_until
-	using namespace std::chrono; // nanoseconds, system_clock, seconds
-
-	float deltaTime = 0.01f;
-	
 	//GLFW initialization
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);
@@ -73,23 +94,7 @@ int main()
 	/*std::cout << "Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x,y,z)" << std::endl;
 	int choice;
 	std::cin >> choice;
-	switch (choice) {
-	case 1: std::cout << "vous avez choisi le boulet de canon" << std::endl;
-		physic.addParticle(0.01, 1, Vector3D(0, 0, 0), Vector3D(1, -5, 3), Vector3D(0, 0, 0));
-		break;
-	case 2: std::cout << "vous avez choisi la boule de feu" << std::endl;
-		physic.addParticle(0.05, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
-		break;
-	case 3: std::cout << "vous avez choisi le laser" << std::endl;
-		physic.addParticle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
-		break;
-	case 4: std::cout << "vous avez choisi la balle" << std::endl;
-		physic.addParticle(0.99, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
-		break;
-	case 5: std::cout << "vous avez choisi le projectile personnel" << std::endl;
-		break;
-	default:
-		return;
+	
 
 	}*/
 	Display display = Display(&physic, WINDOW_SIZE_X, WINDOW_SIZE_Y);
@@ -111,21 +116,6 @@ int main()
   ImGui_ImplOpenGL3_Init("#version 330");
 #pragma endregion
 
-	float positions[6] = {
-		-0.5f, -0.5f,
-		0.0f,  0.5f,
-		0.5f, -0.5f
-	};
-
-	//Vertex buffer
-	/*unsigned int buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);*/
-	
 	std::string vertexShader =
 		"#version 330\n"\
 		"layout(location=0) in vec4 position;\n"\
@@ -145,13 +135,20 @@ int main()
 	unsigned int shader = CreateShader(vertexShader, FragmentShader);
 	glUseProgram(shader);
 
+	std::map<std::string, int> projectileMap1 = {
+		//Le -10 dans l'accélération représente la gravité
+	{ "Boulet de Canon", 1 },
+	{ "Boule de feu", 2 },
+	{ "Laser", 3},
+	{ "Balle", 4}
+	};
 	
 	std::map<std::string, Particle> projectileMap = {
 		//Le -10 dans l'accélération représente la gravité
 	{ "Boulet de Canon", Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(40, 10, 0), Vector3D(0, -10, 0)) },
-	{ "Boule de feu", Particle(0.05, 1, Vector3D(0, 0, 0), Vector3D(20, 40, 0), Vector3D(0, -10, 0)) },
+	{ "Boule de feu", Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(20, 40, 0), Vector3D(0, -10, 0)) },
 	{ "Laser", Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0))},
-	{ "Balle", Particle(0.99, 1, Vector3D(0, 0, 0), Vector3D(80, 80, 0), Vector3D(0, -10, 0))}
+	{ "Balle", Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(80, 80, 0), Vector3D(0, -10, 0))}
 	};
 	static _int64 selected = -1;
 	char projectileName[64] = "";
@@ -202,7 +199,12 @@ int main()
 			if (selected != -1)
 			{
 				std::cout << projectileName << " shot" << std::endl;
-				physic.addParticle(projectileMap.find(projectileName)->second);
+				//physic.addParticle(projectileMap.find(projectileName)->second);
+				//ShootProjectile(std::move(physic), selected + 1);
+				Particle particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+				ParticleGravity gravity = ParticleGravity(200);
+				physic.addParticle(std::move(particle));
+				physic.getParticleForceRegistry().addEntry(physic.getParticle((int)physic.getAllParticle().get()->size() - 1).get(), &gravity);
 			}
 		}
 		ImGui::End();
