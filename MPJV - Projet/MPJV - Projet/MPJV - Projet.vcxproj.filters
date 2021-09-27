@@ -98,5 +98,11 @@
     <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3_loader.h">
       <Filter>Fichiers d%27en-tête\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleForceGenerator.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
