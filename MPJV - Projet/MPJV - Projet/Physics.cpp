@@ -21,9 +21,9 @@ void Physics::addParticle(Particle particle)
     m_incrementalId++;
 }
 
-void Physics::removeParticle(int id)
+void Physics::removeParticle(int index)
 {
-    m_particles.erase(id);
+    m_particles.erase(m_particles.begin() + index);
 }
 
 #pragma endregion
@@ -35,9 +35,9 @@ std::shared_ptr<Particle> Physics::getParticle(int id)
     return std::make_shared<Particle>(m_particles[id]);
 }
 
-std::shared_ptr<std::map<int, Particle>> Physics::getAllParticle()
+std::shared_ptr<std::vector<Particle>> Physics::getAllParticle()
 {
-    return std::make_shared<std::map<int, Particle>>(m_particles);
+    return std::make_shared<std::vector<Particle>>(m_particles);
 }
 
 #pragma endregion
@@ -46,8 +46,8 @@ std::shared_ptr<std::map<int, Particle>> Physics::getAllParticle()
 
 void Physics::update(float deltaTime)
 {
-    for (std::map<int, Particle>::iterator it = m_particles.begin(); it != m_particles.end(); ++it) {
-        it->second.integrate(deltaTime);
+    for (std::vector<Particle>::iterator it = m_particles.begin(); it != m_particles.end(); ++it) {
+        it->integrate(deltaTime);
     }
 }
 
