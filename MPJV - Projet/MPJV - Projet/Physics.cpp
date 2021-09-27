@@ -1,7 +1,7 @@
 #include "Physics.h"
 
 #pragma region Constructors
-Physics::Physics() : m_particles{}, m_incrementalId{0}
+Physics::Physics() : m_particles{}
 {
 }
 
@@ -11,14 +11,12 @@ Physics::Physics() : m_particles{}, m_incrementalId{0}
 
 void Physics::addParticle(float invertedMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration)
 {
-    m_particles[m_incrementalId] = Particle(invertedMass, damping, position, velocity,acceleration);
-    m_incrementalId++;
+    m_particles.push_back(Particle(invertedMass, damping, position, velocity, acceleration));
 }
 
 void Physics::addParticle(Particle particle)
 {
-    m_particles[m_incrementalId] = particle;
-    m_incrementalId++;
+    m_particles.push_back(particle);
 }
 
 void Physics::removeParticle(int index)

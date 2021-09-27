@@ -8,10 +8,6 @@
 class Physics
 {
 private:
-
-	//A variable that keep track of the id of the last particle created
-	int m_incrementalId;
-
 	//A map containing all particles, with an associated id
 	std::vector<Particle> m_particles;
 
