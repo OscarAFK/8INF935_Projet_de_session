@@ -9,9 +9,9 @@ Physics::Physics() : m_particles{}
 
 #pragma region Mutex
 
-void Physics::addParticle(float invertedMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration)
+void Physics::addParticle(float inverseMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration)
 {
-    m_particles.push_back(Particle(invertedMass, damping, position, velocity, acceleration));
+    m_particles.push_back(Particle(inverseMass, damping, position, velocity, acceleration));
 }
 
 void Physics::addParticle(Particle particle)
