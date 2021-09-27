@@ -66,9 +66,19 @@
     <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp">
+    <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
-	<ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp">
+    <ClCompile Include="ParticleForceGenerators\ParticleAnchoredSpring.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleElastic.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleAnchoredElastic.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,6 +138,12 @@
       <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
     </ClInclude>
     <ClInclude Include="ParticleForceGenerators\ParticleSpring.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleElastic.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleAnchoredElastic.h">
       <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
     </ClInclude>
   </ItemGroup>
