@@ -26,7 +26,7 @@ void Display::drawPhysics()
 {
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
 	
-	for (std::vector<Particle>::iterator it = (*listOfParticles).begin(); it != (*listOfParticles).end(); ++it) {
+	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
 		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 10, 4);
 	}
 }

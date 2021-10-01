@@ -15,6 +15,7 @@
 #include "Physics.h"
 #include "Display.h"
 
+
 #define WINDOW_SIZE_X	480
 #define WINDOW_SIZE_Y	480
 
@@ -48,8 +49,9 @@ int main()
 	using namespace std::this_thread; // sleep_for, sleep_until
 	using namespace std::chrono; // nanoseconds, system_clock, seconds
 
-	float deltaTime = 0.01f;
+	float dt = 0.01f;
 	
+
 	//GLFW initialization
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);

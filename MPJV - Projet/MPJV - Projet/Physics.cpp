@@ -28,14 +28,14 @@ void Physics::removeParticle(int index)
 
 #pragma region Accessors
 
-std::shared_ptr<Particle> Physics::getParticle(int id)
+Particle* Physics::getParticle(int id)
 {
-    return std::make_shared<Particle>(m_particles[id]);
+    return &m_particles[id];
 }
 
-std::shared_ptr<std::vector<Particle>> Physics::getAllParticle()
+std::vector<Particle>* Physics::getAllParticle()
 {
-    return std::make_shared<std::vector<Particle>>(m_particles);
+    return &m_particles;
 }
 
 #pragma endregion

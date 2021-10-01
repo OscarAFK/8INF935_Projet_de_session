@@ -25,8 +25,7 @@ public:
 	void addParticle(float invertedMass = 0.0f, float damping = 0.0f, Vector3D position = Vector3D(), Vector3D velocity = Vector3D(), Vector3D acceleration = Vector3D());
 	void addParticle(Particle particle);
 	void removeParticle(int id);
-	std::shared_ptr<Particle> getParticle(int id);
-	std::shared_ptr<std::vector<Particle>> getAllParticle();
+	Particle* getParticle(int id);
+	std::vector<Particle>* getAllParticle();
 	void update();
 };
-
