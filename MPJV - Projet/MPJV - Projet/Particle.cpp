@@ -1,4 +1,5 @@
 ﻿#include "Particle.h"
+#include <iostream>
 
 #pragma region Constructors
 
@@ -92,6 +93,7 @@ void Particle::setForces(const Vector3D value)
 #pragma region Methods
 void Particle::integrate(float deltaTime)
 {
+	//std::cout << m_forces.to_string();
 	m_acceleration = m_inverseMass * m_forces;
 	m_position = m_position + m_velocity * deltaTime + 0.5 * m_acceleration * deltaTime * deltaTime;
 	m_velocity = m_velocity * m_damping + m_acceleration * deltaTime;

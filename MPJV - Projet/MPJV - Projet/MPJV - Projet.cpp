@@ -44,28 +44,43 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 	return program;
 }
 
-void ShootProjectile(Physics physic, int choiceIndex)
+void ShootProjectile(Physics* physic, int choiceIndex)
 {
 	Particle particle;
+	std::vector<ParticleForceGenerator*> generators;
 	ParticleGravity gravity = ParticleGravity();
+
 	switch (choiceIndex) {
-	case 1: std::cout << "vous avez choisi le boulet de canon" << std::endl;
-		particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(1, -5, 3), Vector3D(0, 0, 0));
-		physic.addParticle(std::move(particle));
-		physic.getParticleForceRegistry().addEntry(physic.getParticle((int)physic.getAllParticle().get()->size() - 1).get(), &gravity);
+	case 1:
+		std::cout << "vous avez choisi le boulet de canon" << std::endl;
+		particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+		gravity = ParticleGravity();
+		generators.push_back(&gravity);
 		break;
-	case 2: std::cout << "vous avez choisi la boule de feu" << std::endl;
-		physic.addParticle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+
+	case 2:
+		std::cout << "vous avez choisi la boule de feu" << std::endl;
+		particle = Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+		gravity = ParticleGravity(-5);
+		generators.push_back(&gravity);
 		break;
-	case 3: std::cout << "vous avez choisi le laser" << std::endl;
-		physic.addParticle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
+
+	case 3:
+		std::cout << "vous avez choisi le laser" << std::endl;
+		particle = Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
 		break;
-	case 4: std::cout << "vous avez choisi la balle" << std::endl;
-		physic.addParticle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+
+	case 4:
+		std::cout << "vous avez choisi la balle" << std::endl;
+		particle = Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+		gravity = ParticleGravity();
+		generators.push_back(&gravity);
 		break;
+
 	default:
 		return;
 	}
+	physic->addParticle(std::move(particle), generators);
 }
 
 
@@ -198,13 +213,42 @@ int main()
 		{
 			if (selected != -1)
 			{
-				std::cout << projectileName << " shot" << std::endl;
-				//physic.addParticle(projectileMap.find(projectileName)->second);
-				//ShootProjectile(std::move(physic), selected + 1);
-				Particle particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
-				ParticleGravity gravity = ParticleGravity(200);
-				physic.addParticle(std::move(particle));
-				physic.getParticleForceRegistry().addEntry(physic.getParticle((int)physic.getAllParticle().get()->size() - 1).get(), &gravity);
+				//ShootProjectile(&physic, selected + 1);
+				Particle particle;
+				std::vector<ParticleForceGenerator*> generators;
+				ParticleGravity gravity = ParticleGravity();
+
+				switch (selected + 1) {
+				case 1:
+					std::cout << "vous avez choisi le boulet de canon" << std::endl;
+					particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+					gravity = ParticleGravity();
+					generators.push_back(&gravity);
+					break;
+
+				case 2:
+					std::cout << "vous avez choisi la boule de feu" << std::endl;
+					particle = Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+					gravity = ParticleGravity(-5);
+					generators.push_back(&gravity);
+					break;
+
+				case 3:
+					std::cout << "vous avez choisi le laser" << std::endl;
+					particle = Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
+					break;
+
+				case 4:
+					std::cout << "vous avez choisi la balle" << std::endl;
+					particle = Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+					gravity = ParticleGravity();
+					generators.push_back(&gravity);
+					break;
+
+				default:
+					break;
+				}
+				physic.addParticle(std::move(particle), generators);
 			}
 		}
 		ImGui::End();

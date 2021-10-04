@@ -23,6 +23,17 @@ void ParticleForceRegistry::updateForce(float deltaTime)
 		m_registry[i].forceGenerator->UpdateForce(m_registry[i].particle, deltaTime);
 	}
 }
+std::string ParticleForceRegistry::to_string()
+{
+	std::string result;
+	for (int i = 0; i < m_registry.size(); i++)
+	{
+		result += "Entry #" + std::to_string(i) + " :\n";
+		result += m_registry[i].particle->to_string();
+		result += m_registry[i].forceGenerator->to_string() + "\n";
+	}
+	return result;
+}
 #pragma endregion
 
 

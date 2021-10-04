@@ -19,6 +19,15 @@ void Physics::addParticle(Particle particle)
     m_particles.push_back(particle);
 }
 
+void Physics::addParticle(Particle particle, std::vector<ParticleForceGenerator*> generators)
+{
+    m_particles.push_back(particle);
+    for (int i = 0; i < generators.size(); i++)
+    {
+        m_particleForceRegistry.addEntry(&m_particles[m_particles.size() - 1], generators[i]);
+    }
+}
+
 void Physics::removeParticle(int index)
 {
     m_particles.erase(m_particles.begin() + index);
