@@ -5,6 +5,8 @@
 #define WINDOW_SIZE_X	480
 #define WINDOW_SIZE_Y	480
 
+
+#pragma region FunctionShaders
 static unsigned int CompileShader(unsigned int type, const std::string& source) {
 	unsigned int id = glCreateShader(type);
 	const char* src = source.c_str();
@@ -29,6 +31,8 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 	return program;
 }
 
+#pragma endregion
+
 #pragma region Constructors
 
 Display::Display(Physics* physics) : m_linkedPhysics(physics)
@@ -36,7 +40,6 @@ Display::Display(Physics* physics) : m_linkedPhysics(physics)
 }
 
 #pragma endregion
-
 
 #pragma region Mutex
 
@@ -47,8 +50,7 @@ void Display::linkToPhysics(Physics *physics)
 
 #pragma endregion
 
-
-#pragma region Methods
+#pragma region Methods Class
 
 void Display::drawPhysics()
 {
@@ -67,6 +69,24 @@ void Display::drawIntermediatePhysics(const float alpha)
 		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 10, 4);
 	}
 }
+
+void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction récupérée sur stackOverflow à cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
+{
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < num_segments; i++) {
+		float theta = 2.0f * 3.1415926f * float(i) / float(num_segments);//get the current angle 
+		float x = r * cosf(theta);//calculate the x component 
+		float y = r * sinf(theta);//calculate the y component 
+		glVertex2f((x + cx) / (float)width, (y + cy) / (float)height);//output vertex 
+	}
+	glEnd();
+}
+
+#pragma endregion
+
+#pragma region Methods Libraries
 
 void Display::initDisplayLib()
 {
@@ -254,21 +274,6 @@ void Display::terminalCommand()	//Non utilisé, mais gardé au cas ou
 		return;
 
 	}
-}
-
-
-void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction récupérée sur stackOverflow à cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
-{
-	int width, height;
-	glfwGetWindowSize(window, &width, &height);
-	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < num_segments; i++) {
-		float theta = 2.0f * 3.1415926f * float(i) / float(num_segments);//get the current angle 
-		float x = r * cosf(theta);//calculate the x component 
-		float y = r * sinf(theta);//calculate the y component 
-		glVertex2f((x + cx)/(float)width, (y + cy) / (float)height);//output vertex 
-	}
-	glEnd();
 }
 
 #pragma endregion
