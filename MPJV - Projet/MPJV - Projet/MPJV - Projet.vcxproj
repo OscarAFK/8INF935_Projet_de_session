@@ -159,6 +159,7 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Display.cpp" />
+    <ClCompile Include="loadShader.cpp" />
     <ClCompile Include="MPJV - Projet.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleAnchoredElastic.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="loadShader.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleAnchoredElastic.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleAnchoredSpring.h" />
@@ -195,7 +197,19 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="SimpleFragmentShader.fragmentshader" />
+    <None Include="SimpleVertexShader.vertexshader" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\glm.0.9.9.800\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.9.800\build\native\glm.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\glm.0.9.9.800\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.9.800\build\native\glm.targets'))" />
+  </Target>
 </Project>

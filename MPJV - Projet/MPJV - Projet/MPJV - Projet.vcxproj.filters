@@ -84,6 +84,9 @@
     <ClCompile Include="ParticleForceGenerators\ParticleBuoyancy.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="loadShader.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -152,5 +155,17 @@
     <ClInclude Include="ParticleForceGenerators\ParticleBuoyancy.h">
       <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
     </ClInclude>
+    <ClInclude Include="loadShader.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="SimpleFragmentShader.fragmentshader">
+      <Filter>Fichiers sources</Filter>
+    </None>
+    <None Include="SimpleVertexShader.vertexshader">
+      <Filter>Fichiers sources</Filter>
+    </None>
   </ItemGroup>
 </Project>
