@@ -44,6 +44,7 @@ public:
 	void renderUI();
 	void swapBuffers();
 	void quitLibraries();
+	void terminalCommand();
 
 };
 
