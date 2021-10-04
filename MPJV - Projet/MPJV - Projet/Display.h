@@ -8,16 +8,18 @@ class Display
 {
 private:
 	Physics* m_linkedPhysics;
-
+	int m_sizeX;
+	int m_sizeY;
 	void drawCircle(float cx, float cy, float r, int num_segments);
 
 public:
 	Display() = default;
-	Display(Physics* physics);
+	Display(Physics* physics, int sizeX, int sizeY);
 	~Display() = default;
 
 	void linkToPhysics(Physics* physics);
 	void drawPhysics();
+	void drawIntermediatePhysics(const float alpha);
 
 };
 

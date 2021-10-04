@@ -54,12 +54,17 @@ Vector3D Vector3D::normalize()
 	return Vector3D(m_x / norm, m_y / norm, m_z / norm);
 }
 
+float Vector3D::norm()
+{
+	return sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
+}
+
 float Vector3D::scalarProduct(Vector3D v1, Vector3D v2)
 {
 	return v1.m_x * v2.m_x + v1.m_y * v2.m_y + v1.m_z * v2.m_z;
 }
 
-Vector3D Vector3D::dotProduct(Vector3D v1, Vector3D v2)
+ Vector3D Vector3D::dotProduct(Vector3D v1, Vector3D v2)
 {
 	return Vector3D(v1.m_y * v2.m_z - v1.m_z * v2.m_y,
 		v1.m_z * v2.m_x - v1.m_x * v2.m_z,

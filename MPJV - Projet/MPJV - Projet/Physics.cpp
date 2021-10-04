@@ -1,7 +1,7 @@
 #include "Physics.h"
 
 #pragma region Constructors
-Physics::Physics() : m_particles{}, m_incrementalId{0}
+Physics::Physics()
 {
 }
 
@@ -11,38 +11,53 @@ Physics::Physics() : m_particles{}, m_incrementalId{0}
 
 void Physics::addParticle(float invertedMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration)
 {
-    m_particles[m_incrementalId] = Particle(invertedMass, damping, position, velocity,acceleration);
-    m_incrementalId++;
+    currentState.m_particles.push_back(Particle(invertedMass, damping, position, velocity, acceleration));
 }
 
-void Physics::removeParticle(int id)
+void Physics::addParticle(Particle particle)
 {
-    m_particles.erase(id);
+    currentState.m_particles.push_back(particle);
+}
+
+void Physics::removeParticle(int index)
+{
+    currentState.m_particles.erase(currentState.m_particles.begin() + index);
 }
 
 #pragma endregion
 
 #pragma region Accessors
 
-std::shared_ptr<Particle> Physics::getParticle(int id)
+Particle* Physics::getParticle(int id)
 {
-    return std::make_shared<Particle>(m_particles[id]);
+    return &currentState.m_particles[id];
 }
 
-std::shared_ptr<std::map<int, Particle>> Physics::getAllParticle()
+std::vector<Particle>* Physics::getAllParticle()
 {
-    return std::make_shared<std::map<int, Particle>>(m_particles);
+    return &currentState.m_particles;
 }
 
 #pragma endregion
 
 #pragma region Methods
 
-void Physics::update(float deltaTime)
+void Physics::update(float t, float dt)
 {
-    for (std::map<int, Particle>::iterator it = m_particles.begin(); it != m_particles.end(); ++it) {
-        it->second.integrate(deltaTime);
+    previousState = currentState;
+    //currentState.m_particleForceRegistry.updateForce(deltaTime);
+    for (std::vector<Particle>::iterator it = currentState.m_particles.begin(); it != currentState.m_particles.end(); ++it) {
+        it->integrate(dt);
     }
+}
+
+std::vector<Particle>* Physics::getIntermediateParticle(const float alpha)
+{
+    std::vector<Particle>* intermediateParticles = new std::vector<Particle>;
+    for (int i = 0; i < previousState.m_particles.size(); i++) {
+        intermediateParticles->push_back(Particle(currentState.m_particles[i].getPosition() * alpha + previousState.m_particles[i].getPosition() * (1-alpha)));
+    }
+    return intermediateParticles;
 }
 
 #pragma endregion

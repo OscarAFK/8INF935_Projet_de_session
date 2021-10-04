@@ -21,6 +21,7 @@ class Vector3D
 		void setZ(const float value);
 
 		Vector3D normalize();
+		float norm();
 
 		static float scalarProduct(Vector3D v1, Vector3D v2);
 		static Vector3D dotProduct(Vector3D v1, Vector3D v2);

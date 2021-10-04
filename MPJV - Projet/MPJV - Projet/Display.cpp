@@ -3,7 +3,7 @@
 
 #pragma region Constructors
 
-Display::Display(Physics* physics) : m_linkedPhysics(physics)
+Display::Display(Physics* physics, int sizeX, int sizeY) : m_linkedPhysics(physics), m_sizeX(sizeX), m_sizeY(sizeY)
 {
 }
 
@@ -26,8 +26,17 @@ void Display::drawPhysics()
 {
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
 	
-	for (std::map<int, Particle>::iterator it = (*listOfParticles).begin(); it != (*listOfParticles).end(); ++it) {
-		drawCircle(it->second.getPosition().getX(), it->second.getPosition().getY(), 0.02, 4);
+	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
+		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 10, 4);
+	}
+}
+
+void Display::drawIntermediatePhysics(const float alpha)
+{
+	auto listOfParticles = m_linkedPhysics->getIntermediateParticle(alpha);
+
+	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
+		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 10, 4);
 	}
 }
 
@@ -38,7 +47,7 @@ void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonct
 		float theta = 2.0f * 3.1415926f * float(i) / float(num_segments);//get the current angle 
 		float x = r * cosf(theta);//calculate the x component 
 		float y = r * sinf(theta);//calculate the y component 
-		glVertex2f(x + cx, y + cy);//output vertex 
+		glVertex2f((x + cx)/(float)m_sizeX, (y + cy) / (float)m_sizeY);//output vertex 
 	}
 	glEnd();
 }

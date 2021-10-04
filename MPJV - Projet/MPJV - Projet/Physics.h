@@ -1,24 +1,41 @@
 #pragma once
 
 #include "Particle.h"
-#include <map>
+#include <vector>
 #include <memory>
+#include <chrono>
+#include "ParticleForceGenerators/ParticleForceRegistry.h"
 
 class Physics
 {
-private:
+	//The state of the world at a time
+	struct State {
+		std::vector<Particle> m_particles;
 
-	int m_incrementalId;
-	std::map<int, Particle> m_particles;
+		ParticleForceRegistry m_particleForceRegistry;
+	};
+
+private:
+	
+	
+
+	clock_t timeOfLastUpdate = clock();
+
+	
 
 public:
+
+	State currentState;
+	State previousState;
+
 	Physics();
 	~Physics() = default;
 
 	void addParticle(float invertedMass = 0.0f, float damping = 0.0f, Vector3D position = Vector3D(), Vector3D velocity = Vector3D(), Vector3D acceleration = Vector3D());
+	void addParticle(Particle particle);
 	void removeParticle(int id);
-	std::shared_ptr<Particle> getParticle(int id);
-	std::shared_ptr<std::map<int, Particle>> getAllParticle();
-	void update(float deltaTime);
+	Particle* getParticle(int id);
+	std::vector<Particle>* getAllParticle();
+	std::vector<Particle>* getIntermediateParticle(const float alpha);
+	void update(float t, float dt);
 };
-
