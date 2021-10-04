@@ -8,17 +8,26 @@
 
 class Physics
 {
-private:
-	//A map containing all particles, with an associated id
-	std::vector<Particle> m_particles;
+	//The state of the world at a time
+	struct State {
+		std::vector<Particle> m_particles;
 
-	ParticleForceRegistry m_particleForceRegistry;
+		ParticleForceRegistry m_particleForceRegistry;
+	};
+
+private:
+	
+	
 
 	clock_t timeOfLastUpdate = clock();
 
-	void update(float deltaTime);
+	
 
 public:
+
+	State currentState;
+	State previousState;
+
 	Physics();
 	~Physics() = default;
 
@@ -27,5 +36,6 @@ public:
 	void removeParticle(int id);
 	Particle* getParticle(int id);
 	std::vector<Particle>* getAllParticle();
-	void update();
+	std::vector<Particle>* getIntermediateParticle(const float alpha);
+	void update(float t, float dt);
 };

@@ -7,6 +7,11 @@ Particle::Particle(float invertedMass, float damping, Vector3D position, Vector3
 {
 }
 
+Particle::Particle(Vector3D position) :
+	m_inverseMass(0), m_damping(0), m_position(position), m_velocity(0), m_acceleration(0)
+{
+}
+
 Particle::~Particle() {}
 
 #pragma endregion

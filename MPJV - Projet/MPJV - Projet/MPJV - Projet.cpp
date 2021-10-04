@@ -45,11 +45,13 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
 
 int main()
-{   
-	using namespace std::this_thread; // sleep_for, sleep_until
-	using namespace std::chrono; // nanoseconds, system_clock, seconds
+{
 
 	float dt = 0.01f;
+	float t = 0;
+
+	float currentTime = clock();
+	float accumulator = 0.0;
 	
 
 	//GLFW initialization
@@ -171,12 +173,26 @@ int main()
 		
 
 		//RENDER PHYSICS
+float newTime = clock();
+		float frameTime = (newTime - currentTime) / CLOCKS_PER_SEC;
+		if (frameTime > 0.25)
+			frameTime = 0.25;
+		currentTime = newTime;
 
-		//Update physics and rendering
-		physic.update();
-		//std::cout << physic.getParticle(0)->to_string() << std::endl;
-		display.drawPhysics();
+		accumulator += frameTime;
 
+		while (accumulator >= dt)
+		{
+			
+			//Update physics
+			physic.update(t, dt);
+			t += dt;
+			accumulator -= dt;
+		}
+
+		const float alpha = accumulator / dt;
+
+		display.drawIntermediatePhysics(alpha);
 
 		//RENDER UI
 

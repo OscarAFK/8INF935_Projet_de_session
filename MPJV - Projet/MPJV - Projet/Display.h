@@ -19,6 +19,7 @@ public:
 
 	void linkToPhysics(Physics* physics);
 	void drawPhysics();
+	void drawIntermediatePhysics(const float alpha);
 
 };
 
