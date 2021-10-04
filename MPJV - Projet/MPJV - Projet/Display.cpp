@@ -221,8 +221,41 @@ void Display::renderUI()
 	{
 		if (selected != -1)
 		{
-			std::cout << projectileName << " shot" << std::endl;
-			m_linkedPhysics->addParticle(projectileMap.find(projectileName)->second);
+			//ShootProjectile(&physic, selected + 1);
+			Particle particle = NULL;
+			std::vector<ParticleForceGenerator*> generators;
+			ParticleGravity gravity = ParticleGravity();
+
+			switch (selected + 1) {
+			case 1:
+				std::cout << "vous avez choisi le boulet de canon" << std::endl;
+				particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+				gravity = ParticleGravity();
+				break;
+
+			case 2:
+				std::cout << "vous avez choisi la boule de feu" << std::endl;
+				particle = Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+				gravity = ParticleGravity(-5);
+				break;
+
+			case 3:
+				std::cout << "vous avez choisi le laser" << std::endl;
+				particle = Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
+				gravity = ParticleGravity(0);
+				break;
+
+			case 4:
+				std::cout << "vous avez choisi la balle" << std::endl;
+				particle = Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+				gravity = ParticleGravity();
+				break;
+
+			default:
+				break;
+			}
+			generators.push_back(&gravity);
+			m_linkedPhysics->addParticle(std::move(particle), generators);
 		}
 	}
 	ImGui::End();

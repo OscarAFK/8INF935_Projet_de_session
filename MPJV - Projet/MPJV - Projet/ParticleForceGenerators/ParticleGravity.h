@@ -7,5 +7,7 @@ private :
 	Vector3D m_gravity;
 public :
 	//F = particle->GetMass()*m_gravity
-	void UpdateForce(Particle* particle, float duration);
+	ParticleGravity(Vector3D gravity = Vector3D(0, -10, 0)) : m_gravity{ gravity } {};
+	void UpdateForce(Particle* particle, float duration) override;
+	std::string to_string() override;
 };

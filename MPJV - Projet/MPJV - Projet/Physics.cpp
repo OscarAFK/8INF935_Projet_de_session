@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include <iostream>
 
 #pragma region Constructors
 Physics::Physics()
@@ -19,11 +20,19 @@ void Physics::addParticle(Particle particle)
     currentState.m_particles.push_back(particle);
 }
 
+void Physics::addParticle(Particle particle, std::vector<ParticleForceGenerator*> generators)
+{
+    currentState.m_particles.push_back(particle);
+    for (int i = 0; i < generators.size(); i++)
+    {
+        currentState.m_particleForceRegistry.addEntry(&currentState.m_particles[currentState.m_particles.size() - 1], generators[i]);
+    }
+}
+
 void Physics::removeParticle(int index)
 {
     currentState.m_particles.erase(currentState.m_particles.begin() + index);
 }
-
 #pragma endregion
 
 #pragma region Accessors
@@ -45,7 +54,7 @@ std::vector<Particle>* Physics::getAllParticle()
 void Physics::update(float t, float dt)
 {
     previousState = currentState;
-    //currentState.m_particleForceRegistry.updateForce(deltaTime);
+    currentState.m_particleForceRegistry.updateForce(dt);
     for (std::vector<Particle>::iterator it = currentState.m_particles.begin(); it != currentState.m_particles.end(); ++it) {
         it->integrate(dt);
     }
