@@ -11,6 +11,7 @@ private:
 	float m_waterHeight, m_liquidDensity;
 
 public:
+	ParticleBuoyancy(float maxDepth, float volume, float waterHeight, float liquidDensity) : m_maxDepth{ maxDepth }, m_volume{ volume }, m_waterHeight{ waterHeight }, m_liquidDensity{ liquidDensity }  {};
 	void UpdateForce(Particle* particle, float deltaTime);
 
 };

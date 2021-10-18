@@ -13,6 +13,7 @@ private:
 	float m_restLength;
 
 public:
+	ParticleElastic(Particle* anchorParticle, float k, float restLength) : m_other{ anchorParticle }, m_k{ k }, m_restLength{ restLength }  {};
 	void UpdateForce(Particle* particle, float deltaTime);
 
 };

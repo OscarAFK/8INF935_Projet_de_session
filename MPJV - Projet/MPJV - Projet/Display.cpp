@@ -161,11 +161,11 @@ void Display::initDisplayLib()
 	glUseProgram(shader);
 
 
-	projectileMap =
-	{ "Boulet de Canon",
-	 "Boule de feu",
-	 "Laser",
-	 "Balle"
+	projectileMap = { 
+		"Boulet de Canon",
+		"Boule de feu",
+		"Laser",
+		"Balle"
 	};
 	selected = -1;
 
@@ -235,26 +235,26 @@ void Display::shootProjectile(int projectileId)
 		std::vector<ParticleForceGenerator*> generators;
 		ParticleGravity gravity;
 
-		switch (projectileId + 1) {
-		case 1:
+		switch (projectileId) {
+		case 0:
 			std::cout << "vous avez choisi le boulet de canon" << std::endl;
 			particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity());
 			break;
 
-		case 2:
+		case 1:
 			std::cout << "vous avez choisi la boule de feu" << std::endl;
 			particle = Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity(-5));
 			break;
 
-		case 3:
+		case 2:
 			std::cout << "vous avez choisi le laser" << std::endl;
 			particle = Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity(0));
 			break;
 
-		case 4:
+		case 3:
 			std::cout << "vous avez choisi la balle" << std::endl;
 			particle = Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity());
