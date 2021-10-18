@@ -25,6 +25,12 @@
     <Filter Include="Fichiers sources\ParticleForceGenerators">
       <UniqueIdentifier>{78f0f4d8-0ccf-47fa-b811-aca81ca3d6b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\ParticleContactGenerators">
+      <UniqueIdentifier>{ca7a248a-e97e-46b7-af87-216f512b0c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ParticleContactGenerators">
+      <UniqueIdentifier>{333d7976-252e-49ae-a6d6-07f032c2346b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -86,6 +92,15 @@
     </ClCompile>
     <ClCompile Include="ParticleForceGenerators\ParticleForceRegistry.cpp">
       <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleCable.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleLink.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleRod.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +169,18 @@
     </ClInclude>
     <ClInclude Include="ParticleForceGenerators\ParticleBuoyancy.h">
       <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleCable.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleContactGenerators.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleLink.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleRod.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
