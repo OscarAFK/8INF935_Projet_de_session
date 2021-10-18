@@ -161,12 +161,11 @@ void Display::initDisplayLib()
 	glUseProgram(shader);
 
 
-	projectileMap = {
-		//Le -10 dans l'accélération représente la gravité
-	{ "Boulet de Canon", Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(40, 10, 0), Vector3D(0, -10, 0)) },
-	{ "Boule de feu", Particle(0.05, 1, Vector3D(0, 0, 0), Vector3D(20, 40, 0), Vector3D(0, -10, 0)) },
-	{ "Laser", Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0))},
-	{ "Balle", Particle(0.99, 1, Vector3D(0, 0, 0), Vector3D(80, 80, 0), Vector3D(0, -10, 0))}
+	projectileMap =
+	{ "Boulet de Canon",
+	 "Boule de feu",
+	 "Laser",
+	 "Balle"
 	};
 	selected = -1;
 
@@ -209,60 +208,64 @@ void Display::renderUI()
 
 	if (ImGui::TreeNode("Liste des projectiles"))
 	{
-		for (std::map<std::string, Particle>::iterator it = projectileMap.begin(); it != projectileMap.end(); ++it) {
-			if (ImGui::Selectable(it->first.c_str(), selected == std::distance(projectileMap.begin(), it))) {
+		for (std::vector<std::string>::iterator it = projectileMap.begin(); it != projectileMap.end(); ++it) {
+			if (ImGui::Selectable(it->c_str(), selected == std::distance(projectileMap.begin(), it))) {
 				selected = std::distance(projectileMap.begin(), it);
-				sprintf_s(projectileName, "%s", it->first.c_str());
+				sprintf_s(projectileName, "%s", it->c_str());
 			}
 		}
 		ImGui::TreePop();
 	}
 	if (ImGui::Button("Shoot"))
 	{
-		if (selected != -1)
-		{
-			//ShootProjectile(&physic, selected + 1);
-			Particle particle = NULL;
-			std::vector<ParticleForceGenerator*> generators;
-			ParticleGravity gravity;
-
-			switch (selected + 1) {
-			case 1:
-				std::cout << "vous avez choisi le boulet de canon" << std::endl;
-				particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
-				generators.push_back(new ParticleGravity());
-				break;
-
-			case 2:
-				std::cout << "vous avez choisi la boule de feu" << std::endl;
-				particle = Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
-				generators.push_back(new ParticleGravity(-5));
-				break;
-
-			case 3:
-				std::cout << "vous avez choisi le laser" << std::endl;
-				particle = Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
-				generators.push_back(new ParticleGravity(0));
-				break;
-
-			case 4:
-				std::cout << "vous avez choisi la balle" << std::endl;
-				particle = Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
-				generators.push_back(new ParticleGravity());
-				break;
-
-			default:
-				break;
-			}
-			
-			m_linkedPhysics->addParticle(particle, generators);
-		}
+		shootProjectile(selected);
 	}
 	ImGui::End();
 
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Display::shootProjectile(int projectileId)
+{
+	if (projectileId != -1)
+	{
+		Particle particle = NULL;
+		std::vector<ParticleForceGenerator*> generators;
+		ParticleGravity gravity;
+
+		switch (projectileId + 1) {
+		case 1:
+			std::cout << "vous avez choisi le boulet de canon" << std::endl;
+			particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+			generators.push_back(new ParticleGravity());
+			break;
+
+		case 2:
+			std::cout << "vous avez choisi la boule de feu" << std::endl;
+			particle = Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+			generators.push_back(new ParticleGravity(-5));
+			break;
+
+		case 3:
+			std::cout << "vous avez choisi le laser" << std::endl;
+			particle = Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
+			generators.push_back(new ParticleGravity(0));
+			break;
+
+		case 4:
+			std::cout << "vous avez choisi la balle" << std::endl;
+			particle = Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+			generators.push_back(new ParticleGravity());
+			break;
+
+		default:
+			break;
+		}
+
+		m_linkedPhysics->addParticle(particle, generators);
+	}
 }
 
 void Display::swapBuffers()
