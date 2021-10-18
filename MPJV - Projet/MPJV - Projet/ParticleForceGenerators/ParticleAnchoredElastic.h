@@ -13,6 +13,7 @@ private:
 	float m_restLength;
 
 public:
+	ParticleAnchoredElastic(Vector3D* anchorPoint, float k, float restLength) : m_other{ anchorPoint }, m_k{ k }, m_restLength{ restLength }  {};
 	void UpdateForce(Particle* particle, float deltaTime);
 
 };
