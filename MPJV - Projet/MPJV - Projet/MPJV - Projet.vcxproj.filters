@@ -102,6 +102,12 @@
     <ClCompile Include="ParticleContactGenerators\ParticleRod.cpp">
       <Filter>Fichiers sources\ParticleContactGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleContact.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleContactResolver.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -180,6 +186,12 @@
       <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
     <ClInclude Include="ParticleContactGenerators\ParticleRod.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleContact.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleContactResolver.h">
       <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
   </ItemGroup>
