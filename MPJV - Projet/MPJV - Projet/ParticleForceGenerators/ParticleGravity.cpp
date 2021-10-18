@@ -3,8 +3,7 @@
 
 void ParticleGravity::UpdateForce(Particle* particle, float deltaTime)
 {
-	std::cout << particle->to_string();
-	//particle->addForce(particle->getMass() * m_gravity);
+	particle->addForce(particle->getMass() * m_gravity);
 }
 
 std::string ParticleGravity::to_string()

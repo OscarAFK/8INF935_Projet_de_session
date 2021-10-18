@@ -152,7 +152,7 @@ Vector3D operator/(Vector3D vector, const float& value)
 
 std::string Vector3D::to_string() const
 {
-	char string[64];
+	char string[128];
 	sprintf_s(string, "(%f, %f, %f)", m_x, m_y, m_z);
 	return string;
 }

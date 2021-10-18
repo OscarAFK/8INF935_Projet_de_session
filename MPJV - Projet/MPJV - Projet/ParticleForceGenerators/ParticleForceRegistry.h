@@ -20,5 +20,4 @@ public:
 	void addEntry(Particle* particle, ParticleForceGenerator* forceGenerator);
 	void removeEntry(int index);
 	void updateForce(float deltaTime);
-	std::string to_string();
 };
