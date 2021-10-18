@@ -22,7 +22,7 @@ private:
 	unsigned int shader;
 
 	//Other variables
-	std::map<std::string, Particle> projectileMap;
+	std::vector<std::string> projectileMap;
 	_int64 selected;
 	char projectileName[64];
 	Physics* m_linkedPhysics;
@@ -43,6 +43,7 @@ public:
 	const bool windowShouldClose();
 	void setupView();
 	void renderUI();
+	void shootProjectile(int projectileId);
 	void swapBuffers();
 	void quitLibraries();
 	void terminalCommand();
