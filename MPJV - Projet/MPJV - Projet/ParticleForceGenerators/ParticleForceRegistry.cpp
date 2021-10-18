@@ -19,6 +19,6 @@ void ParticleForceRegistry::removeEntry(int index)
 void ParticleForceRegistry::updateForce(float deltaTime)
 {
 	for (std::size_t i = 0; i < m_registry.size(); ++i) {
-		m_registry[i].forceGenerator->UpdateForce(m_registry[i].particle, deltaTime);//0xC0000005 : Violation d'accès lors de la lecture de l'emplacement 0x0000000000000008.
+		m_registry[i].forceGenerator->UpdateForce(m_registry[i].particle, deltaTime);
 	}
 }
