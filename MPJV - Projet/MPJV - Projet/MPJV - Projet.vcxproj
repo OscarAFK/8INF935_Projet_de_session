@@ -162,6 +162,8 @@
     <ClCompile Include="MPJV - Projet.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleContactGenerators\ParticleCable.cpp" />
+    <ClCompile Include="ParticleContactGenerators\ParticleContact.cpp" />
+    <ClCompile Include="ParticleContactGenerators\ParticleContactResolver.cpp" />
     <ClCompile Include="ParticleContactGenerators\ParticleLink.cpp" />
     <ClCompile Include="ParticleContactGenerators\ParticleRod.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleAnchoredElastic.cpp" />
@@ -188,7 +190,9 @@
     <ClInclude Include="Display.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleCable.h" />
+    <ClInclude Include="ParticleContactGenerators\ParticleContact.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleContactGenerators.h" />
+    <ClInclude Include="ParticleContactGenerators\ParticleContactResolver.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleLink.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleRod.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleAnchoredElastic.h" />
