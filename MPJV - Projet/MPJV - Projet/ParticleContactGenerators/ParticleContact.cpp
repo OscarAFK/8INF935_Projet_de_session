@@ -44,4 +44,12 @@ void ParticleContact::resolveVelocity()
 
 void ParticleContact::resolveInterpretation()
 {
+    if (m_particles[1] != nullptr) {    //Si on définit une seconde particule, alors on calcule la distance dont chaque particule doit être déplacée
+        m_particles[0]->setPosition(m_particles[0]->getPosition() + (m_particles[1]->getMass() * (m_particles[0]->getInverseMass() + m_particles[1]->getInverseMass())) * m_penetration * m_contactNormal);
+        m_particles[1]->setPosition(m_particles[1]->getPosition()+(-m_particles[0]->getMass()*(m_particles[0]->getInverseMass()+ m_particles[1]->getInverseMass()))*m_penetration*m_contactNormal);
+    }
+    else {  //Sinon on déplace juste la première particule de toute la distance d'interpénétration
+        m_particles[0]->setPosition(m_particles[0]->getPosition() + m_penetration * m_contactNormal);
+    }
+    
 }
