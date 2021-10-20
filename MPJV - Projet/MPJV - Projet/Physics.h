@@ -5,7 +5,13 @@
 #include <memory>
 #include <chrono>
 #include "ParticleForceGenerators/ParticleForceRegistry.h"
+#include "ParticleForceGenerators/ParticleAnchoredElastic.h"
+#include "ParticleForceGenerators/ParticleAnchoredSpring.h"
+#include "ParticleForceGenerators/ParticleBuoyancy.h"
+#include "ParticleForceGenerators/ParticleDrag.h"
+#include "ParticleForceGenerators/ParticleElastic.h"
 #include "ParticleForceGenerators/ParticleGravity.h"
+#include "ParticleForceGenerators/ParticleSpring.h"
 
 class Physics
 {

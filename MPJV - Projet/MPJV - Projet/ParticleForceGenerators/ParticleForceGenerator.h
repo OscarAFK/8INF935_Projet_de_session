@@ -5,5 +5,4 @@ class ParticleForceGenerator
 {
 public :
 	virtual void UpdateForce(Particle* particle, float deltaTime) = 0;
-	virtual std::string to_string() = 0;
 };
