@@ -20,9 +20,9 @@ void ParticleContact::resolve(float duration)
 float ParticleContact::calculateSeperatingVelocity()
 {
     if(m_particles[1]!=nullptr)
-        return Vector3D::scalarProduct((m_particles[0]->getVelocity()- m_particles[1]->getVelocity()), m_contactNormal);
+        return -m_restitution * Vector3D::scalarProduct((m_particles[0]->getVelocity()- m_particles[1]->getVelocity()), m_contactNormal);
     else
-        return Vector3D::scalarProduct(m_particles[0]->getVelocity(), m_contactNormal);
+        return -m_restitution * Vector3D::scalarProduct(m_particles[0]->getVelocity(), m_contactNormal);
 }
 
 void ParticleContact::resolveVelocity()
@@ -31,7 +31,7 @@ void ParticleContact::resolveVelocity()
     if (m_particles[1] != nullptr) {    //Si on a définit une seconde particule, on l'utilise pour calculer k et on change sa velocité
          k = ((m_restitution + 1) * Vector3D::scalarProduct(m_particles[0]->getVelocity() - m_particles[1]->getVelocity(), m_contactNormal))
             / (m_particles[0]->getInverseMass() + m_particles[1]->getInverseMass());
-         m_particles[1]->setVelocity(m_particles[1]->getVelocity() - k * m_contactNormal * m_particles[1]->getInverseMass());
+         m_particles[1]->setVelocity(m_particles[1]->getVelocity() + k * m_contactNormal * m_particles[1]->getInverseMass());
     }
     else {      //Sinon on calcule k en considérant l'objet de contact comme ayant une vitesse nulle et une masse inversée nulle (=masse infinie)
         k = ((m_restitution + 1) * Vector3D::scalarProduct(m_particles[0]->getVelocity(), m_contactNormal))
