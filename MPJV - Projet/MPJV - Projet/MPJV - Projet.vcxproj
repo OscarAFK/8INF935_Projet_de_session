@@ -161,6 +161,7 @@
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="MPJV - Projet.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleContactGenerators\NaiveParticleContactGenerator.cpp" />
     <ClCompile Include="ParticleContactGenerators\ParticleCable.cpp" />
     <ClCompile Include="ParticleContactGenerators\ParticleContact.cpp" />
     <ClCompile Include="ParticleContactGenerators\ParticleContactResolver.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleContactGenerators\NaiveParticleContactGenerator.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleCable.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleContact.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleContactGenerator.h" />
