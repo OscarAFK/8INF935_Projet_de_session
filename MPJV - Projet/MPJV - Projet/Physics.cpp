@@ -4,6 +4,8 @@
 #pragma region Constructors
 Physics::Physics()
 {
+    particleContactResolver = ParticleContactResolver();
+    particleContactGenerator = NaiveParticleContactGenerator(50,getAllParticle());
 }
 
 #pragma endregion
@@ -51,13 +53,23 @@ std::vector<Particle>* Physics::getAllParticle()
 
 #pragma region Methods
 
-void Physics::update(float t, float dt)
+void Physics::updateState()
 {
     previousState = currentState;
+    particleContactGenerator.setVectorParticle(getAllParticle());
+}
+
+void Physics::update(float t, float dt)
+{
+    updateState();
     currentState.m_particleForceRegistry.updateForce(dt);
     for (std::vector<Particle>::iterator it = currentState.m_particles.begin(); it != currentState.m_particles.end(); ++it) {
         it->integrate(dt);
     }
+    ParticleContact particleContactList[100];
+    int nbContactsCrees = particleContactGenerator.addContact(particleContactList,100);
+    //particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);
+
 }
 
 std::vector<Particle>* Physics::getIntermediateParticle(const float alpha)

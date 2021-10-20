@@ -1,4 +1,5 @@
 #include "ParticleContactResolver.h"
+#include <iostream>
 
 void ParticleContactResolver::resolveContacts(ParticleContact* contactArray, unsigned int numContact, float duration)
 {
@@ -8,7 +9,9 @@ void ParticleContactResolver::resolveContacts(ParticleContact* contactArray, uns
 	do {
 		ParticleContact *contactToResolve = nullptr;
 		for (int i = 0; i < numContact; i++) {
+			std::cout << "Iteration no : " << i << std::endl;
 			float currentVel = contactArray[i].calculateSeperatingVelocity();
+			std::cout << "Separating Velocity calculée" << std::endl;
 			if (currentVel < smallestRelativeVelocity) {
 				smallestRelativeVelocity = currentVel;
 				contactToResolve = &contactArray[i];

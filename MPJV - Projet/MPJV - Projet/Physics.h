@@ -12,6 +12,8 @@
 #include "ParticleForceGenerators/ParticleElastic.h"
 #include "ParticleForceGenerators/ParticleGravity.h"
 #include "ParticleForceGenerators/ParticleSpring.h"
+#include "ParticleContactGenerators/ParticleContactResolver.h"
+#include "ParticleContactGenerators/NaiveParticleContactGenerator.h"
 
 class Physics
 {
@@ -27,13 +29,15 @@ private:
 	
 
 	clock_t timeOfLastUpdate = clock();
-
+	State currentState;
+	State previousState;
 	
+	ParticleContactResolver particleContactResolver;
+	NaiveParticleContactGenerator particleContactGenerator;
 
 public:
 
-	State currentState;
-	State previousState;
+	
 
 	Physics();
 	~Physics() = default;
@@ -45,5 +49,6 @@ public:
 	Particle* getParticle(int id);
 	std::vector<Particle>* getAllParticle();
 	std::vector<Particle>* getIntermediateParticle(const float alpha);
+	void updateState();
 	void update(float t, float dt);
 };

@@ -1,3 +1,4 @@
+#pragma once
 #include "../Particle.h"
 #include "../Vector3D.h"
 
@@ -6,6 +7,7 @@ class ParticleContact
 public:	
 
 	ParticleContact(Particle *p1, Particle *p2, float restitution, float penetration);
+	ParticleContact() = default;
 	~ParticleContact() = default;
 
 	void resolve(float duration);

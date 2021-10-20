@@ -57,7 +57,7 @@ void Display::drawPhysics()
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
 	
 	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
-		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 10, 4);
+		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
 	}
 }
 
@@ -66,7 +66,7 @@ void Display::drawIntermediatePhysics(const float alpha)
 	auto listOfParticles = m_linkedPhysics->getIntermediateParticle(alpha);
 
 	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
-		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 10, 4);
+		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
 	}
 }
 
