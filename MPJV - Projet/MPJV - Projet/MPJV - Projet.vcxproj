@@ -191,7 +191,7 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleCable.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleContact.h" />
-    <ClInclude Include="ParticleContactGenerators\ParticleContactGenerators.h" />
+    <ClInclude Include="ParticleContactGenerators\ParticleContactGenerator.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleContactResolver.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleLink.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleRod.h" />

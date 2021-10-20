@@ -6,10 +6,10 @@ class ParticleCable : public ParticleLink
 public:
 	// A contact will be generated if the distance
 	//between particles is larger than maxLength
-	float maxLength;
+	float m_maxLength;
 
 	//bounciness of the cable
-	float restitution;
+	float m_restitution;
 
 	unsigned int addContact(ParticleContact* contact, unsigned int limit) const;
 };

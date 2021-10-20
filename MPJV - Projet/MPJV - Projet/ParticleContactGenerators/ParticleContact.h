@@ -12,7 +12,6 @@ public:
 	
 	float calculateSeperatingVelocity();
 
-private:
 	Particle* m_particles[2];
 
 	//elasticness
@@ -23,6 +22,7 @@ private:
 
 	Vector3D m_contactNormal;
 
+private:
 	void resolveVelocity();
 
 	void resolveInterpretation();

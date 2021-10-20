@@ -179,9 +179,6 @@
     <ClInclude Include="ParticleContactGenerators\ParticleCable.h">
       <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleContactGenerators\ParticleContactGenerators.h">
-      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
-    </ClInclude>
     <ClInclude Include="ParticleContactGenerators\ParticleLink.h">
       <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
@@ -192,6 +189,9 @@
       <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
     <ClInclude Include="ParticleContactGenerators\ParticleContactResolver.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleContactGenerator.h">
       <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
   </ItemGroup>
