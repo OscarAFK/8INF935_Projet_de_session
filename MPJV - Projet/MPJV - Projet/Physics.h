@@ -19,7 +19,7 @@ class Physics
 {
 	//The state of the world at a time
 	struct State {
-		std::vector<Particle> m_particles;
+		std::vector<Particle*> m_particles;
 
 		ParticleForceRegistry m_particleForceRegistry;
 	};
@@ -43,12 +43,12 @@ public:
 	~Physics() = default;
 
 	void addParticle(float invertedMass = 0.0f, float damping = 0.0f, Vector3D position = Vector3D(), Vector3D velocity = Vector3D(), Vector3D acceleration = Vector3D());
-	void addParticle(Particle particle);
-	void addParticle(Particle particle, std::vector<ParticleForceGenerator*> generators);
+	void addParticle(Particle*  particle);
+	void addParticle(Particle* particle, std::vector<ParticleForceGenerator*> generators);
 	void removeParticle(int id);
 	Particle* getParticle(int id);
-	std::vector<Particle>* getAllParticle();
-	std::vector<Particle>* getIntermediateParticle(const float alpha);
+	std::vector<Particle*> getAllParticle();
+	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void updateState();
 	void update(float t, float dt);
 };

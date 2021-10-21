@@ -17,6 +17,7 @@ public:
 	//Constructors
 	Particle(float inverseMass = 0.0f, float damping = 0.0f, Vector3D position = Vector3D(), Vector3D velocity = Vector3D(), Vector3D acceleration = Vector3D());
 	Particle(Vector3D position = Vector3D());
+	Particle(Particle * p);
 	~Particle();
 
 	//Accessors

@@ -7,7 +7,6 @@ class ParticleContact
 public:	
 
 	ParticleContact(Particle *p1, Particle *p2, float restitution, float penetration);
-	ParticleContact() = default;
 	~ParticleContact() = default;
 
 	void resolve(float duration);
@@ -23,6 +22,8 @@ public:
 	float m_penetration;
 
 	Vector3D m_contactNormal;
+
+	bool operator==(const ParticleContact c);
 
 private:
 	void resolveVelocity();

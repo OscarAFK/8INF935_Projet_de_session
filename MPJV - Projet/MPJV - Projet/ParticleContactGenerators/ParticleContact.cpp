@@ -1,8 +1,11 @@
 #include "ParticleContact.h"
+#include <iostream>
 
 ParticleContact::ParticleContact(Particle* p1, Particle *p2, float restitution, float penetration) : 
-                                m_particles{ p1,p2 }, m_restitution(restitution), m_penetration(penetration)
+                                m_restitution(restitution), m_penetration(penetration)
 {
+    m_particles[0] = p1;
+    m_particles[1] = p2;
     if (p2 != nullptr) {
         m_contactNormal = (m_particles[0]->getPosition() - m_particles[1]->getPosition()).norm();
     }
@@ -23,6 +26,14 @@ float ParticleContact::calculateSeperatingVelocity()
         return -m_restitution * Vector3D::scalarProduct((m_particles[0]->getVelocity()- m_particles[1]->getVelocity()), m_contactNormal);
     else
         return -m_restitution * Vector3D::scalarProduct(m_particles[0]->getVelocity(), m_contactNormal);
+}
+
+bool ParticleContact::operator==(const ParticleContact c)
+{
+    if ((c.m_particles[0] == m_particles[0] && c.m_particles[1] == m_particles[1]) ||       //Si le contact pointe vers deux particules identiques
+        (c.m_particles[0] == m_particles[1] && c.m_particles[1] == m_particles[0]))         //dans n'importe quel ordre, alors il est identique
+        return true;
+    else return false;
 }
 
 void ParticleContact::resolveVelocity()
