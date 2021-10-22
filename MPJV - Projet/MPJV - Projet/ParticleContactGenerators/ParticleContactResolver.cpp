@@ -11,12 +11,15 @@ void ParticleContactResolver::resolveContacts(std::vector<ParticleContact*> cont
 		for (int i = 0; i < contactArray.size(); i++) {
 			
 			float currentVel = contactArray[i]->calculateSeperatingVelocity();
-
 			if (currentVel < smallestRelativeVelocity) {
 				smallestRelativeVelocity = currentVel;
 				contactToResolve = contactArray[i];
 			}
 		}
-		contactToResolve->resolve(duration);
-	} while (m_iteration < numContact * 2 && smallestRelativeVelocity < 0);
+		if (contactToResolve != nullptr)
+			contactToResolve->resolve(duration);
+		else
+			break;
+	} while (m_iteration < numContact * 2);
+
 }

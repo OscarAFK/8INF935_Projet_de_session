@@ -5,7 +5,7 @@
 Physics::Physics()
 {
     particleContactResolver = ParticleContactResolver();
-    particleContactGenerator = NaiveParticleContactGenerator(50,getAllParticle());
+    particleContactGenerator = NaiveParticleContactGenerator(100,getAllParticle());
 }
 
 #pragma endregion
@@ -74,10 +74,7 @@ void Physics::update(float t, float dt)
     }
     std::vector<ParticleContact*> particleContactList;
     int nbContactsCrees = particleContactGenerator.addContact(&particleContactList,100);
-    std::cout << "size de particleContactList: " << particleContactList.size() << std::endl;
-    std::cout << "size de nbContactsCrees: " << nbContactsCrees << std::endl;
     particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);
-
 }
 
 std::vector<Particle*> Physics::getIntermediateParticle(const float alpha)

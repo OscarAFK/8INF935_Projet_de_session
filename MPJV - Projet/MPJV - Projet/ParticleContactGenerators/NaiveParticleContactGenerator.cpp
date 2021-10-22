@@ -23,7 +23,7 @@ unsigned int NaiveParticleContactGenerator::addContact(std::vector<ParticleConta
 			float distance = (m_particles[i]->getPosition() - m_particles[j]->getPosition()).Vector3D::norm();
 			if (distance < m_radius) {
 
-				ParticleContact* c = new ParticleContact(m_particles[i], m_particles[j], 0, m_radius - distance);
+				ParticleContact* c = new ParticleContact(m_particles[i], m_particles[j], 1, m_radius - distance);
 				
 				//On vérifie si le contact n'existe pas déjà
 				bool contactAlreadyExist = false;
