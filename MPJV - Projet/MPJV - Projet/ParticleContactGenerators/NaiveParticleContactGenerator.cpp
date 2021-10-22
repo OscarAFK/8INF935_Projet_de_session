@@ -16,9 +16,6 @@ unsigned int NaiveParticleContactGenerator::addContact(std::vector<ParticleConta
 	int iteration=0;
 	for (int i = 0; i < m_particles.size(); i++) {
 		for (int j = 0; j < m_particles.size(); j++) {
-			if (iteration > limit) {
-				return limit;
-			}
 			if (i == j) continue;
 			float distance = (m_particles[i]->getPosition() - m_particles[j]->getPosition()).Vector3D::norm();
 			if (distance < m_radius) {

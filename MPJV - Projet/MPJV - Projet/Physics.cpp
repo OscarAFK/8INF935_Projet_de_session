@@ -35,6 +35,7 @@ void Physics::removeParticle(int index)
 {
     currentState.m_particles.erase(currentState.m_particles.begin() + index);
 }
+
 #pragma endregion
 
 #pragma region Accessors
@@ -59,8 +60,10 @@ std::vector<Particle*> Physics::getAllParticle()
 
 void Physics::updateState()
 {
+    previousState.m_particles.clear();
+
     for (int i = 0; i < previousState.m_particles.size(); i++)
-        previousState.m_particles[i] = new Particle(currentState.m_particles[i]);
+        previousState.m_particles.push_back(new Particle(currentState.m_particles[i]));
     previousState = currentState;
     particleContactGenerator.setVectorParticle(getAllParticle());
 }
@@ -75,6 +78,10 @@ void Physics::update(float t, float dt)
     std::vector<ParticleContact*> particleContactList;
     int nbContactsCrees = particleContactGenerator.addContact(&particleContactList,100);
     particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);
+    
+    for (int i = 0; i < particleContactList.size(); i++) {
+        delete particleContactList[i];
+    }
 }
 
 std::vector<Particle*> Physics::getIntermediateParticle(const float alpha)

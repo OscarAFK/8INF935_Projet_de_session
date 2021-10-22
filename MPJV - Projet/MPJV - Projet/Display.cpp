@@ -68,6 +68,10 @@ void Display::drawIntermediatePhysics(const float alpha)
 	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
 		drawCircle((*it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
 	}
+
+	for (int i = 0; i < listOfParticles.size(); i++) {
+		delete listOfParticles[i];
+	}
 }
 
 void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction récupérée sur stackOverflow à cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
