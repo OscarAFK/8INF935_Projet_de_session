@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef VECTOR3D_H
-#define VECTOR3D_H
-
 #include <cmath>
 #include <string>
 
@@ -24,6 +21,7 @@ class Vector3D
 		void setZ(const float value);
 
 		Vector3D normalize();
+		float norm();
 
 		static float scalarProduct(Vector3D v1, Vector3D v2);
 		static Vector3D dotProduct(Vector3D v1, Vector3D v2);
@@ -45,4 +43,3 @@ class Vector3D
 
 		std::string to_string() const;
 };
-#endif
