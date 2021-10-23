@@ -4,6 +4,8 @@
 class ParticleLink : public ParticleContactGenerator
 {
 public:
+	ParticleLink(Particle* p1, Particle* p2);
+
 	//Linked particles
 	Particle* m_particles[2];
 
