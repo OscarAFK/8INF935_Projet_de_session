@@ -39,7 +39,7 @@ private:
 
 public:
 
-	
+	Particle* particle;
 
 	Physics();
 	~Physics() = default;

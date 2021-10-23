@@ -201,7 +201,7 @@ void Display::renderUI()
 {
 	//RENDER UI
 
-		//Create new ImGui frame
+	//Create new ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
@@ -226,6 +226,23 @@ void Display::renderUI()
 	}
 	ImGui::End();
 
+	ImGui::Begin("Blob");
+	if (ImGui::Button("Créer un blob"))
+	{
+		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));;
+		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));;
+		std::vector<ParticleForceGenerator*> forceGenerators;
+		m_linkedPhysics->particle = particle2;
+		forceGenerators.push_back(new ParticleSpring(particle1, 2, 150));
+		m_linkedPhysics->addParticle(particle1);
+		m_linkedPhysics->addParticle(particle2, forceGenerators);
+		
+	}
+	ImGui::End();
+	if (m_linkedPhysics->particle != nullptr)
+	{
+		std::cout << m_linkedPhysics->particle->getPosition().to_string() << std::endl;
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
