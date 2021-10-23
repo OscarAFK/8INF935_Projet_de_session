@@ -1,27 +1,69 @@
 #include <stdio.h>
 #include <iostream>
+#include <chrono>
+#include <thread>
+
+
 #include "Particle.h"
+#include "Physics.h"
+#include "Display.h"
+
 
 int main()
 {
-    float deltaTime = 0.01f;
 
-    std::string input;
-    Particle p1 = Particle();
-    Particle p2 = Particle(0, Vector3D(1,2,3), Vector3D(1, 2, 3), Vector3D(1, 2, 3));
+	float dt = 0.01f;
+	float t = 0;
 
-    std::cout << p1.to_string() << std::endl;
-    std::cout << p2.to_string() << std::endl;
-    
-    bool run = true;
-    while (run)
-    {
-        p2.integrate(deltaTime);
-        std::cout << p2.to_string() << std::endl;
-        //printf(position.to_string().c_str());*
+	float currentTime = clock();
+	float accumulator = 0.0;
+	
 
-    }
+	
+	//Initializing physics and display
+	Physics physic = Physics();
+	
+	Display display = Display(&physic);
+
+	display.initDisplayLib();
+	
+	while (!display.windowShouldClose()) {
+		
+		display.setupView();
+		
+
+		//RENDER PHYSICS
+		float newTime = clock();
+		float frameTime = (newTime - currentTime) / CLOCKS_PER_SEC;
+		if (frameTime > 0.25)
+			frameTime = 0.25;
+		currentTime = newTime;
+
+		accumulator += frameTime;
+
+		while (accumulator >= dt)
+		{
+			
+			//Update physics
+			physic.update(t, dt);
+			t += dt;
+			accumulator -= dt;
+		}
+
+		const float alpha = accumulator / dt;
+
+		display.drawIntermediatePhysics(alpha);
+		
+		display.renderUI();
+
+		display.swapBuffers();
+	}
+	
+	display.quitLibraries();
+
+	exit(EXIT_SUCCESS);
 }
+
 
 
 
