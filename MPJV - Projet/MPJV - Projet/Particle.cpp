@@ -2,14 +2,8 @@
 
 #pragma region Constructors
 
-Particle::Particle(float inverseMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration) :
-	m_inverseMass(inverseMass), m_damping(damping), m_position(position), m_velocity(velocity), m_acceleration(acceleration)
-{
-	m_forces = Vector3D(0, 0, 0);
-}
-
-Particle::Particle(Vector3D position) :
-	m_inverseMass(0), m_damping(0), m_position(position), m_velocity(0), m_acceleration(0)
+Particle::Particle(float invertedMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration) :
+	m_inverseMass(invertedMass), m_damping(damping), m_position(position), m_velocity(velocity), m_acceleration(acceleration)
 {
 }
 
@@ -19,7 +13,7 @@ Particle::~Particle() {}
 
 #pragma region Accessors
 
-float Particle::getInverseMass() const
+float Particle::getInvertedMass() const
 {
 	return m_inverseMass;
 }
@@ -49,16 +43,11 @@ Vector3D Particle::getAcceleration() const
 	return m_acceleration;
 }
 
-Vector3D Particle::getForces() const
-{
-	return m_forces;
-}
-
 #pragma endregion
 
 #pragma region Mutators
 
-void Particle::setInverseMass(const float value)
+void Particle::setInvertedMass(const float value)
 {
 	m_inverseMass = value;
 }
@@ -88,25 +77,13 @@ void Particle::setAcceleration(const Vector3D value)
 	m_acceleration = value;
 }
 
-void Particle::setForces(const Vector3D value)
-{
-	m_forces = value;
-}
-
 #pragma endregion
 
 #pragma region Methods
 void Particle::integrate(float deltaTime)
 {
-	m_acceleration = m_inverseMass * m_forces;
 	m_position = m_position + m_velocity * deltaTime + 0.5 * m_acceleration * deltaTime * deltaTime;
-	m_velocity = m_velocity * m_damping + m_acceleration * deltaTime;
-	m_forces = Vector3D(0, 0, 0);
-}
-
-void Particle::addForce(const Vector3D value)
-{
-	m_forces += value;
+	m_velocity = m_velocity + m_acceleration * deltaTime;
 }
 
 #pragma endregion
@@ -121,6 +98,7 @@ bool Particle::operator==(const Particle v)
 	}
 	return false;
 }
+
 #pragma endregion
 
 #pragma region Utils
@@ -128,7 +106,7 @@ bool Particle::operator==(const Particle v)
 std::string Particle::to_string() const
 {
 	char string[256];
-	sprintf_s(string, "Mass : %f\nPosition%s\nVelocity%s\nAcceleration%s\n", 1/m_inverseMass,
+	sprintf_s(string, "Inverted Mass : %f\nPosition%s\nVelocity%s\nAcceleration%s\n", m_inverseMass,
 																					  m_position.to_string().c_str(),
 																					  m_velocity.to_string().c_str(),
 																					  m_acceleration.to_string().c_str());
