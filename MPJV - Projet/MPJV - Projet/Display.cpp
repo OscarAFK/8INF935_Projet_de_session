@@ -231,8 +231,7 @@ void Display::renderUI()
 	{
 		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
 		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
-		ParticleCable* p = new ParticleCable(particle1, particle2, 200, 0.5f);
-		m_linkedPhysics->getParticleContactGenerator()->push_back();
+		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle1, particle2, 300, 0.5f));
 		std::vector<ParticleForceGenerator*> forceGenerators1;
 		std::vector<ParticleForceGenerator*> forceGenerators2;
 		forceGenerators2.push_back(new ParticleSpring(particle1, 2, 50));

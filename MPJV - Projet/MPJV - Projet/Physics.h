@@ -36,7 +36,7 @@ private:
 	
 	ParticleContactResolver particleContactResolver;
 	NaiveParticleContactGenerator naiveParticleContactGenerator;
-	std::vector<ParticleContactGenerator> particleContactGenerator;
+	std::vector<ParticleContactGenerator*> particleContactGenerator;
 
 public:
 
@@ -50,7 +50,7 @@ public:
 	Particle* getParticle(int id);
 	std::vector<Particle*> getAllParticle();
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
-	std::vector<ParticleContactGenerator>* getParticleContactGenerator();
+	void addParticleContactGenerator(ParticleContactGenerator* contactGenerator);
 	void updateState();
 	void update(float t, float dt);
 };

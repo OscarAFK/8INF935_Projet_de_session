@@ -80,7 +80,7 @@ void Physics::update(float t, float dt)
     std::vector<ParticleContact*> particleContactList;                                          //Création des contacts
     int nbContactsCrees = naiveParticleContactGenerator.addContact(&particleContactList,100);
     for (int i = 0; i < particleContactGenerator.size(); i++) {
-        nbContactsCrees+= particleContactGenerator[i].addContact(&particleContactList, 100);
+        nbContactsCrees+= particleContactGenerator[i]->addContact(&particleContactList, 100);
     }
     particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);          //Resolution des contacts
     for (int i = 0; i < particleContactList.size(); i++) {                                      //Nettoyage
@@ -97,9 +97,9 @@ std::vector<Particle*> Physics::getIntermediateParticle(const float alpha)
     return intermediateParticles;
 }
 
-std::vector<ParticleContactGenerator>* Physics::getParticleContactGenerator()
+void Physics::addParticleContactGenerator(ParticleContactGenerator* contactGenerator)
 {
-    return &particleContactGenerator;
+    particleContactGenerator.push_back(contactGenerator);
 }
 
 #pragma endregion

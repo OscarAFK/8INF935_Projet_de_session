@@ -1,4 +1,5 @@
 #include "ParticleCable.h"
+#include <iostream>
 
 ParticleCable::ParticleCable(Particle* p1, Particle* p2, float maxLength, float restitution)
 {
@@ -9,6 +10,7 @@ ParticleCable::ParticleCable(Particle* p1, Particle* p2, float maxLength, float 
 }
 unsigned int ParticleCable::addContact(std::vector<ParticleContact*>* contact, unsigned int limit)
 {	
+	std::cout << currentLength() << std::endl;
 	if (currentLength() > m_maxLength) {
 		contact->push_back(new ParticleContact(m_particles[0], m_particles[1], 0, currentLength() - m_maxLength));
 		return 1;
