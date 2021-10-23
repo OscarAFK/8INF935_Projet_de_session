@@ -11,7 +11,7 @@ void NaiveParticleContactGenerator::setVectorParticle(std::vector<Particle*> par
 	m_particles = particles;
 }
 
-unsigned int NaiveParticleContactGenerator::addContact(std::vector<ParticleContact*>* contact, unsigned int  limit)
+unsigned int NaiveParticleContactGenerator::addContact(std::vector<ParticleContact*>* contact, unsigned int  limit) 
 {
 	int iteration=0;
 	for (int i = 0; i < m_particles.size(); i++) {

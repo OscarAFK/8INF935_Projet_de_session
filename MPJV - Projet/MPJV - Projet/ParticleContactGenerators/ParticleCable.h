@@ -12,6 +12,6 @@ public:
 	//bounciness of the cable
 	float m_restitution;
 
-	unsigned int addContact(std::vector<ParticleContact*>* contact, unsigned int limit) const;
+	unsigned int addContact(std::vector<ParticleContact*>* contact, unsigned int limit);
 
 };
