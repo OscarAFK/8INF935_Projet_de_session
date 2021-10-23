@@ -12,3 +12,5 @@ unsigned int ParticleRod::addContact(std::vector<ParticleContact*>* contact, uns
 
 	return 0;
 }
+
+ParticleRod::ParticleRod(Particle* p1, Particle* p2, int length) : ParticleLink(p1,p2), m_length(length) {}
