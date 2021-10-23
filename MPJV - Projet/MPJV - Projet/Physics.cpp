@@ -5,7 +5,7 @@
 Physics::Physics()
 {
     particleContactResolver = ParticleContactResolver();
-    particleContactGenerator = NaiveParticleContactGenerator(100,getAllParticle());
+    naiveParticleContactGenerator = NaiveParticleContactGenerator(100,getAllParticle());
 }
 
 #pragma endregion
@@ -65,7 +65,7 @@ void Physics::updateState()
     for (int i = 0; i < previousState.m_particles.size(); i++)
         previousState.m_particles.push_back(new Particle(currentState.m_particles[i]));
     previousState = currentState;
-    particleContactGenerator.setVectorParticle(getAllParticle());
+    naiveParticleContactGenerator.setVectorParticle(getAllParticle());
 }
 
 void Physics::update(float t, float dt)
@@ -75,11 +75,15 @@ void Physics::update(float t, float dt)
     for (std::vector<Particle*>::iterator it = currentState.m_particles.begin(); it != currentState.m_particles.end(); ++it) {
         (*it)->integrate(dt);
     }
-    std::vector<ParticleContact*> particleContactList;
-    int nbContactsCrees = particleContactGenerator.addContact(&particleContactList,100);
-    particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);
-    
-    for (int i = 0; i < particleContactList.size(); i++) {
+
+    //GESTION DES CONTACTS
+    std::vector<ParticleContact*> particleContactList;                                          //Création des contacts
+    int nbContactsCrees = naiveParticleContactGenerator.addContact(&particleContactList,100);
+    for (int i = 0; i < particleContactGenerator.size(); i++) {
+        nbContactsCrees+= particleContactGenerator[i].addContact(&particleContactList, 100);
+    }
+    particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);          //Resolution des contacts
+    for (int i = 0; i < particleContactList.size(); i++) {                                      //Nettoyage
         delete particleContactList[i];
     }
 }

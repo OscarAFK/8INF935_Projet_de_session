@@ -13,6 +13,7 @@
 #include "ParticleForceGenerators/ParticleGravity.h"
 #include "ParticleForceGenerators/ParticleSpring.h"
 #include "ParticleContactGenerators/ParticleContactResolver.h"
+#include "ParticleContactGenerators/ParticleContactGenerator.h"
 #include "ParticleContactGenerators/NaiveParticleContactGenerator.h"
 
 class Physics
@@ -33,7 +34,8 @@ private:
 	State previousState;
 	
 	ParticleContactResolver particleContactResolver;
-	NaiveParticleContactGenerator particleContactGenerator;
+	NaiveParticleContactGenerator naiveParticleContactGenerator;
+	std::vector<ParticleContactGenerator> particleContactGenerator;
 
 public:
 
