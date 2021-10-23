@@ -229,20 +229,18 @@ void Display::renderUI()
 	ImGui::Begin("Blob");
 	if (ImGui::Button("Créer un blob"))
 	{
-		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));;
-		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));;
-		std::vector<ParticleForceGenerator*> forceGenerators;
-		m_linkedPhysics->particle = particle2;
-		forceGenerators.push_back(new ParticleSpring(particle1, 2, 150));
-		m_linkedPhysics->addParticle(particle1);
-		m_linkedPhysics->addParticle(particle2, forceGenerators);
+		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+		m_linkedPhysics->getParticleContactGenerator()->push_back(new ParticleCable(particle1, particle2, 200, 0.5f));
+		std::vector<ParticleForceGenerator*> forceGenerators1;
+		std::vector<ParticleForceGenerator*> forceGenerators2;
+		forceGenerators2.push_back(new ParticleSpring(particle1, 2, 50));
+		forceGenerators1.push_back(new ParticleSpring(particle2, 2, 50));
+		m_linkedPhysics->addParticle(particle1, forceGenerators1);
+		m_linkedPhysics->addParticle(particle2, forceGenerators2);
 		
 	}
 	ImGui::End();
-	if (m_linkedPhysics->particle != nullptr)
-	{
-		std::cout << m_linkedPhysics->particle->getPosition().to_string() << std::endl;
-	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

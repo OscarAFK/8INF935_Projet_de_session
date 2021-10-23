@@ -15,6 +15,7 @@
 #include "ParticleContactGenerators/ParticleContactResolver.h"
 #include "ParticleContactGenerators/ParticleContactGenerator.h"
 #include "ParticleContactGenerators/NaiveParticleContactGenerator.h"
+#include "ParticleContactGenerators/ParticleCable.h"
 
 class Physics
 {
@@ -39,8 +40,6 @@ private:
 
 public:
 
-	Particle* particle;
-
 	Physics();
 	~Physics() = default;
 
@@ -51,6 +50,7 @@ public:
 	Particle* getParticle(int id);
 	std::vector<Particle*> getAllParticle();
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
+	std::vector<ParticleContactGenerator>* getParticleContactGenerator();
 	void updateState();
 	void update(float t, float dt);
 };

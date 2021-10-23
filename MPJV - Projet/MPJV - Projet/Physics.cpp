@@ -97,4 +97,9 @@ std::vector<Particle*> Physics::getIntermediateParticle(const float alpha)
     return intermediateParticles;
 }
 
+std::vector<ParticleContactGenerator>* Physics::getParticleContactGenerator()
+{
+    return &particleContactGenerator;
+}
+
 #pragma endregion
