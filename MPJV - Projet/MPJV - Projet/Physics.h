@@ -13,13 +13,14 @@
 #include "ParticleForceGenerators/ParticleGravity.h"
 #include "ParticleForceGenerators/ParticleSpring.h"
 #include "ParticleContactGenerators/ParticleContactResolver.h"
+#include "ParticleContactGenerators/ParticleContactGenerator.h"
 #include "ParticleContactGenerators/NaiveParticleContactGenerator.h"
 
 class Physics
 {
 	//The state of the world at a time
 	struct State {
-		std::vector<Particle> m_particles;
+		std::vector<Particle*> m_particles;
 
 		ParticleForceRegistry m_particleForceRegistry;
 	};
@@ -33,7 +34,8 @@ private:
 	State previousState;
 	
 	ParticleContactResolver particleContactResolver;
-	NaiveParticleContactGenerator particleContactGenerator;
+	NaiveParticleContactGenerator naiveParticleContactGenerator;
+	std::vector<ParticleContactGenerator> particleContactGenerator;
 
 public:
 
@@ -43,12 +45,12 @@ public:
 	~Physics() = default;
 
 	void addParticle(float invertedMass = 0.0f, float damping = 0.0f, Vector3D position = Vector3D(), Vector3D velocity = Vector3D(), Vector3D acceleration = Vector3D());
-	void addParticle(Particle particle);
-	void addParticle(Particle particle, std::vector<ParticleForceGenerator*> generators);
+	void addParticle(Particle*  particle);
+	void addParticle(Particle* particle, std::vector<ParticleForceGenerator*> generators);
 	void removeParticle(int id);
 	Particle* getParticle(int id);
-	std::vector<Particle>* getAllParticle();
-	std::vector<Particle>* getIntermediateParticle(const float alpha);
+	std::vector<Particle*> getAllParticle();
+	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void updateState();
 	void update(float t, float dt);
 };

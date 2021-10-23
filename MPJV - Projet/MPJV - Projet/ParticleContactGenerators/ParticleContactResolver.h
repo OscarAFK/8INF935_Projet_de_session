@@ -1,5 +1,6 @@
 #pragma once
 #include "ParticleContact.h"
+#include <vector>
 
 class ParticleContactResolver
 {
@@ -10,7 +11,7 @@ public:
 
 	ParticleContactResolver() = default;
 
-	void resolveContacts(ParticleContact* contactArray,
+	void resolveContacts(std::vector<ParticleContact*> contactArray,
 						unsigned int numContact,
 						float duration);
 };

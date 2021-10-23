@@ -56,8 +56,8 @@ void Display::drawPhysics()
 {
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
 	
-	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
-		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
+	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
+		drawCircle((*it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
 	}
 }
 
@@ -65,8 +65,12 @@ void Display::drawIntermediatePhysics(const float alpha)
 {
 	auto listOfParticles = m_linkedPhysics->getIntermediateParticle(alpha);
 
-	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
-		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
+	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
+		drawCircle((*it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
+	}
+
+	for (int i = 0; i < listOfParticles.size(); i++) {
+		delete listOfParticles[i];
 	}
 }
 
@@ -231,32 +235,32 @@ void Display::shootProjectile(int projectileId)
 {
 	if (projectileId != -1)
 	{
-		Particle particle = NULL;
+		Particle* particle = nullptr;
 		std::vector<ParticleForceGenerator*> generators;
 		ParticleGravity gravity;
 
 		switch (projectileId) {
 		case 0:
 			std::cout << "vous avez choisi le boulet de canon" << std::endl;
-			particle = Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+			particle = new Particle(0.01f, 1, Vector3D(0, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity());
 			break;
 
 		case 1:
 			std::cout << "vous avez choisi la boule de feu" << std::endl;
-			particle = Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
+			particle = new Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity(-5));
 			break;
 
 		case 2:
 			std::cout << "vous avez choisi le laser" << std::endl;
-			particle = Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
+			particle = new Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity(0));
 			break;
 
 		case 3:
 			std::cout << "vous avez choisi la balle" << std::endl;
-			particle = Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
+			particle = new Particle(0.99f, 1, Vector3D(0, 0, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0));
 			generators.push_back(new ParticleGravity());
 			break;
 

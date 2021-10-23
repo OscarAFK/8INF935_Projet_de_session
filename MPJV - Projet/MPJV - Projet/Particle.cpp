@@ -13,6 +13,16 @@ Particle::Particle(Vector3D position) :
 {
 }
 
+Particle::Particle(Particle* p)
+{
+	m_inverseMass = p->getInverseMass();
+	m_damping = p->getDamping();
+	m_position = p->getPosition();
+	m_velocity = p->getVelocity();
+	m_acceleration = p->getAcceleration();
+	m_forces = p->getForces();
+}
+
 Particle::~Particle() {}
 
 #pragma endregion
