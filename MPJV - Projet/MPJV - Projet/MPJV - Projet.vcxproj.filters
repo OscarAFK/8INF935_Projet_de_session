@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers sources\ImGui">
+      <UniqueIdentifier>{8a09e7ec-bb98-491a-843f-c61fbb171f19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ImGui">
+      <UniqueIdentifier>{79089fc7-d67e-4433-95ea-94e6e8aa2c48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ParticleForceGenerators">
+      <UniqueIdentifier>{18297a00-5453-4884-8f52-f7249e68114f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ParticleForceGenerators">
+      <UniqueIdentifier>{78f0f4d8-0ccf-47fa-b811-aca81ca3d6b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ParticleContactGenerators">
+      <UniqueIdentifier>{ca7a248a-e97e-46b7-af87-216f512b0c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ParticleContactGenerators">
+      <UniqueIdentifier>{333d7976-252e-49ae-a6d6-07f032c2346b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -24,6 +42,75 @@
     <ClCompile Include="Particle.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui.cpp">
+      <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui_demo.cpp">
+      <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui_draw.cpp">
+      <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui_impl_glfw.cpp">
+      <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp">
+      <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp">
+      <Filter>Fichiers sources\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleDrag.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleAnchoredSpring.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleElastic.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleAnchoredElastic.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleBuoyancy.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceGenerators\ParticleForceRegistry.cpp">
+      <Filter>Fichiers sources\ParticleForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleCable.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleLink.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleRod.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleContact.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\ParticleContactResolver.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleContactGenerators\NaiveParticleContactGenerator.cpp">
+      <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -31,6 +118,87 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Display.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imconfig.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imgui.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_glfw.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imgui_internal.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imstb_rectpack.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\ImGui\imgui_impl_opengl3_loader.h">
+      <Filter>Fichiers d%27en-tête\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleAnchoredSpring.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleDrag.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleForceGenerator.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleForceRegistry.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleGravity.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleSpring.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleElastic.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleAnchoredElastic.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerators\ParticleBuoyancy.h">
+      <Filter>Fichiers d%27en-tête\ParticleForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleCable.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleLink.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleRod.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleContact.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleContactResolver.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\ParticleContactGenerator.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleContactGenerators\NaiveParticleContactGenerator.h">
+      <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
