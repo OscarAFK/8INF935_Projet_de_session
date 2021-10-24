@@ -229,15 +229,35 @@ void Display::renderUI()
 	ImGui::Begin("Blob");
 	if (ImGui::Button("Créer un blob"))
 	{
-		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
-		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 20, 0), Vector3D(0, 0, 0));
+		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
+		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
+		Particle* particle3 = new Particle(0.01f, 1, Vector3D(-50, 50, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
+		Particle* particle4 = new Particle(0.01f, 1, Vector3D(50, 50, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
+		Particle* particle5 = new Particle(0.01f, 1, Vector3D(0, 75, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
+
 		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle1, particle2, 300, 0.5f));
+		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle2, particle3, 300, 0.5f));
+		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle3, particle4, 300, 0.5f));
+		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle4, particle5, 300, 0.5f));
+		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle5, particle1, 300, 0.5f));
+
 		std::vector<ParticleForceGenerator*> forceGenerators1;
 		std::vector<ParticleForceGenerator*> forceGenerators2;
-		forceGenerators2.push_back(new ParticleSpring(particle1, 2, 50));
-		forceGenerators1.push_back(new ParticleSpring(particle2, 2, 50));
+		std::vector<ParticleForceGenerator*> forceGenerators3;
+		std::vector<ParticleForceGenerator*> forceGenerators4;
+		std::vector<ParticleForceGenerator*> forceGenerators5;
+
+		forceGenerators1.push_back(new ParticleSpring(particle5, 10, 50));
+		forceGenerators2.push_back(new ParticleSpring(particle1, 10, 50));
+		forceGenerators3.push_back(new ParticleSpring(particle2, 10, 50));
+		forceGenerators4.push_back(new ParticleSpring(particle3, 10, 50));
+		forceGenerators5.push_back(new ParticleSpring(particle4, 10, 50));
+
 		m_linkedPhysics->addParticle(particle1, forceGenerators1);
 		m_linkedPhysics->addParticle(particle2, forceGenerators2);
+		m_linkedPhysics->addParticle(particle3, forceGenerators3);
+		m_linkedPhysics->addParticle(particle4, forceGenerators4);
+		m_linkedPhysics->addParticle(particle5, forceGenerators5);
 		
 	}
 	ImGui::End();
