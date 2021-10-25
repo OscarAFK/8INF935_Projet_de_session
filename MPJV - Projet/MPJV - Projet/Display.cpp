@@ -227,7 +227,7 @@ void Display::renderUI()
 	ImGui::End();
 
 	ImGui::Begin("Blob");
-	if (ImGui::Button("Créer un blob"))
+	if (ImGui::Button("Creer un blob"))
 	{
 		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
 		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
