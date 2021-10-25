@@ -12,6 +12,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "Camera.h"
 
 class Display
 {
@@ -20,6 +21,7 @@ private:
 	//attribute used with the display libraries
 	GLFWwindow* window;
 	unsigned int shader;
+	Camera* camera;
 
 	//Other variables
 	std::vector<std::string> projectileMap;
@@ -47,6 +49,7 @@ public:
 	void swapBuffers();
 	void quitLibraries();
 	void terminalCommand();
+	Camera* getCamera();
 
 };
 

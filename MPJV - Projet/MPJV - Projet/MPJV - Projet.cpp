@@ -3,11 +3,25 @@
 #include <chrono>
 #include <thread>
 
-
 #include "Particle.h"
 #include "Physics.h"
 #include "Display.h"
+#include "Camera.h"
 
+void processInput(GLFWwindow* window, Camera* camera)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+	const float cameraSpeed = 0.05f; // adjust accordingly
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera->moveCamera(cameraSpeed * camera->getCameraFront());
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera->moveCamera(-cameraSpeed * camera->getCameraFront());
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera->moveCamera(-glm::normalize(glm::cross(camera->getCameraFront(), camera->getCameraUp())) * cameraSpeed);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera->moveCamera(glm::normalize(glm::cross(camera->getCameraFront(), camera->getCameraUp())) * cameraSpeed);
+}
 
 int main()
 {
@@ -24,14 +38,13 @@ int main()
 	Physics physic = Physics();
 	
 	Display display = Display(&physic);
-
-	display.initDisplayLib();
 	
 	while (!display.windowShouldClose()) {
 		
+		processInput(display.getWindow(), display.getCamera());
+
 		display.setupView();
 		
-
 		//RENDER PHYSICS
 		float newTime = clock();
 		float frameTime = (newTime - currentTime) / CLOCKS_PER_SEC;
@@ -43,7 +56,6 @@ int main()
 
 		while (accumulator >= dt)
 		{
-			
 			//Update physics
 			physic.update(t, dt);
 			t += dt;
@@ -57,6 +69,8 @@ int main()
 		display.renderUI();
 
 		display.swapBuffers();
+
+		glfwPollEvents();
 	}
 	
 	display.quitLibraries();

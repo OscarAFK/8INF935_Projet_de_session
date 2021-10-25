@@ -200,5 +200,8 @@
     <ClInclude Include="ParticleContactGenerators\NaiveParticleContactGenerator.h">
       <Filter>Fichiers d%27en-tête\ParticleContactGenerators</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

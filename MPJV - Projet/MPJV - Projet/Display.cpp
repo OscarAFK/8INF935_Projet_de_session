@@ -36,7 +36,9 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 #pragma region Constructors
 
 Display::Display(Physics* physics) : m_linkedPhysics(physics)
-{
+{	
+	camera = new Camera();
+	initDisplayLib();
 }
 
 #pragma endregion
@@ -185,7 +187,7 @@ const bool Display::windowShouldClose()
 	return glfwWindowShouldClose(window);
 }
 
-void Display::setupView()
+void Display::setupView() // Add update camera here ------------------------------------------------------------------------------------------------
 {
 	//Setup View
 	float ratio;
@@ -195,6 +197,8 @@ void Display::setupView()
 	glViewport(0, 0, width, height);
 
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	//camera->updateView();
 }
 
 void Display::renderUI()
@@ -349,6 +353,11 @@ void Display::terminalCommand()	//Non utilisé, mais gardé au cas ou
 		return;
 
 	}
+}
+
+Camera* Display::getCamera()
+{
+	return camera;
 }
 
 #pragma endregion
