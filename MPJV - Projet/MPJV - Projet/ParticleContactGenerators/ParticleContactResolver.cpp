@@ -3,7 +3,10 @@
 
 void ParticleContactResolver::resolveContacts(std::vector<ParticleContact*> contactArray, unsigned int numContact, float duration)
 {
-	if (numContact == 0) return;
+
+	//Cette fonction est à retravailler
+
+	/*if (numContact == 0) return;
 	m_iteration = 0;
 	float smallestRelativeVelocity = 1000;
 	do {
@@ -20,6 +23,10 @@ void ParticleContactResolver::resolveContacts(std::vector<ParticleContact*> cont
 			contactToResolve->resolve(duration);
 		else
 			break;
-	} while (m_iteration < numContact * 2);
-
+	} while (m_iteration < numContact * 2);*/
+	
+	
+	for (int i = 0; i < contactArray.size(); i++) {
+		contactArray[i]->resolve(duration);
+	}
 }
