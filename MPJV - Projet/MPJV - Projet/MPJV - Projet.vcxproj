@@ -176,6 +176,9 @@
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Utilitaire\Matrix33.cpp" />
+    <ClCompile Include="Utilitaire\Matrix34.cpp" />
+    <ClCompile Include="Utilitaire\Quaternion.cpp" />
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +211,9 @@
     <ClInclude Include="ParticleForceGenerators\ParticleGravity.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleSpring.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Utilitaire\Matrix33.h" />
+    <ClInclude Include="Utilitaire\Matrix34.h" />
+    <ClInclude Include="Utilitaire\Quaternion.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

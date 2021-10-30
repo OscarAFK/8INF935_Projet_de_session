@@ -31,6 +31,12 @@
     <Filter Include="Fichiers d%27en-tête\ParticleContactGenerators">
       <UniqueIdentifier>{333d7976-252e-49ae-a6d6-07f032c2346b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Utilitaire">
+      <UniqueIdentifier>{2bf9414f-d4a6-488b-baa7-c1b48c07caf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Utilitaire">
+      <UniqueIdentifier>{6dea7059-bb32-4d61-8568-b03189877088}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -110,6 +116,15 @@
     </ClCompile>
     <ClCompile Include="ParticleContactGenerators\NaiveParticleContactGenerator.cpp">
       <Filter>Fichiers sources\ParticleContactGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilitaire\Matrix33.cpp">
+      <Filter>Fichiers sources\Utilitaire</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilitaire\Matrix34.cpp">
+      <Filter>Fichiers sources\Utilitaire</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilitaire\Quaternion.cpp">
+      <Filter>Fichiers sources\Utilitaire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +217,15 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilitaire\Matrix33.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilitaire\Matrix34.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilitaire\Quaternion.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
