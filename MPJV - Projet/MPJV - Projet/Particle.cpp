@@ -1,4 +1,5 @@
 ﻿#include "Particle.h"
+#include <iostream>
 
 #pragma region Constructors
 
@@ -47,6 +48,11 @@ float Particle::getDamping() const
 Vector3D Particle::getPosition() const
 {
 	return m_position;
+}
+
+Vector3D Particle::getPreviousPosition() const
+{
+	return m_previousPos;
 }
 
 Vector3D Particle::getVelocity() const
@@ -109,6 +115,7 @@ void Particle::setForces(const Vector3D value)
 void Particle::integrate(float deltaTime)
 {
 	m_acceleration = m_inverseMass * m_forces;
+	m_previousPos = m_position;
 	m_position = m_position + m_velocity * deltaTime + 0.5 * m_acceleration * deltaTime * deltaTime;
 	m_velocity = m_velocity * m_damping + m_acceleration * deltaTime;
 	m_forces = Vector3D(0, 0, 0);

@@ -11,6 +11,7 @@ private:
 	Vector3D m_acceleration;
 	Vector3D m_velocity;
 	Vector3D m_position;
+	Vector3D m_previousPos;
 	Vector3D m_forces;
 
 public:
@@ -25,6 +26,7 @@ public:
 	float getMass() const;
 	float getDamping() const;
 	Vector3D getPosition() const;
+	Vector3D getPreviousPosition() const;
 	Vector3D getVelocity() const;
 	Vector3D getAcceleration() const;
 	Vector3D getForces() const;

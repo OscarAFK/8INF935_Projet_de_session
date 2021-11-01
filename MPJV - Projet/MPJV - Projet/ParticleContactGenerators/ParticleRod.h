@@ -10,5 +10,5 @@ class ParticleRod : public ParticleLink
 	//between particles is not equal to the length
 	float m_length;
 
-	unsigned int addContact(std::vector<ParticleContact*>* contact, unsigned int limit);
+	unsigned int addContact(std::vector<ParticleContact>* contact, unsigned int limit);
 };

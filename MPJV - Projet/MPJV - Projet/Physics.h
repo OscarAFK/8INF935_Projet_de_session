@@ -19,20 +19,13 @@
 
 class Physics
 {
-	//The state of the world at a time
-	struct State {
-		std::vector<Particle*> m_particles;
-
-		ParticleForceRegistry m_particleForceRegistry;
-	};
 
 private:
 	
-	
+	std::vector<Particle> m_particles;
+	ParticleForceRegistry m_particleForceRegistry;
 
 	clock_t timeOfLastUpdate = clock();
-	State currentState;
-	State previousState;
 	
 	ParticleContactResolver particleContactResolver;
 	NaiveParticleContactGenerator naiveParticleContactGenerator;
@@ -48,9 +41,8 @@ public:
 	void addParticle(Particle* particle, std::vector<ParticleForceGenerator*> generators);
 	void removeParticle(int id);
 	Particle* getParticle(int id);
-	std::vector<Particle*> getAllParticle();
+	std::vector<Particle>* getAllParticle();
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void addParticleContactGenerator(ParticleContactGenerator* contactGenerator);
-	void updateState();
 	void update(float t, float dt);
 };
