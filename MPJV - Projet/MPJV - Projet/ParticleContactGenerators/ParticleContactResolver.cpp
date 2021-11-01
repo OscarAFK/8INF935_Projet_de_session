@@ -1,7 +1,7 @@
 #include "ParticleContactResolver.h"
 #include <iostream>
 
-void ParticleContactResolver::resolveContacts(std::vector<ParticleContact>* contactArray, unsigned int numContact, float duration)
+void ParticleContactResolver::resolveContacts(ParticleContact* contactArray, unsigned int numContact, float duration)
 {
 
 	//Cette fonction est à retravailler
@@ -26,7 +26,7 @@ void ParticleContactResolver::resolveContacts(std::vector<ParticleContact>* cont
 	} while (m_iteration < numContact * 2);*/
 	
 	
-	for (int i = 0; i < contactArray->size(); i++) {
-		contactArray->at(i).resolve(duration);
+	for (int i = 0; i < numContact; i++) {
+		(contactArray+i)->resolve(duration);
 	}
 }

@@ -13,6 +13,6 @@ public:
 
 	std::vector<Particle>* m_particles;
 
-	unsigned int addContact(std::vector<ParticleContact>* contact, unsigned int  limit);
+	unsigned int addContact(ParticleContact* contact, unsigned int  limit);
 
 };

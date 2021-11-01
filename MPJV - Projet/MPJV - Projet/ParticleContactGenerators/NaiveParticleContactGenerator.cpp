@@ -6,7 +6,7 @@ NaiveParticleContactGenerator::NaiveParticleContactGenerator(float radius, std::
 	m_particles = particles;
 }
 
-unsigned int NaiveParticleContactGenerator::addContact(std::vector<ParticleContact>* contact, unsigned int  limit) 
+unsigned int NaiveParticleContactGenerator::addContact(ParticleContact* contact, unsigned int  limit) 
 {
 	int iteration=0;
 	for (int i = 0; i < m_particles->size(); i++) {
@@ -16,8 +16,9 @@ unsigned int NaiveParticleContactGenerator::addContact(std::vector<ParticleConta
 
 			if (distance < m_radius) {
 				ParticleContact c = ParticleContact(&m_particles->at(i), &m_particles->at(j), 1, m_radius - distance);
-				contact->push_back(c);
+				*(contact+iteration) = c;
 				iteration++;
+				if (iteration >= limit-1) return iteration;
 			}
 		}
 	}

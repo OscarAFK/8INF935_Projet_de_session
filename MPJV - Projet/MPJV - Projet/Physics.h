@@ -17,6 +17,8 @@
 #include "ParticleContactGenerators/NaiveParticleContactGenerator.h"
 #include "ParticleContactGenerators/ParticleCable.h"
 
+#define CONTACT_MAX		200
+
 class Physics
 {
 

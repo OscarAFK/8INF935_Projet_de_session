@@ -11,7 +11,7 @@ public:
 
 	ParticleContactResolver() = default;
 
-	void resolveContacts(std::vector<ParticleContact>* contactArray,
+	void resolveContacts(ParticleContact* contactArray,
 						unsigned int numContact,
 						float duration);
 };

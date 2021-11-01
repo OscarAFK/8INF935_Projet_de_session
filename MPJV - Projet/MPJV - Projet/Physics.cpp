@@ -62,12 +62,12 @@ void Physics::update(float t, float dt)
     }
 
     //GESTION DES CONTACTS
-    std::vector<ParticleContact> particleContactList;       //Création des contacts
-    int nbContactsCrees = naiveParticleContactGenerator.addContact(&particleContactList,100);
+    ParticleContact particleContactList[200];       //Création des contacts
+    int nbContactsCrees = naiveParticleContactGenerator.addContact(particleContactList, CONTACT_MAX);
     for (int i = 0; i < particleContactGenerator.size(); i++) {
-        nbContactsCrees+= particleContactGenerator[i]->addContact(&particleContactList, 100);
+        nbContactsCrees+= particleContactGenerator[i]->addContact((particleContactList + nbContactsCrees), CONTACT_MAX-nbContactsCrees);
     }
-    particleContactResolver.resolveContacts(&particleContactList, nbContactsCrees, dt);          //Resolution des contacts
+    particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);          //Resolution des contacts
 }
 
 std::vector<Particle*> Physics::getIntermediateParticle(const float alpha)
