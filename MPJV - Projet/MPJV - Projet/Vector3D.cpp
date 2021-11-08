@@ -6,6 +6,10 @@ Vector3D::Vector3D(float x, float y, float z) :
 	m_x(x), m_y(y), m_z(z)
 { }
 
+Vector3D::Vector3D(float values[3]) :
+	m_x(values[0]), m_y(values[1]), m_z(values[2])
+{}
+
 #pragma endregion
 
 #pragma region Accessors
@@ -23,6 +27,11 @@ float Vector3D::getY() const
 float Vector3D::getZ() const
 {
 	return m_z;
+}
+
+std::vector<float> Vector3D::getValues() const
+{
+	return {m_x, m_y,m_z};
 }
 
 #pragma endregion

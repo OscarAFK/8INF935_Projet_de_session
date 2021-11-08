@@ -18,7 +18,7 @@ Matrix33::Matrix33(const Matrix33& other)
 #pragma endregion
 
 #pragma region Accessors
-float Matrix33::getValueAt(int i, int j)
+float Matrix33::getValueAt(int i, int j) const
 {
     return m_values[i + j*3];
 }
@@ -31,9 +31,11 @@ Matrix33& Matrix33::operator*=(const Matrix33& other)
 {
     Matrix33 newMat = Matrix33();
     for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < 3; j++) {
+            newMat.m_values[i + j * 3] = 0;
             for (int k = 0; k < 3; k++)
-                newMat.m_values[i + j * 3] = m_values[i + k * 3] * other.m_values[k + j * 3];
+                newMat.m_values[i + j * 3] += m_values[k + i * 3] * other.m_values[j + k * 3];
+        }
     return newMat;
 }
 
@@ -59,14 +61,19 @@ Matrix33 operator*(const Matrix33& m1, const float& f1)
     return m2;
 }
 
-Matrix33& Matrix33::operator*=(const Vector3D& other)
+Vector3D operator*(const Matrix33& m1, const Vector3D& v1)
 {
-    // TODO: insérer une instruction return ici
-}
-
-Matrix33 operator*(const Matrix33& m1, const Vector3D& v1)
-{
-    return Matrix33();
+    Vector3D newVec = Vector3D();
+    auto vecValues = v1.getValues();
+    for (int i = 0; i < 3; i++) {
+        float val = 0;
+        for (int j = 0; j < 3; j++)
+            val += vecValues[j] * m1.m_values[j + i * 3];
+        if (i == 0) newVec.setX(val);
+        else if (i == 1) newVec.setY(val);
+        else if (i == 2) newVec.setZ(val);
+    }
+    return newVec;
 }
 
 #pragma endregion

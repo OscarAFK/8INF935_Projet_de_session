@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <string>
+#include <vector>
 
 class Vector3D
 {
@@ -10,11 +11,13 @@ class Vector3D
 
 	public:
 		Vector3D(float x = 0, float y = 0, float z = 0);
+		Vector3D(float values[3]);
 		~Vector3D() = default;
 
 		float getX() const;
 		float getY() const;
 		float getZ() const;
+		std::vector<float> getValues() const;
 
 		void setX(const float value);
 		void setY(const float value);

@@ -17,7 +17,7 @@ public:
 	~Matrix33() = default;
 
 	//Accessors
-	float getValueAt(int i, int j);
+	float getValueAt(int i, int j) const;
 
 	//Operators
 	Matrix33& operator*=(const Matrix33& other);
@@ -26,8 +26,7 @@ public:
 	Matrix33& operator*=(const float& other);
 	friend Matrix33 operator*(const Matrix33& m1, const float& f1);
 
-	Matrix33& operator*=(const Vector3D& other);
-	friend Matrix33 operator*(const Matrix33& m1, const Vector3D& v1);
+	friend Vector3D operator*(const Matrix33& m1, const Vector3D& v1);
 
 	//Methods
 	Matrix33 Inverse();
