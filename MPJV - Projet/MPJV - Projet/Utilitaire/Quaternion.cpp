@@ -11,22 +11,22 @@ Quaternion::Quaternion(const Quaternion& other) :
 
 #pragma region Accessors
 
-const float Quaternion::getW()
+float Quaternion::getW() const
 {
     return m_values[0];
 }
 
-const float Quaternion::getI()
+float Quaternion::getI() const
 {
     return m_values[1];
 }
 
-const float Quaternion::getJ()
+float Quaternion::getJ() const
 {
     return m_values[2];
 }
 
-const float Quaternion::getK()
+float Quaternion::getK() const
 {
     return m_values[3];
 }

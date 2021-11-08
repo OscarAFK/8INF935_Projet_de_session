@@ -22,9 +22,7 @@ public:
 	//Operators
 	Matrix34 operator*(const Matrix34& other) const;
 
-	Matrix34 operator*(const float& other) const;
-
-	Matrix34 operator*(const Vector3D& other) const;
+	Vector3D operator*(const Vector3D& other) const;
 
 	//Methods
 	Matrix34 Inverse();

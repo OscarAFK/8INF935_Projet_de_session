@@ -20,11 +20,14 @@ public:
 	float getValueAt(int i, int j);
 
 	//Operators
-	Matrix33 operator*(const Matrix33& other) const;
+	Matrix33& operator*=(const Matrix33& other);
+	friend Matrix33 operator*(const Matrix33& m1, const Matrix33& m2);
 
-	Matrix33 operator*(const float& other) const;
+	Matrix33& operator*=(const float& other);
+	friend Matrix33 operator*(const Matrix33& m1, const float& f1);
 
-	Matrix33 operator*(const Vector3D& other) const;
+	Matrix33& operator*=(const Vector3D& other);
+	friend Matrix33 operator*(const Matrix33& m1, const Vector3D& v1);
 
 	//Methods
 	Matrix33 Inverse();

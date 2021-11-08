@@ -15,10 +15,10 @@ public:
 	~Quaternion() = default;
 
 	//Accessors
-	const float getW();
-	const float getI();
-	const float getJ();
-	const float getK();
+	float getW() const;
+	float getI() const;
+	float getJ() const;
+	float getK() const;
 
 	//Operators
 	Quaternion operator*(const Quaternion& other);

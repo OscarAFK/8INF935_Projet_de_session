@@ -27,25 +27,44 @@ float Matrix33::getValueAt(int i, int j)
 
 #pragma region Operators
 
-Matrix33 Matrix33::operator*(const Matrix33& other) const
+Matrix33& Matrix33::operator*=(const Matrix33& other)
 {
     Matrix33 newMat = Matrix33();
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
-            for(int k = 0; k < 3; k++)
-                newMat.m_values[i + j * 3] = m_values[i + k*3] * other.m_values[k + j*3];
+            for (int k = 0; k < 3; k++)
+                newMat.m_values[i + j * 3] = m_values[i + k * 3] * other.m_values[k + j * 3];
     return newMat;
 }
 
-Matrix33 Matrix33::operator*(const float& other) const
+Matrix33 operator*(const Matrix33& m1, const Matrix33& m2)
+{
+    auto m3 = m1;
+    m3 *= m2;
+    return m3;
+}
+
+Matrix33& Matrix33::operator*=(const float& f1)
 {
     Matrix33 newMat = Matrix33();
     for (int i = 0; i < 9; i++)
-        newMat.m_values[i] = m_values[i] * other;
+        newMat.m_values[i] = m_values[i] * f1;
     return newMat;
 }
 
-Matrix33 Matrix33::operator*(const Vector3D& other) const
+Matrix33 operator*(const Matrix33& m1, const float& f1)
+{
+    Matrix33 m2 = m1;
+    m2 *= f1;
+    return m2;
+}
+
+Matrix33& Matrix33::operator*=(const Vector3D& other)
+{
+    // TODO: insérer une instruction return ici
+}
+
+Matrix33 operator*(const Matrix33& m1, const Vector3D& v1)
 {
     return Matrix33();
 }
@@ -72,6 +91,7 @@ Matrix33 Matrix33::Inverse()
     newMat.m_values[6] = m_values[3]* m_values[7] - m_values[4]* m_values[6];
     newMat.m_values[7] = m_values[1]* m_values[6] - m_values[0]* m_values[7];
     newMat.m_values[8] = m_values[0]* m_values[4] - m_values[1]* m_values[3];
+    newMat *= 1/Determinant(newMat);
     return newMat;
 }
 
@@ -86,7 +106,24 @@ Matrix33 Matrix33::Transpose()
 
 void Matrix33::SetOrientation(const Quaternion& q)
 {
-
+    float x2 = q.getI() * q.getI();
+    float y2 = q.getJ() * q.getJ();
+    float z2 = q.getK() * q.getK();
+    float xy = q.getI() * q.getJ();
+    float zw = q.getK() * q.getW();
+    float xz = q.getI() * q.getK();
+    float yw = q.getJ() * q.getW();
+    float yz = q.getJ() * q.getK();
+    float xw = q.getI() * q.getW();
+    m_values[0] = 1 - (2 * y2 + 2 * z2);
+    m_values[1] = 2 * xy + 2 * zw;
+    m_values[2] = 2 * xz - 2 * yw;
+    m_values[3] = 2 * xy - 2 * zw;
+    m_values[4] = 1 - (2 * x2 + 2 * z2);
+    m_values[5] = 2 * yz + 2 * xw;
+    m_values[6] = 2 * xz + 2 * yw;
+    m_values[7] = 2 * yz - 2 * xw;
+    m_values[8] = 1 - (2 * x2 + 2 * y2);
 }
 
 float Matrix33::Determinant(const Matrix33& mat)
