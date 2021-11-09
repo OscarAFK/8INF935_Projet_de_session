@@ -101,10 +101,11 @@ Vector3D& Vector3D::operator+=(const Vector3D& v)
 	return *this;
 }
 
-Vector3D operator+(Vector3D v1, const Vector3D& v2)
+Vector3D operator+(const Vector3D& v1, const Vector3D& v2)
 {
-	v1 += v2;
-	return v1;
+	auto v3 = v1;
+	v3 += v2;
+	return v3;
 }
 
 Vector3D& Vector3D::operator-=(const Vector3D& v)
@@ -115,10 +116,24 @@ Vector3D& Vector3D::operator-=(const Vector3D& v)
 	return *this;
 }
 
-Vector3D operator-(Vector3D v1, const Vector3D& v2)
+Vector3D& Vector3D::operator*=(const Vector3D& v)
 {
-	v1 -= v2;
-	return v1;
+	auto returnVector = Vector3D(m_x*v.m_x, m_y * v.m_y, m_z * v.m_z);
+	return returnVector;
+}
+
+Vector3D operator*(const Vector3D& v1, const Vector3D& v2)
+{
+	auto v3 = v1;
+	v3 *= v2;
+	return v3;
+}
+
+Vector3D operator-(const Vector3D& v1, const Vector3D& v2)
+{
+	auto v3 = v1;
+	v3 -= v2;
+	return v3;
 }
 
 Vector3D& Vector3D::operator*=(const float& value)
@@ -129,13 +144,14 @@ Vector3D& Vector3D::operator*=(const float& value)
 	return *this;
 }
 
-Vector3D operator*(Vector3D vector, const float& value)
+Vector3D operator*(const Vector3D& vector, const float& value)
 {
-	vector *= value;
+	auto v = vector;
+	v *= value;
 	return vector;
 }
 
-Vector3D operator*(const float& value, Vector3D vector)
+Vector3D operator*(const float& value, Vector3D& vector)
 {
 	vector *= value;
 	return vector;
@@ -149,9 +165,10 @@ Vector3D& Vector3D::operator/=(const float& value)
 	return *this;
 }
 
-Vector3D operator/(Vector3D vector, const float& value)
+Vector3D operator/(const Vector3D& vector, const float& value)
 {
-	vector /= value;
+	auto v = vector;
+	v /= value;
 	return vector;
 }
 

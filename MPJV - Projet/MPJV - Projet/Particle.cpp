@@ -10,7 +10,7 @@ Particle::Particle(float inverseMass, float damping, Vector3D position, Vector3D
 }
 
 Particle::Particle(Vector3D position) :
-	m_inverseMass(0), m_damping(0), m_position(position), m_velocity(0), m_acceleration(0)
+	m_inverseMass(0), m_damping(0), m_position(position), m_velocity(Vector3D()), m_acceleration(Vector3D())
 {
 }
 

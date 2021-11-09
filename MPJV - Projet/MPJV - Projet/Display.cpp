@@ -288,13 +288,13 @@ void Display::shootProjectile(int projectileId)
 		case 1:
 			std::cout << "vous avez choisi la boule de feu" << std::endl;
 			particle = new Particle(0.05f, 1, Vector3D(0, 0, 0), Vector3D(1, 2, 1), Vector3D(0, 0, 0));
-			generators.push_back(new ParticleGravity(-5));
+			generators.push_back(new ParticleGravity(Vector3D(0,-5,0)));
 			break;
 
 		case 2:
 			std::cout << "vous avez choisi le laser" << std::endl;
 			particle = new Particle(10000, 1, Vector3D(0, 0, 0), Vector3D(500, 0, 0), Vector3D(0, 0, 0));
-			generators.push_back(new ParticleGravity(0));
+			generators.push_back(new ParticleGravity(Vector3D(0, 0, 0)));
 			break;
 
 		case 3:

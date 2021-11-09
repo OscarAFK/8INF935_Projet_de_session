@@ -96,17 +96,15 @@ Matrix34 Matrix34::Inverse()
 
 void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
 {
-    m_values[0] = 1 - (2 * q.getJ() * q.getJ() + 2 * q.getK() * q.getK());
-    m_values[1] = 2 * q.getI() * q.getJ() + 2 * q.getK() * q.getW();
-    m_values[2] = 2 * q.getI() * q.getK() - 2 * q.getJ() * q.getW();
+    Matrix33 tmpMat = Matrix33();
+    tmpMat.SetOrientation(q);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            m_values[i+j*4] = tmpMat.getValueAt(i,j);
+        }
+    }
     m_values[3] = p.getX();
-    m_values[4] = 2 * q.getI() * q.getJ() - 2 * q.getK() * q.getW();
-    m_values[5] = 1 - (2 * q.getI() * q.getI() + 2 * q.getK() * q.getK());
-    m_values[6] = 2 * q.getJ() * q.getK() + 2 * q.getI() * q.getW();
     m_values[7] = p.getY();
-    m_values[8] = 2 * q.getI() * q.getK() + 2 * q.getJ() * q.getW();
-    m_values[9] = 2 * q.getJ() * q.getK() - 2 * q.getI() * q.getW();
-    m_values[10] = 1 - (2 * q.getI() * q.getI() + 2 * q.getJ() * q.getJ());
     m_values[11] = p.getZ();
 }
 

@@ -32,17 +32,20 @@ class Vector3D
 		bool operator==(const Vector3D v);
 
 		Vector3D& operator+=(const Vector3D& v);
-		friend Vector3D operator+(Vector3D v1, const Vector3D& v2);
+		friend Vector3D operator+(const Vector3D& v1, const Vector3D& v2);
 
 		Vector3D& operator-=(const Vector3D& v);
-		friend Vector3D operator-(Vector3D v1, const Vector3D& v2);
+		friend Vector3D operator-(const Vector3D& v1, const Vector3D& v2);
+
+		Vector3D& operator*=(const Vector3D& v);
+		friend Vector3D operator*(const Vector3D& v1, const Vector3D& v2);
 
 		Vector3D& operator*=(const float& v);
-		friend Vector3D operator*(Vector3D v1, const float& v2);
-		friend Vector3D operator*(const float& v1, Vector3D v2);
+		friend Vector3D operator*(const Vector3D& v1, const float& v2);
+		friend Vector3D operator*(const float& v1, Vector3D& v2);
 
 		Vector3D& operator/=(const float& v);
-		friend Vector3D operator/(Vector3D v1, const float& v2);
+		friend Vector3D operator/(const Vector3D& v1, const float& v2);
 
 		std::string to_string() const;
 };

@@ -126,6 +126,9 @@
     <ClCompile Include="Utilitaire\Quaternion.cpp">
       <Filter>Fichiers sources\Utilitaire</Filter>
     </ClCompile>
+    <ClCompile Include="Utilitaire\Rigidbody.cpp">
+      <Filter>Fichiers sources\Utilitaire</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -225,6 +228,9 @@
       <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
     </ClInclude>
     <ClInclude Include="Utilitaire\Quaternion.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilitaire\Rigidbody.h">
       <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
     </ClInclude>
   </ItemGroup>

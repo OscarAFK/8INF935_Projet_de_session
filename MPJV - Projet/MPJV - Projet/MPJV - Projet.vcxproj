@@ -179,6 +179,7 @@
     <ClCompile Include="Utilitaire\Matrix33.cpp" />
     <ClCompile Include="Utilitaire\Matrix34.cpp" />
     <ClCompile Include="Utilitaire\Quaternion.cpp" />
+    <ClCompile Include="Utilitaire\Rigidbody.cpp" />
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +215,7 @@
     <ClInclude Include="Utilitaire\Matrix33.h" />
     <ClInclude Include="Utilitaire\Matrix34.h" />
     <ClInclude Include="Utilitaire\Quaternion.h" />
+    <ClInclude Include="Utilitaire\Rigidbody.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
