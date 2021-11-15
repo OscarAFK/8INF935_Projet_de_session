@@ -2,7 +2,21 @@
 
 void Rigidbody::Integrate(float duration)
 {
+	//Acceleration
+	Vector3D linearAcceleration = m_inverseMass * m_forceAccum;
+	Vector3D angularAcceleration = m_inverseTenseurInertieWorld * m_torqueAccum;
+	
+	//Vitesse
+	m_velocity = m_velocity * pow(m_damping, duration) + linearAcceleration * duration;
+	m_rotation = m_rotation * pow(m_angularDamping, duration) + angularAcceleration * duration;
 
+	//Position
+	m_position = m_position + m_velocity * duration;
+	m_orientation.UpdateByAngularVelocity(m_rotation, duration);
+
+	//Update datas
+	CalculateDerivedData();
+	ClearAccumulator();
 }
 
 void Rigidbody::AddForce(const Vector3D& force)
@@ -28,9 +42,20 @@ void Rigidbody::ClearAccumulator()
 	m_torqueAccum = Vector3D(0, 0, 0);
 }
 
+void Rigidbody::SetInertiaTenseur(const Matrix33& tenseurInertie)
+{
+	m_inverseTenseurInertie = tenseurInertie.Inverse();
+}
+
 void Rigidbody::CalculateDerivedData()
 {
 	m_transformMatrix.SetOrientationAndPosition(m_orientation, m_position);
+	ComputeTenseurInertiaWorld(m_inverseTenseurInertieWorld);
+}
+
+void Rigidbody::ComputeTenseurInertiaWorld(Matrix33& inertiaTenseurWorld)
+{
+	inertiaTenseurWorld = m_transformMatrix * m_inverseTenseurInertie;
 }
 
 Vector3D Rigidbody::LocalToWorld(const Vector3D& local)

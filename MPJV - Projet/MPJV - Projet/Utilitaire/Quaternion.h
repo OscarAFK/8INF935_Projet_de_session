@@ -21,7 +21,8 @@ public:
 	float getK() const;
 
 	//Operators
-	Quaternion operator*(const Quaternion& other);
+	Quaternion operator*=(const Quaternion& other);
+	friend Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
 
 	//Methods
 	void Normalize();

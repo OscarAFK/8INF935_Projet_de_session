@@ -20,6 +20,10 @@ private:
 	//Calculates transform matrix from rotation and rotation
 	Matrix34 m_transformMatrix;
 
+	//Calculates tenseur of inertia
+	Matrix33 m_inverseTenseurInertie;
+	Matrix33 m_inverseTenseurInertieWorld;
+
 	//same as linear damping but for rotation
 	float m_angularDamping;
 
@@ -46,10 +50,14 @@ public:
 	//called each frame, reset m_forceAccum and m_torqueAccum
 	void ClearAccumulator();
 
+	void SetInertiaTenseur(const Matrix33 & tenseurInertie);
+
 private:
 
 	//call each frame to calculate the transform matrix and normalize the rotation
 	void CalculateDerivedData();
+	
+	void ComputeTenseurInertiaWorld(Matrix33 &inertiaTenseur);
 
 	//
 	Vector3D LocalToWorld(const Vector3D& local);

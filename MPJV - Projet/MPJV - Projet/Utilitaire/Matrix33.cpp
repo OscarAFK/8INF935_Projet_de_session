@@ -80,7 +80,7 @@ Vector3D operator*(const Matrix33& m1, const Vector3D& v1)
 
 #pragma region Methods
 
-Matrix33 Matrix33::Inverse()
+Matrix33 Matrix33::Inverse() const
 {
     //On calcule le determinant
     float det = Determinant(*this);

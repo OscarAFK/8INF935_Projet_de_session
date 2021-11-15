@@ -29,7 +29,7 @@ public:
 	friend Vector3D operator*(const Matrix33& m1, const Vector3D& v1);
 
 	//Methods
-	Matrix33 Inverse();
+	Matrix33 Inverse() const;
 
 	Matrix33 Transpose();
 
