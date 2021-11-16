@@ -131,3 +131,14 @@ Vector3D Matrix34::TransformDirection(const Vector3D& vector)
     }
     return Vector3D(vectReturn);
 }
+
+Matrix33 Matrix34::ToMatrix33() const
+{
+    float values[9];
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            values[i + 3 * j] = m_values[i + 4 * j];
+        }
+    }
+    return Matrix33(values);
+}

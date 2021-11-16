@@ -44,5 +44,7 @@ public:
 	//Transform a direction by ignoring the translation
 	Vector3D TransformDirection(const Vector3D& vector);
 
+	Matrix33 ToMatrix33() const;
+
 
 };

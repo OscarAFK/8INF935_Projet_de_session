@@ -55,7 +55,9 @@ void Rigidbody::CalculateDerivedData()
 
 void Rigidbody::ComputeTenseurInertiaWorld(Matrix33& inertiaTenseurWorld)
 {
-	inertiaTenseurWorld = m_transformMatrix * m_inverseTenseurInertie;
+	Matrix33 transformMatrix33 = m_transformMatrix.ToMatrix33();
+	inertiaTenseurWorld = transformMatrix33 * m_inverseTenseurInertie;
+	inertiaTenseurWorld *= transformMatrix33.Inverse();
 }
 
 Vector3D Rigidbody::LocalToWorld(const Vector3D& local)
