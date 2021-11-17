@@ -35,6 +35,8 @@ private:
 
 public:
 
+	Rigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie);
+
 	//Integrate the rigidbody by modifying position, orientation and velocities
 	void Integrate(float duration);
 
@@ -62,4 +64,12 @@ private:
 	//
 	Vector3D LocalToWorld(const Vector3D& local);
 	Vector3D WorldToLocal(const Vector3D& world);
+};
+
+namespace tenseursFormesDeBase {
+	Matrix33 Sphere(float m, float r);
+
+	Matrix33 Cuboide(float m, Vector3D d);
+
+	Matrix33 Cylindre(float m, float r, float h);
 };
