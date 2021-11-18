@@ -38,6 +38,26 @@ void Physics::removeParticle(int index)
 
 #pragma endregion
 
+#pragma region Mutex
+
+void Physics::addRigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie)
+{
+    m_rigidbody.push_back(new Rigidbody(position, orientation, mass, damping, angularDamping, tenseurInertie));
+    }
+
+void Physics::addRigidbody(Rigidbody* rigidbody)
+{
+    m_rigidbody.push_back(rigidbody);
+}
+
+void Physics::removeRigidbody(int index)
+{
+    m_rigidbody.erase(m_rigidbody.begin() + index);
+}
+
+
+#pragma endregion
+
 #pragma region Accessors
 
 Particle* Physics::getParticle(int id)
@@ -48,6 +68,16 @@ Particle* Physics::getParticle(int id)
 std::vector<Particle>* Physics::getAllParticle()
 {
     return &m_particles;
+}
+
+Rigidbody* Physics::getRigidbody(int id)
+{
+    return &m_rigidbody[id];
+}
+
+std::vector<Rigidbody>* Physics::getAllRigidbody()
+{
+    return &m_rigidbody;
 }
 
 #pragma endregion

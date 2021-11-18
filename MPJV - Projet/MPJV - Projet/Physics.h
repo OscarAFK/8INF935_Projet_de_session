@@ -16,6 +16,7 @@
 #include "ParticleContactGenerators/ParticleContactGenerator.h"
 #include "ParticleContactGenerators/NaiveParticleContactGenerator.h"
 #include "ParticleContactGenerators/ParticleCable.h"
+#include "Utilitaire/Rigidbody.h"
 
 #define CONTACT_MAX		200
 
@@ -33,6 +34,8 @@ private:
 	NaiveParticleContactGenerator naiveParticleContactGenerator;
 	std::vector<ParticleContactGenerator*> particleContactGenerator;
 
+	std::vector<Rigidbody> m_rigidbody;
+
 public:
 
 	Physics();
@@ -47,4 +50,11 @@ public:
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void addParticleContactGenerator(ParticleContactGenerator* contactGenerator);
 	void update(float t, float dt);
+
+	void addRigidbody(Vector3D position = Vector3D(), Quaternion orientation = Quaternion(), float mass = 0.0f, float damping= 0.0f, float angularDamping = 0.0f, Matrix33 tenseurInertie = Matrix33());
+	void addRigidbody(Rigidbody* rigidbody);
+	void removeRigidbody(int id);
+	Rigidbody* getRigidbody(int id);
+	std::vector<Rigidbody>* getAllRigidbody();
+	
 };
