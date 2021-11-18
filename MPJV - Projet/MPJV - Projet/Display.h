@@ -31,11 +31,13 @@ private:
 
 	//Methods
 	void drawCircle(float cx, float cy, float r, int num_segments);
+	void drawSquare(float cx, float cy, float d);
 
 public:
 	Display() = default;
 	Display(Physics* physics);
 	~Display() = default;
+
 
 	void linkToPhysics(Physics* physics);
 	void drawPhysics();

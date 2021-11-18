@@ -90,6 +90,18 @@ void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonct
 	glEnd();
 }
 
+void Display::drawSquare(float cx, float cy, float d)
+{
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f((-d + cx) / (float)width, (-d + cy) / (float)height);//output vertex 
+	glVertex2f((d + cx) / (float)width, (-d + cy) / (float)height);//output vertex 
+	glVertex2f((d + cx) / (float)width, (d + cy) / (float)height);//output vertex 
+	glVertex2f((-d + cx) / (float)width, (d + cy) / (float)height);//output vertex 
+	glEnd();
+}
+
 #pragma endregion
 
 #pragma region Methods Libraries
