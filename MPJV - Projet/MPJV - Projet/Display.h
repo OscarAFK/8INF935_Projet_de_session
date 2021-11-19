@@ -20,8 +20,7 @@ private:
 
 	//attribute used with the display libraries
 	GLFWwindow* window;
-	unsigned int shader;
-	Camera* camera;
+	Camera* m_camera;
 
 	//Other variables
 	std::vector<std::string> projectileMap;
@@ -35,15 +34,17 @@ private:
 
 public:
 	Display() = default;
-	Display(Physics* physics);
+	Display(Physics* physics, Camera* camera);
 	~Display() = default;
 
 
 	void linkToPhysics(Physics* physics);
+	void setCamera(Camera* camera);
 	void drawPhysics();
 	void drawIntermediatePhysics(const float alpha);
 	void initDisplayLib();
 	GLFWwindow* getWindow();
+	Camera* getCamera();
 	const bool windowShouldClose();
 	void setupView();
 	void renderUI();
@@ -51,7 +52,6 @@ public:
 	void swapBuffers();
 	void quitLibraries();
 	void terminalCommand();
-	Camera* getCamera();
 
 };
 

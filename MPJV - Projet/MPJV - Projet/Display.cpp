@@ -35,7 +35,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
 #pragma region Constructors
 
-Display::Display(Physics* physics) : m_linkedPhysics(physics)
+Display::Display(Physics* physics, Camera* camera) : m_linkedPhysics(physics), m_camera(camera)
 {	
 	initDisplayLib();
 }
@@ -47,6 +47,11 @@ Display::Display(Physics* physics) : m_linkedPhysics(physics)
 void Display::linkToPhysics(Physics *physics)
 {
 	m_linkedPhysics = physics;
+}
+
+void Display::setCamera(Camera* camera)
+{
+	m_camera = camera;
 }
 
 #pragma endregion
@@ -150,41 +155,6 @@ void Display::initDisplayLib()
 	ImGui_ImplOpenGL3_Init("#version 330");
 	#pragma endregion
 
-	float positions[6] = {
-		-0.5f, -0.5f,
-		0.0f,  0.5f,
-		0.5f, -0.5f
-	};
-
-
-	//Vertex buffer
-	/*unsigned int buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);*/
-
-	std::string vertexShader =
-		"#version 330\n"\
-		"layout(location=0) in vec4 position;\n"\
-		"void main(void)\n"\
-		"{\n"\
-		"   gl_Position = position;\n"\
-		"}\n";
-
-	std::string FragmentShader =
-		"#version 330\n"\
-		"layout(location=0)out vec4 color;\n"\
-		"void main(void)\n"\
-		"{\n"\
-		"   color = vec4(1.0, 1.0, 1.0, 1.0);\n"\
-		"}\n";
-
-	shader = CreateShader(vertexShader, FragmentShader);
-	glUseProgram(shader);
-
 
 	projectileMap = { 
 		"Boulet de Canon",
@@ -193,7 +163,6 @@ void Display::initDisplayLib()
 		"Balle"
 	};
 	selected = -1;
-
 }
 
 GLFWwindow* Display::getWindow()
@@ -248,7 +217,7 @@ void Display::renderUI()
 		shootProjectile(selected);
 	}
 	ImGui::End();
-
+	/*
 	ImGui::Begin("Blob");
 	if (ImGui::Button("Creer un blob"))
 	{
@@ -283,7 +252,7 @@ void Display::renderUI()
 		m_linkedPhysics->addParticle(particle5, forceGenerators5);
 		
 	}
-	ImGui::End();
+	ImGui::End();*/
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -344,7 +313,6 @@ void Display::quitLibraries()
 	ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
-	glDeleteProgram(shader);
 	glfwTerminate;
 }
 
@@ -376,7 +344,7 @@ void Display::terminalCommand()	//Non utilisé, mais gardé au cas ou
 
 Camera* Display::getCamera()
 {
-	return camera;
+	return m_camera;
 }
 
 #pragma endregion

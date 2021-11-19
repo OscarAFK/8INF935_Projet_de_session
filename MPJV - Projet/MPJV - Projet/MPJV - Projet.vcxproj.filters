@@ -37,6 +37,9 @@
     <Filter Include="Fichiers sources\Utilitaire">
       <UniqueIdentifier>{6dea7059-bb32-4d61-8568-b03189877088}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Utilitaire\ShapePrimitives">
+      <UniqueIdentifier>{f999dbd4-2944-46d3-a058-fbad4b158f96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -241,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="Utilitaire\stb_image.h">
       <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire\ShapePrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire\ShapePrimitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

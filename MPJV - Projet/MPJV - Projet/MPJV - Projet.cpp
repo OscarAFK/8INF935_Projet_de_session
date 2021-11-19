@@ -9,6 +9,7 @@
 #include "Display.h"
 #include "Camera.h"
 #include "Utilitaire/stb_image.h"
+#include "Cube.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -28,6 +29,7 @@ bool firstMouseRelease = true;
 
 float dt = 0.01f;
 float t = 0;
+Display display;
 
 int main()
 {
@@ -39,7 +41,7 @@ int main()
 	//Initializing physics and display
 	Physics physic = Physics();
 	
-	Display display = Display(&physic);
+	display = Display(&physic, &camera);
 
 	//============================================================================================
 
@@ -191,6 +193,7 @@ int main()
     ourShader.setInt("texture1", 0);
     ourShader.setInt("texture2", 1);
 
+    Cube cube = Cube(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
 
 	//==============================================================================================
 
@@ -231,24 +234,25 @@ int main()
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+        
         // bind textures on corresponding texture units
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
-
+        
         // activate shader
         ourShader.use();
-
+        int width, height;
+        glfwGetWindowSize(display.getWindow(), &width, &height);
         // pass projection matrix to shader (note that in this case it could change every frame)
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)width / (float)height, 0.1f, 100.0f);
         ourShader.setMat4("projection", projection);
 
         // camera/view transformation
         glm::mat4 view = camera.GetViewMatrix();
         ourShader.setMat4("view", view);
-
+        
         // render boxes
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 10; i++)
@@ -262,6 +266,8 @@ int main()
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+        cube.render(&display);
 
 		//====================================================================================
 
