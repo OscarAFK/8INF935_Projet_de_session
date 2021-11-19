@@ -180,6 +180,7 @@
     <ClCompile Include="Utilitaire\Matrix34.cpp" />
     <ClCompile Include="Utilitaire\Quaternion.cpp" />
     <ClCompile Include="Utilitaire\Rigidbody.cpp" />
+    <ClCompile Include="Utilitaire\stb_image.cpp" />
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -212,11 +213,17 @@
     <ClInclude Include="ParticleForceGenerators\ParticleGravity.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleSpring.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Utilitaire\Matrix33.h" />
     <ClInclude Include="Utilitaire\Matrix34.h" />
     <ClInclude Include="Utilitaire\Quaternion.h" />
     <ClInclude Include="Utilitaire\Rigidbody.h" />
+    <ClInclude Include="Utilitaire\stb_image.h" />
     <ClInclude Include="Vector3D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\shader.fs" />
+    <None Include="Shaders\shader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
