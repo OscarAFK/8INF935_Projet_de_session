@@ -13,7 +13,6 @@ public:
 	Shape(glm::vec3 position)
 	{
 		m_position = position;
-		m_shader = new Shader("Shaders/shader.vs", "Shaders/shader.fs");;
 	}
 	virtual void render(Display* display) = 0;
 };

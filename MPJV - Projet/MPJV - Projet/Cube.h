@@ -7,55 +7,58 @@ class Cube : public Shape{
 public:
 	Cube(glm::vec3 position, glm::vec3 size):Shape(position)
 	{
-        
+        m_shader = new Shader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
+        float x = size.x / 2;
+        float y = size.y / 2;
+        float z = size.z / 2;
         float vertices[] = {
         //back face
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
+        -x, -y, -z,
+         x, -y, -z,
+         x,  y, -z,
+         x,  y, -z,
+        -x,  y, -z,
+        -x, -y, -z,
 
         //front face
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
+        -x, -y,  z,
+         x, -y,  z,
+         x,  y,  z,
+         x,  y,  z,
+        -x,  y,  z,
+        -x, -y,  z,
 
         //left face
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
+        -x,  y,  z,
+        -x,  y, -z,
+        -x, -y, -z,
+        -x, -y, -z,
+        -x, -y,  z,
+        -x,  y,  z,
 
         //right face
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
+         x,  y,  z,
+         x,  y, -z,
+         x, -y, -z,
+         x, -y, -z,
+         x, -y,  z,
+         x,  y,  z,
 
          //bottom face
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
+        -x, -y, -z,
+         x, -y, -z,
+         x, -y,  z,
+         x, -y,  z,
+        -x, -y,  z,
+        -x, -y, -z,
 
         //top face
-        -0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
+        -x,  y, -z,
+         x,  y, -z,
+         x,  y,  z,
+         x,  y,  z,
+        -x,  y,  z,
+        -x,  y, -z,
         };
 
         glGenVertexArrays(1, &m_VAO);
