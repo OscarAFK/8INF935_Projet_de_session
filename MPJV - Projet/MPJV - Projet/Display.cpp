@@ -2,42 +2,11 @@
 #include <map>
 
 
-#define WINDOW_SIZE_X	480
-#define WINDOW_SIZE_Y	480
-
-
-#pragma region FunctionShaders
-static unsigned int CompileShader(unsigned int type, const std::string& source) {
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-	return id;
-}
-
-static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader) {
-	unsigned int program = glCreateProgram();
-	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-	glLinkProgram(program);
-	glValidateProgram(program);
-
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-
-	return program;
-}
-
-#pragma endregion
-
 #pragma region Constructors
 
-Display::Display(Physics* physics, Camera* camera) : m_linkedPhysics(physics), m_camera(camera)
+Display::Display(int windowSizeX, int windowSizeY, Physics* physics, Camera* camera) : m_linkedPhysics(physics), m_camera(camera)
 {	
-	initDisplayLib();
+	initDisplayLib(windowSizeX, windowSizeY);
 }
 
 #pragma endregion
@@ -110,7 +79,7 @@ void Display::drawSquare(float cx, float cy, float d)
 
 #pragma region Methods Libraries
 
-void Display::initDisplayLib()
+void Display::initDisplayLib(int windowSizeX, int windowSizeY)
 {
 	//GLFW initialization
 	if (!glfwInit()) {
@@ -123,11 +92,12 @@ void Display::initDisplayLib()
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-	window = glfwCreateWindow(WINDOW_SIZE_X, WINDOW_SIZE_Y, "OpenGL Example", NULL, NULL);
+	window = glfwCreateWindow(windowSizeX, windowSizeY, "OpenGL Example", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+
 	glfwMakeContextCurrent(window);
 
 	// tell GLFW to capture our mouse

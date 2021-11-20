@@ -16,56 +16,52 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+#define WINDOW_SIZE_X 1280
+#define WINDOW_SIZE_Y 720
 
-// camera
+//Camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
+float lastX = WINDOW_SIZE_X / 2.0f;
+float lastY = WINDOW_SIZE_Y / 2.0f;
 bool firstMousePress = true;
 bool firstMouseRelease = true;
 
 float dt = 0.01f;
 float t = 0;
-Display display;
 
 int main()
 {
 	float currentTime = clock();
 	float accumulator = 0.0;
 	
-
-	
-	//Initializing physics and display
-	Physics physic = Physics();
-	
-	display = Display(&physic, &camera);
-
-	//============================================================================================
+    //Initializing physics and display
+    Physics physic = Physics();
+    Display display = Display(WINDOW_SIZE_X , WINDOW_SIZE_Y ,&physic, &camera);
 
     // inputs
     glfwSetFramebufferSizeCallback(display.getWindow(), framebuffer_size_callback);
     glfwSetCursorPosCallback(display.getWindow(), mouse_callback);
     glfwSetScrollCallback(display.getWindow(), scroll_callback);
 
+    glEnable(GL_DEPTH_TEST);
+
     // tell GLFW to capture our mouse
     glfwSetInputMode(display.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-    // configure global opengl state
-    // -----------------------------
-    glEnable(GL_DEPTH_TEST);
+    Shader cubeShader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
+    Shader lightShader("Shaders/lightShader.vs", "Shaders/lightShader.fs");
 
-    Cube cube1 = Cube(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
-    Cube cube2 = Cube(glm::vec3(0, 5, 0), glm::vec3(2, 3, 1));
-
-	//==============================================================================================
+    Cube lightCube = Cube(lightPos, glm::vec3(0.25f, 0.25f, 0.25f), &lightShader);
+    Cube cube = Cube(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), &cubeShader);
 
 	while (!display.windowShouldClose()) {
 
 		display.setupView();
 
+        //Inputs
+        processInput(display.getWindow());
 		
 		//RENDER PHYSICS
 		float newTime = clock();
@@ -88,22 +84,34 @@ int main()
 
 		display.drawIntermediatePhysics(alpha);
 		
-
-		//====================================================================================
-
-        // input
-        // -----
-        processInput(display.getWindow());
-
-        // render
-        // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        //Render
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        cube1.render(&display);
-        cube2.render(&display);
 
-		//====================================================================================
+        cubeShader.use();
+        cubeShader.setVec3("light.position", lightPos);
+        cubeShader.setVec3("viewPos", camera.Position);
+
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
+        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
+        cubeShader.setVec3("light.ambient", ambientColor);
+        cubeShader.setVec3("light.diffuse", diffuseColor);
+        cubeShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
+        // material properties
+        cubeShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        cubeShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+        cubeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f); // specular lighting doesn't have full effect on this object's material
+        cubeShader.setFloat("material.shininess", 32.0f);
+
+
+        cube.render(&display);
+        lightCube.render(&display);
+
 
 		display.renderUI();
 

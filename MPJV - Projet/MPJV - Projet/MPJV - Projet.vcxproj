@@ -224,6 +224,10 @@
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\cubeShader.fs" />
+    <None Include="Shaders\cubeShader.vs" />
+    <None Include="Shaders\lightShader.fs" />
+    <None Include="Shaders\lightShader.vs" />
     <None Include="Shaders\shader.fs" />
     <None Include="Shaders\shader.vs" />
   </ItemGroup>

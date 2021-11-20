@@ -5,60 +5,56 @@
 class Cube : public Shape{
 
 public:
-	Cube(glm::vec3 position, glm::vec3 size):Shape(position)
+	Cube(glm::vec3 position, glm::vec3 size, Shader* shader):Shape(position, size, shader)
 	{
-        m_shader = new Shader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
-        float x = size.x / 2;
-        float y = size.y / 2;
-        float z = size.z / 2;
         float vertices[] = {
-        //back face
-        -x, -y, -z,
-         x, -y, -z,
-         x,  y, -z,
-         x,  y, -z,
-        -x,  y, -z,
-        -x, -y, -z,
 
+        //back face
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
         //front face
-        -x, -y,  z,
-         x, -y,  z,
-         x,  y,  z,
-         x,  y,  z,
-        -x,  y,  z,
-        -x, -y,  z,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
         //left face
-        -x,  y,  z,
-        -x,  y, -z,
-        -x, -y, -z,
-        -x, -y, -z,
-        -x, -y,  z,
-        -x,  y,  z,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
         //right face
-         x,  y,  z,
-         x,  y, -z,
-         x, -y, -z,
-         x, -y, -z,
-         x, -y,  z,
-         x,  y,  z,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
          //bottom face
-        -x, -y, -z,
-         x, -y, -z,
-         x, -y,  z,
-         x, -y,  z,
-        -x, -y,  z,
-        -x, -y, -z,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
         //top face
-        -x,  y, -z,
-         x,  y, -z,
-         x,  y,  z,
-         x,  y,  z,
-        -x,  y,  z,
-        -x,  y, -z,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
         };
 
         glGenVertexArrays(1, &m_VAO);
@@ -70,10 +66,12 @@ public:
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
-        
-        m_shader->use();
+
+        // normal attribute
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
 	}
 	void render(Display* display) override
 	{
@@ -94,8 +92,9 @@ public:
 
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         model = glm::translate(model, m_position);
-        float angle = 20.0f;
-        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+        //float angle = 20.0f;
+        //model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+        model = glm::scale(model, m_size);
         m_shader->setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 	}

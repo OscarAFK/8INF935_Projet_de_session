@@ -259,5 +259,17 @@
     <None Include="Shaders\shader.vs">
       <Filter>Fichiers de ressources</Filter>
     </None>
+    <None Include="Shaders\cubeShader.vs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\cubeShader.fs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\lightShader.fs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
+    <None Include="Shaders\lightShader.vs">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
   </ItemGroup>
 </Project>

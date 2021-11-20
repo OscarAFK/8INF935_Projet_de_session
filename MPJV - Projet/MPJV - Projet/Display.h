@@ -34,7 +34,7 @@ private:
 
 public:
 	Display() = default;
-	Display(Physics* physics, Camera* camera);
+	Display(int windowSizeX, int windowSizeY, Physics* physics, Camera* camera);
 	~Display() = default;
 
 
@@ -42,7 +42,7 @@ public:
 	void setCamera(Camera* camera);
 	void drawPhysics();
 	void drawIntermediatePhysics(const float alpha);
-	void initDisplayLib();
+	void initDisplayLib(int windowSizeX, int windowSizeY);
 	GLFWwindow* getWindow();
 	Camera* getCamera();
 	const bool windowShouldClose();
