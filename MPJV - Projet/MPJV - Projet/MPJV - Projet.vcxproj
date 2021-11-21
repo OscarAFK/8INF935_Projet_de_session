@@ -194,8 +194,10 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleContactGenerators\NaiveParticleContactGenerator.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleCable.h" />
@@ -216,6 +218,8 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shape.h" />
+    <ClInclude Include="ShapeRenderer.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="Utilitaire\Matrix33.h" />
     <ClInclude Include="Utilitaire\Matrix34.h" />
     <ClInclude Include="Utilitaire\Quaternion.h" />

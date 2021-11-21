@@ -40,6 +40,9 @@
     <Filter Include="Fichiers d%27en-tête\Utilitaire\ShapePrimitives">
       <UniqueIdentifier>{f999dbd4-2944-46d3-a058-fbad4b158f96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Utilitaire\ECS">
+      <UniqueIdentifier>{bf86f973-6b87-4a83-96af-529f9de1d3c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -250,6 +253,18 @@
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Fichiers d%27en-tête\Utilitaire\ShapePrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeRenderer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
