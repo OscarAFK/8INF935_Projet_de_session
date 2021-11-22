@@ -8,6 +8,11 @@ Rigidbody::Rigidbody(Vector3D position, Quaternion orientation, float mass, floa
 	SetInertiaTenseur(tenseurInertie);
 }
 
+Rigidbody::Rigidbody(Vector3D position)
+{
+	m_position = position;
+}
+
 void Rigidbody::Integrate(float duration)
 {
 	//Acceleration
@@ -19,6 +24,7 @@ void Rigidbody::Integrate(float duration)
 	m_rotation = m_rotation * pow(m_angularDamping, duration) + angularAcceleration * duration;
 
 	//Position
+	m_previousPos = m_position;
 	m_position = m_position + m_velocity * duration;
 	m_orientation.UpdateByAngularVelocity(m_rotation, duration);
 
@@ -53,6 +59,23 @@ void Rigidbody::ClearAccumulator()
 void Rigidbody::SetInertiaTenseur(const Matrix33& tenseurInertie)
 {
 	m_inverseTenseurInertie = tenseurInertie.Inverse();
+}
+
+float Rigidbody::GetMass() const
+{
+	if (m_inverseMass != 0) return 1 / m_inverseMass;
+	std::cout << "ERROR: infinite mass" << std::endl;
+	return -1;
+}
+
+Vector3D Rigidbody::GetPosition() const
+{
+	return m_position;
+}
+
+Vector3D Rigidbody::GetPreviousPosition() const
+{
+	return m_previousPos;
 }
 
 void Rigidbody::CalculateDerivedData()

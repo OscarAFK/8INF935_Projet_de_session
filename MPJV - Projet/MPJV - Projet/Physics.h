@@ -17,6 +17,12 @@
 #include "ParticleContactGenerators/NaiveParticleContactGenerator.h"
 #include "ParticleContactGenerators/ParticleCable.h"
 
+#include "Utilitaire/Rigidbody.h"
+#include "ForceGenerators/ForceRegistry.h"
+#include "ForceGenerators/ForceGenerator.h"
+#include "ForceGenerators/GravityForceGenerator.h"
+
+
 #define CONTACT_MAX		200
 
 class Physics
@@ -25,7 +31,10 @@ class Physics
 private:
 	
 	std::vector<Particle> m_particles;
+	std::vector<Rigidbody*> m_rigidbody;
+
 	ParticleForceRegistry m_particleForceRegistry;
+	ForceRegistry m_forceRegistry;
 
 	clock_t timeOfLastUpdate = clock();
 	
@@ -33,13 +42,14 @@ private:
 	NaiveParticleContactGenerator naiveParticleContactGenerator;
 	std::vector<ParticleContactGenerator*> particleContactGenerator;
 
+
 public:
 
 	Physics();
 	~Physics() = default;
 
 	void addParticle(float invertedMass = 0.0f, float damping = 0.0f, Vector3D position = Vector3D(), Vector3D velocity = Vector3D(), Vector3D acceleration = Vector3D());
-	void addParticle(Particle*  particle);
+	void addParticle(Particle particle);
 	void addParticle(Particle* particle, std::vector<ParticleForceGenerator*> generators);
 	void removeParticle(int id);
 	Particle* getParticle(int id);
@@ -47,4 +57,13 @@ public:
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void addParticleContactGenerator(ParticleContactGenerator* contactGenerator);
 	void update(float t, float dt);
+
+	void addRigidbody(Vector3D position = Vector3D(), Quaternion orientation = Quaternion(), float mass = 0.0f, float damping= 0.0f, float angularDamping = 0.0f, Matrix33 tenseurInertie = Matrix33());
+	void addRigidbody(Rigidbody *rigidbody);
+	void addRigidbody(Rigidbody *rigidbody, std::vector<ForceGenerator*> generators);
+	void removeRigidbody(int id);
+	Rigidbody* getRigidbody(int id);
+	std::vector<Rigidbody*> getAllRigidbody();
+	std::vector<Rigidbody*> getIntermediateRigidbody(const float alpha);
+	
 };

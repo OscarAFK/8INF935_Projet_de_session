@@ -14,10 +14,10 @@ Physics::Physics()
 
 void Physics::addParticle(float invertedMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration)
 {
-    m_particles.push_back(new Particle(invertedMass, damping, position, velocity, acceleration));
+    m_particles.push_back(Particle(invertedMass, damping, position, velocity, acceleration));
 }
 
-void Physics::addParticle(Particle *particle)
+void Physics::addParticle(Particle particle)
 {
     m_particles.push_back(particle);
 }
@@ -38,6 +38,35 @@ void Physics::removeParticle(int index)
 
 #pragma endregion
 
+#pragma region Mutex
+
+void Physics::addRigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie)
+{
+    m_rigidbody.push_back(new Rigidbody(position, orientation, mass, damping, angularDamping, tenseurInertie));
+}
+
+void Physics::addRigidbody(Rigidbody * rigidbody)
+{
+    m_rigidbody.push_back(rigidbody);
+}
+
+void Physics::addRigidbody(Rigidbody *rigidbody, std::vector<ForceGenerator*> generators)
+{
+    m_rigidbody.push_back(rigidbody);
+    for (int i = 0; i < generators.size(); i++)
+    {
+        m_forceRegistry.addEntry(m_rigidbody[m_rigidbody.size()-1], generators[i]);
+    }
+}
+
+void Physics::removeRigidbody(int index)
+{
+    m_rigidbody.erase(m_rigidbody.begin() + index);
+}
+
+
+#pragma endregion
+
 #pragma region Accessors
 
 Particle* Physics::getParticle(int id)
@@ -50,6 +79,25 @@ std::vector<Particle>* Physics::getAllParticle()
     return &m_particles;
 }
 
+Rigidbody* Physics::getRigidbody(int id)
+{
+    return m_rigidbody[id];
+}
+
+std::vector<Rigidbody*> Physics::getAllRigidbody()
+{
+    return m_rigidbody;
+}
+
+std::vector<Rigidbody*> Physics::getIntermediateRigidbody(const float alpha)
+{
+    std::vector<Rigidbody*> intermediateRigidbody = std::vector<Rigidbody*>();
+    for (int i = 0; i < m_rigidbody.size(); i++) {
+        intermediateRigidbody.push_back(new Rigidbody(m_rigidbody[i]->GetPosition() * alpha + m_rigidbody[i]->GetPreviousPosition() * (1 - alpha)));
+    }
+    return intermediateRigidbody;
+}
+
 #pragma endregion
 
 #pragma region Methods
@@ -59,6 +107,12 @@ void Physics::update(float t, float dt)
     m_particleForceRegistry.updateForce(dt);
     for (std::vector<Particle>::iterator it = m_particles.begin(); it != m_particles.end(); ++it) {
         it->integrate(dt);
+    }
+
+    m_forceRegistry.updateForce(dt);
+    
+    for (int i = 0; i < m_rigidbody.size(); i++) {
+        m_rigidbody[i]->Integrate(dt);
     }
 
     //GESTION DES CONTACTS

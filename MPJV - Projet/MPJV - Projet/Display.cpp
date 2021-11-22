@@ -57,22 +57,38 @@ void Display::linkToPhysics(Physics *physics)
 void Display::drawPhysics()
 {
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
+	auto listOfRigidbody = m_linkedPhysics->getAllRigidbody();
 	
 	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
 		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
 	}
+
+	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
+		drawSquare((*it)->GetPosition().getX(), (*it)->GetPosition().getY(), 40);
+	}
+
 }
 
 void Display::drawIntermediatePhysics(const float alpha)
 {
 	auto listOfParticles = m_linkedPhysics->getIntermediateParticle(alpha);
+	auto listOfRigidbody = m_linkedPhysics->getIntermediateRigidbody(alpha);
 
 	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
 		drawCircle((*it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
 	}
 
+
+	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
+		drawSquare((*it)->GetPosition().getX(), (*it)->GetPosition().getY(), 40);
+	}
+
 	for (int i = 0; i < listOfParticles.size(); i++) {
 		delete listOfParticles[i];
+	}
+
+	for (int i = 0; i < listOfRigidbody.size(); i++) {
+		delete listOfRigidbody[i];
 	}
 }
 
@@ -240,6 +256,7 @@ void Display::renderUI()
 	{
 		shootProjectile(selected);
 	}
+
 	ImGui::End();
 
 	ImGui::Begin("Blob");
@@ -275,6 +292,20 @@ void Display::renderUI()
 		m_linkedPhysics->addParticle(particle4, forceGenerators4);
 		m_linkedPhysics->addParticle(particle5, forceGenerators5);
 		
+	}
+	ImGui::End();
+
+	ImGui::Begin("Rigidbodies");
+	if (ImGui::Button("Creer un rigidbody"))
+	{
+		Rigidbody * rg = nullptr;
+		std::vector<ForceGenerator*> generators;
+
+		std::cout << "Creation d'un rigidbody" << std::endl;
+
+		rg = new Rigidbody(Vector3D(0, 0, 0), Quaternion(1,0,0,0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1,40));
+		generators.push_back(new GravityForceGenerator(Vector3D(0, -100, 0)));
+		m_linkedPhysics->addRigidbody(rg, generators);
 	}
 	ImGui::End();
 

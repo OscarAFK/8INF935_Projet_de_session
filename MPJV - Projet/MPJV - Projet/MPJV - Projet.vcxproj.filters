@@ -37,6 +37,12 @@
     <Filter Include="Fichiers sources\Utilitaire">
       <UniqueIdentifier>{6dea7059-bb32-4d61-8568-b03189877088}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\ForceGenerators">
+      <UniqueIdentifier>{1448c400-669a-4860-9f0d-776a2143a10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ForceGenerators">
+      <UniqueIdentifier>{800ed4a5-89a0-4a1d-b054-6954f0a18716}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -128,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="Utilitaire\Rigidbody.cpp">
       <Filter>Fichiers sources\Utilitaire</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenerators\ForceRegistry.cpp">
+      <Filter>Fichiers sources\ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenerators\GravityForceGenerator.cpp">
+      <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +244,15 @@
     </ClInclude>
     <ClInclude Include="Utilitaire\Rigidbody.h">
       <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerators\ForceGenerator.h">
+      <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerators\ForceRegistry.h">
+      <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerators\GravityForceGenerator.h">
+      <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

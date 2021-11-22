@@ -27,7 +27,7 @@ class Vector3D
 		float norm();
 
 		static float scalarProduct(Vector3D v1, Vector3D v2);
-		static Vector3D dotProduct(Vector3D v1, Vector3D v2);
+		static Vector3D vectProduct(Vector3D v1, Vector3D v2);
 
 		bool operator==(const Vector3D v);
 

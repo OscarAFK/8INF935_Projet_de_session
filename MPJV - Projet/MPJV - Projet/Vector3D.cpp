@@ -73,7 +73,7 @@ float Vector3D::scalarProduct(Vector3D v1, Vector3D v2)
 	return v1.m_x * v2.m_x + v1.m_y * v2.m_y + v1.m_z * v2.m_z;
 }
 
- Vector3D Vector3D::dotProduct(Vector3D v1, Vector3D v2)
+ Vector3D Vector3D::vectProduct(Vector3D v1, Vector3D v2)
 {
 	return Vector3D(v1.m_y * v2.m_z - v1.m_z * v2.m_y,
 		v1.m_z * v2.m_x - v1.m_x * v2.m_z,
@@ -148,13 +148,14 @@ Vector3D operator*(const Vector3D& vector, const float& value)
 {
 	auto v = vector;
 	v *= value;
-	return vector;
+	return v;
 }
 
 Vector3D operator*(const float& value, Vector3D& vector)
 {
-	vector *= value;
-	return vector;
+	auto v = vector;
+	v *= value;
+	return v;
 }
 
 Vector3D& Vector3D::operator/=(const float& value)
@@ -169,7 +170,7 @@ Vector3D operator/(const Vector3D& vector, const float& value)
 {
 	auto v = vector;
 	v /= value;
-	return vector;
+	return v;
 }
 
 #pragma endregion
