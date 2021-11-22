@@ -57,5 +57,6 @@ public:
 	void removeRigidbody(int id);
 	Rigidbody* getRigidbody(int id);
 	std::vector<Rigidbody>* getAllRigidbody();
+	std::vector<Rigidbody*> getIntermediateRigidbody(const float alpha);
 	
 };

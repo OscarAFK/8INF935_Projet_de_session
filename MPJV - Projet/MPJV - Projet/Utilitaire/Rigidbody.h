@@ -2,6 +2,7 @@
 #include "../Vector3D.h"
 #include "Quaternion.h"
 #include "Matrix34.h"
+#include <iostream>
 
 class Rigidbody {
 private:
@@ -10,6 +11,7 @@ private:
 	float m_damping;
 	Vector3D m_velocity;
 	Vector3D m_position;
+	Vector3D m_previousPos;
 
 	// orientation of the rigidbody
 	Quaternion m_orientation;
@@ -36,6 +38,7 @@ private:
 public:
 
 	Rigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie);
+	Rigidbody(Vector3D position = Vector3D());
 
 	//Integrate the rigidbody by modifying position, orientation and velocities
 	void Integrate(float duration);
@@ -53,6 +56,11 @@ public:
 	void ClearAccumulator();
 
 	void SetInertiaTenseur(const Matrix33 & tenseurInertie);
+
+	float GetMass() const;
+
+	Vector3D GetPosition() const;
+	Vector3D GetPreviousPosition() const;
 
 private:
 

@@ -80,6 +80,15 @@ std::vector<Rigidbody>* Physics::getAllRigidbody()
     return &m_rigidbody;
 }
 
+std::vector<Rigidbody*> Physics::getIntermediateRigidbody(const float alpha)
+{
+    std::vector<Rigidbody*> intermediateRigidbody = std::vector<Rigidbody*>();
+    for (int i = 0; i < m_rigidbody.size(); i++) {
+        intermediateRigidbody.push_back(new Rigidbody(m_rigidbody[i].GetPosition() * alpha + m_rigidbody[i].GetPreviousPosition() * (1 - alpha)));
+    }
+    return intermediateRigidbody;
+}
+
 #pragma endregion
 
 #pragma region Methods
@@ -89,6 +98,10 @@ void Physics::update(float t, float dt)
     m_particleForceRegistry.updateForce(dt);
     for (std::vector<Particle>::iterator it = m_particles.begin(); it != m_particles.end(); ++it) {
         it->integrate(dt);
+    }
+
+    for (std::vector<Rigidbody>::iterator it = m_rigidbody.begin(); it != m_rigidbody.end(); ++it) {
+        it->Integrate(dt);
     }
 
     //GESTION DES CONTACTS
