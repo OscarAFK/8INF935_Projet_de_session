@@ -7,17 +7,17 @@ class ForceRegistry
 private:
 	struct ForceEntry
 	{
-		ForceEntry(Rigidbody* rg, ForceGenerator* pfg) : rigidbody{ rg }, forceGenerator{ pfg }{};
+		ForceEntry(Rigidbody* rg, ForceGenerator* fg) : rigidbody{ rg }, forceGenerator{ fg }{};
 		Rigidbody* rigidbody;
 		ForceGenerator* forceGenerator;
 	};
 
-	using Registry = std::vector<ForceEntry>;
-	Registry m_registry;
+	//using Registry = std::vector<ForceEntry>;
+	std::vector<ForceEntry> m_registry;
 
 public:
 	void addEntry(ForceEntry entry);
-	void addEntry(Rigidbody* particle, ForceGenerator* forceGenerator);
+	void addEntry(Rigidbody* rg, ForceGenerator* forceGenerator);
 	void removeEntry(int index);
 	void updateForce(float deltaTime);
 };

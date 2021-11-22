@@ -8,6 +8,11 @@ Rigidbody::Rigidbody(Vector3D position, Quaternion orientation, float mass, floa
 	SetInertiaTenseur(tenseurInertie);
 }
 
+Rigidbody::Rigidbody(Vector3D position)
+{
+	m_position = position;
+}
+
 void Rigidbody::Integrate(float duration)
 {
 	//Acceleration

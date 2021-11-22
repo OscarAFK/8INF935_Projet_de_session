@@ -42,12 +42,21 @@ void Physics::removeParticle(int index)
 
 void Physics::addRigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie)
 {
-    m_rigidbody.push_back(Rigidbody(position, orientation, mass, damping, angularDamping, tenseurInertie));
-    }
+    m_rigidbody.push_back(new Rigidbody(position, orientation, mass, damping, angularDamping, tenseurInertie));
+}
 
-void Physics::addRigidbody(Rigidbody rigidbody)
+void Physics::addRigidbody(Rigidbody * rigidbody)
 {
     m_rigidbody.push_back(rigidbody);
+}
+
+void Physics::addRigidbody(Rigidbody *rigidbody, std::vector<ForceGenerator*> generators)
+{
+    m_rigidbody.push_back(rigidbody);
+    for (int i = 0; i < generators.size(); i++)
+    {
+        m_forceRegistry.addEntry(m_rigidbody[m_rigidbody.size()-1], generators[i]);
+    }
 }
 
 void Physics::removeRigidbody(int index)
@@ -72,19 +81,19 @@ std::vector<Particle>* Physics::getAllParticle()
 
 Rigidbody* Physics::getRigidbody(int id)
 {
-    return &m_rigidbody[id];
+    return m_rigidbody[id];
 }
 
-std::vector<Rigidbody>* Physics::getAllRigidbody()
+std::vector<Rigidbody*> Physics::getAllRigidbody()
 {
-    return &m_rigidbody;
+    return m_rigidbody;
 }
 
 std::vector<Rigidbody*> Physics::getIntermediateRigidbody(const float alpha)
 {
     std::vector<Rigidbody*> intermediateRigidbody = std::vector<Rigidbody*>();
     for (int i = 0; i < m_rigidbody.size(); i++) {
-        intermediateRigidbody.push_back(new Rigidbody(m_rigidbody[i].GetPosition() * alpha + m_rigidbody[i].GetPreviousPosition() * (1 - alpha)));
+        intermediateRigidbody.push_back(new Rigidbody(m_rigidbody[i]->GetPosition() * alpha + m_rigidbody[i]->GetPreviousPosition() * (1 - alpha)));
     }
     return intermediateRigidbody;
 }
@@ -100,8 +109,10 @@ void Physics::update(float t, float dt)
         it->integrate(dt);
     }
 
-    for (std::vector<Rigidbody>::iterator it = m_rigidbody.begin(); it != m_rigidbody.end(); ++it) {
-        it->Integrate(dt);
+    m_forceRegistry.updateForce(dt);
+    
+    for (int i = 0; i < m_rigidbody.size(); i++) {
+        m_rigidbody[i]->Integrate(dt);
     }
 
     //GESTION DES CONTACTS

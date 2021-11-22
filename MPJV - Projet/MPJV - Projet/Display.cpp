@@ -63,8 +63,8 @@ void Display::drawPhysics()
 		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
 	}
 
-	for (std::vector<Rigidbody>::iterator it = listOfRigidbody->begin(); it != listOfRigidbody->end(); ++it) {
-		drawSquare(it->GetPosition().getX(), it->GetPosition().getY(), 40);
+	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
+		drawSquare((*it)->GetPosition().getX(), (*it)->GetPosition().getY(), 40);
 	}
 
 }
@@ -256,6 +256,7 @@ void Display::renderUI()
 	{
 		shootProjectile(selected);
 	}
+
 	ImGui::End();
 
 	ImGui::Begin("Blob");
@@ -291,6 +292,20 @@ void Display::renderUI()
 		m_linkedPhysics->addParticle(particle4, forceGenerators4);
 		m_linkedPhysics->addParticle(particle5, forceGenerators5);
 		
+	}
+	ImGui::End();
+
+	ImGui::Begin("Rigidbodies");
+	if (ImGui::Button("Creer un rigidbody"))
+	{
+		Rigidbody * rg = nullptr;
+		std::vector<ForceGenerator*> generators;
+
+		std::cout << "Creation d'un rigidbody" << std::endl;
+
+		rg = new Rigidbody(Vector3D(0, 0, 0), Quaternion(1,0,0,0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1,40));
+		generators.push_back(new GravityForceGenerator(Vector3D(0, -100, 0)));
+		m_linkedPhysics->addRigidbody(rg, generators);
 	}
 	ImGui::End();
 
