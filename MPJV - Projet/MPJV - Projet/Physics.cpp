@@ -14,10 +14,10 @@ Physics::Physics()
 
 void Physics::addParticle(float invertedMass, float damping, Vector3D position, Vector3D velocity, Vector3D acceleration)
 {
-    m_particles.push_back(new Particle(invertedMass, damping, position, velocity, acceleration));
+    m_particles.push_back(Particle(invertedMass, damping, position, velocity, acceleration));
 }
 
-void Physics::addParticle(Particle *particle)
+void Physics::addParticle(Particle particle)
 {
     m_particles.push_back(particle);
 }
@@ -42,10 +42,10 @@ void Physics::removeParticle(int index)
 
 void Physics::addRigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie)
 {
-    m_rigidbody.push_back(new Rigidbody(position, orientation, mass, damping, angularDamping, tenseurInertie));
+    m_rigidbody.push_back(Rigidbody(position, orientation, mass, damping, angularDamping, tenseurInertie));
     }
 
-void Physics::addRigidbody(Rigidbody* rigidbody)
+void Physics::addRigidbody(Rigidbody rigidbody)
 {
     m_rigidbody.push_back(rigidbody);
 }
