@@ -1,5 +1,6 @@
 #include "Display.h"
 #include <map>
+#include "ShapeRenderer.h"
 
 
 #pragma region Constructors
@@ -413,4 +414,15 @@ Camera* Display::getCamera()
 	return m_camera;
 }
 
+void Display::tick(std::vector<Entity*> entities)
+{
+	for (size_t i = 0; i < entities.size(); i++)
+	{
+		ShapeRenderer* shapeRenderer = entities[i]->getComponent<ShapeRenderer>();
+		if (shapeRenderer != nullptr)
+		{
+			shapeRenderer->render(this);
+		}
+	}
+}
 #pragma endregion

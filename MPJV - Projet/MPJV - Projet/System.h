@@ -1,20 +1,12 @@
 #pragma once
+#include "Entity.h"
 
 class System
 {
 public:
-	System();
-	~System();
-	virtual void Tick() = 0;
+	System() {};
+	virtual void tick(std::vector<Entity*> entities) = 0;
 
 private:
 
 };
-
-System::System()
-{
-}
-
-System::~System()
-{
-}

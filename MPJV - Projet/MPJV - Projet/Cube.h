@@ -1,10 +1,10 @@
 #pragma once
 #include "Shape.h"
-/*
+
 class Cube : public Shape{
 
 public:
-	Cube(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, Shader* shader) :Shape(position, rotation, size, shader)
+	Cube(glm::vec3 position, glm::vec3 rotation, glm::vec3 size) :Shape(position, rotation, size)
 	{
         float vertices[] = {
 
@@ -72,7 +72,7 @@ public:
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
         glEnableVertexAttribArray(1);
 	}
-	void render(Display* display) override
+	/*void render(Display* display) override
 	{
         int width, height;
         glfwGetWindowSize(display->getWindow(), &width, &height);
@@ -97,5 +97,5 @@ public:
         model = glm::scale(model, m_scale);
         m_shader->setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
-	}
-};*/
+	}*/
+};

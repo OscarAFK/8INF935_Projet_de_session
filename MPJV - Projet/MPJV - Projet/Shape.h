@@ -4,7 +4,7 @@
 #include "Display.h"
 
 #include <GLFW/glfw3.h>
-/*
+
 class Shape
 {
 protected:
@@ -12,12 +12,31 @@ protected:
 	unsigned int m_VBO, m_VAO;
 	Shader* m_shader;
 public:
-	/*Shape(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, Shader* shader)
+	Shape(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale)
 	{
 		m_position = position;
 		m_rotation = rotation;
 		m_scale = scale;
-		m_shader = shader;
 	}
-	virtual void render(Display* display) = 0;
-};*/
+	//virtual void render(Display* display) = 0;
+
+	unsigned int getVAO()
+	{
+		return m_VAO;
+	}
+
+	glm::vec3 getPosition()
+	{
+		return m_position;
+	}
+
+	glm::vec3 getRotation()
+	{
+		return m_rotation;
+	}
+
+	glm::vec3 getScale()
+	{
+		return m_scale;
+	}
+};

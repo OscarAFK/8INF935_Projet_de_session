@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Physics.h"
-#include <memory>
 #include <iostream>
 #include <map>
 
@@ -14,8 +13,9 @@
 #include "imgui_impl_opengl3.h"
 #include "Camera.h"
 #include "Cube.h"
+#include "System.h"
 
-class Display
+class Display : public System
 {
 private:
 
@@ -58,6 +58,6 @@ public:
 	void swapBuffers();
 	void quitLibraries();
 	void terminalCommand();
-
+	void tick(std::vector<Entity*> entities) override;
 };
 

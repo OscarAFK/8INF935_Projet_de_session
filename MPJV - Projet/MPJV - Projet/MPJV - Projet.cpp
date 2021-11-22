@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 
+#include "Time.h"
 #include "Shader.h"
 #include "Particle.h"
 #include "Physics.h"
@@ -10,6 +11,7 @@
 #include "Camera.h"
 #include "Utilitaire/stb_image.h"
 #include "Cube.h"
+#include "ShapeRenderer.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -39,23 +41,36 @@ int main()
     //Initializing physics and display
     Physics physic = Physics();
     Display display = Display(WINDOW_SIZE_X , WINDOW_SIZE_Y ,&physic, &camera);
+    Time time = Time();
+
+    std::vector<System*> systems;
+    systems.push_back(&physic);
+    systems.push_back(&display);
+    systems.push_back(&time);
+
+
+    Shader cubeShader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
+    Shader lightShader("Shaders/lightShader.vs", "Shaders/lightShader.fs");
+
+    std::vector<Entity*> entities;
+    Entity e = Entity();
+    e.addComponent<ShapeRenderer>();
+    e.getComponent<ShapeRenderer>()->setShape(Cube(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
+    e.getComponent<ShapeRenderer>()->setShader(cubeShader);
+    entities.push_back(&e);
+
 
     glEnable(GL_DEPTH_TEST);
 
     // inputs
     glfwSetFramebufferSizeCallback(display.getWindow(), framebuffer_size_callback);
     glfwSetCursorPosCallback(display.getWindow(), mouse_callback);
-    glfwSetScrollCallback(display.getWindow(), scroll_callback);
-
-    
+    glfwSetScrollCallback(display.getWindow(), scroll_callback);    
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(display.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-    /*Shader cubeShader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
-    Shader lightShader("Shaders/lightShader.vs", "Shaders/lightShader.fs");
-
-    Cube lightCube = Cube(lightPos, glm::vec3(45, 0, 0), glm::vec3(0.25f, 0.25f, 0.25f), &lightShader);
+    /*Cube lightCube = Cube(lightPos, glm::vec3(45, 0, 0), glm::vec3(0.25f, 0.25f, 0.25f), &lightShader);
     Cube cube = Cube(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), &cubeShader);*/
 
 	while (!display.windowShouldClose()) {
@@ -86,32 +101,20 @@ int main()
 
 		display.drawIntermediatePhysics(alpha);
 		
+        
+
         //Render
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /*cubeShader.use();
-        cubeShader.setVec3("light.position", lightPos);
-        cubeShader.setVec3("viewPos", camera.Position);
+        for (size_t i = 0; i < systems.size(); i++)
+        {
+            systems[i]->tick(entities);
+        }
+        
+        
 
-        glm::vec3 lightColor;
-        lightColor.x = sin(glfwGetTime() * 2.0f);
-        lightColor.y = sin(glfwGetTime() * 0.7f);
-        lightColor.z = sin(glfwGetTime() * 1.3f);
-        glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // decrease the influence
-        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
-        cubeShader.setVec3("light.ambient", ambientColor);
-        cubeShader.setVec3("light.diffuse", diffuseColor);
-        cubeShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-
-        // material properties
-        cubeShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-        cubeShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-        cubeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f); // specular lighting doesn't have full effect on this object's material
-        cubeShader.setFloat("material.shininess", 32.0f);
-
-
-        cube.render(&display);
+        /*cube.render(&display);
         lightCube.render(&display);*/
 
 

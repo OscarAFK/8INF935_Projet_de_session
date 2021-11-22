@@ -1,7 +1,7 @@
 #pragma once
 
+#include "System.h"
 #include "Particle.h"
-#include <vector>
 #include <memory>
 #include <chrono>
 #include "ParticleForceGenerators/ParticleForceRegistry.h"
@@ -19,7 +19,7 @@
 
 #define CONTACT_MAX		200
 
-class Physics
+class Physics : public System
 {
 
 private:
@@ -47,4 +47,8 @@ public:
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void addParticleContactGenerator(ParticleContactGenerator* contactGenerator);
 	void update(float t, float dt);
+	void tick(std::vector<Entity*> entities) override
+	{
+		//printf("physics tick");
+	}
 };
