@@ -40,23 +40,21 @@ int main()
     Physics physic = Physics();
     Display display = Display(WINDOW_SIZE_X , WINDOW_SIZE_Y ,&physic, &camera);
 
-    glEnable(GL_DEPTH_TEST);
-
     // inputs
     glfwSetFramebufferSizeCallback(display.getWindow(), framebuffer_size_callback);
     glfwSetCursorPosCallback(display.getWindow(), mouse_callback);
     glfwSetScrollCallback(display.getWindow(), scroll_callback);
 
-    
+    glEnable(GL_DEPTH_TEST);
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(display.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-    /*Shader cubeShader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
+    Shader cubeShader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
     Shader lightShader("Shaders/lightShader.vs", "Shaders/lightShader.fs");
 
-    Cube lightCube = Cube(lightPos, glm::vec3(45, 0, 0), glm::vec3(0.25f, 0.25f, 0.25f), &lightShader);
-    Cube cube = Cube(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), &cubeShader);*/
+    Cube lightCube = Cube(lightPos, glm::vec3(0.25f, 0.25f, 0.25f), &lightShader);
+    Cube cube = Cube(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), &cubeShader);
 
 	while (!display.windowShouldClose()) {
 
@@ -74,7 +72,7 @@ int main()
 
 		accumulator += frameTime;
 
-		while (accumulator >= dt) //-> mettre ca dans le physics
+		while (accumulator >= dt)
 		{
 			//Update physics
 			physic.update(t, dt);
@@ -90,7 +88,7 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /*cubeShader.use();
+        cubeShader.use();
         cubeShader.setVec3("light.position", lightPos);
         cubeShader.setVec3("viewPos", camera.Position);
 
@@ -112,7 +110,7 @@ int main()
 
 
         cube.render(&display);
-        lightCube.render(&display);*/
+        lightCube.render(&display);
 
 
 		display.renderUI();
