@@ -7,12 +7,13 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-//#include <glm/glm.hpp>
+#include <glm/glm.hpp>
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "Camera.h"
+#include "Cube.h"
 
 class Display
 {
@@ -27,10 +28,15 @@ private:
 	_int64 selected;
 	char projectileName[64];
 	Physics* m_linkedPhysics;
+	unsigned int m_cubeVAO;
+	Shader* m_cubeShader;
+	Shader* m_lightShader;
 
 	//Methods
 	void drawCircle(float cx, float cy, float r, int num_segments);
 	void drawSquare(float cx, float cy, float d);
+	void initCube();
+	void drawCube(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, Shader shader);
 
 public:
 	Display() = default;
