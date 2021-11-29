@@ -60,8 +60,8 @@ int main()
     std::vector<Entity*> entities;
     Entity e = Entity();
     e.addComponent<ShapeRenderer>();
-    e.getComponent<ShapeRenderer>()->setShape(cube);
-    e.getComponent<ShapeRenderer>()->setShader(cubeShader);
+    //e.getComponent<ShapeRenderer>()->setShape(cube);
+    //e.getComponent<ShapeRenderer>()->setShader(cubeShader);
     entities.push_back(&e);
 
 

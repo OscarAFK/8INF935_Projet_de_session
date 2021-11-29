@@ -26,7 +26,9 @@ public:
         int width, height;
         glfwGetWindowSize(display->getWindow(), &width, &height);
 
-        glBindVertexArray(m_shape->getVAO());
+        glBindVertexArray(display->getCubeVAO());
+        //glBindVertexArray(m_shape->getVAO());
+        // 
         // activate shader
         m_shader->use();
 

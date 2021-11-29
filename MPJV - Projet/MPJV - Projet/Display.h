@@ -28,9 +28,9 @@ private:
 	_int64 selected;
 	char projectileName[64];
 	Physics* m_linkedPhysics;
-	//unsigned int m_cubeVAO, m_cubeVBO;
-	Shader* m_cubeShader;
+	unsigned int m_cubeVAO = -1;
 	Shader* m_lightShader;
+	Shader* m_cubeShader;
 
 	//Methods
 	void drawCircle(float cx, float cy, float r, int num_segments);
@@ -56,5 +56,7 @@ public:
 	void quitLibraries();
 	void terminalCommand();
 	void tick(std::vector<Entity*> entities) override;
+	void createCubeVAO();
+	unsigned int getCubeVAO();
 };
 
