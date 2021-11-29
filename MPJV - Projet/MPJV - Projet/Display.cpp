@@ -296,7 +296,7 @@ void Display::renderUI()
 	ImGui::End();
 
 	ImGui::Begin("Rigidbodies");
-	if (ImGui::Button("Creer un rigidbody"))
+	if (ImGui::Button("Creer une forme irreguliere"))
 	{
 		Rigidbody * rg = nullptr;
 		std::vector<ForceGenerator*> generators;
@@ -306,6 +306,28 @@ void Display::renderUI()
 		rg = new Rigidbody(Vector3D(0, 0, 0), Quaternion(1,0,0,0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1,40));
 		generators.push_back(new GravityForceGenerator(Vector3D(0, -100, 0)));
 		m_linkedPhysics->addRigidbody(rg, generators);
+	}
+
+	if (ImGui::Button("Creer deux voitures"))
+	{
+		Rigidbody* voiture1 = nullptr;
+		Rigidbody* voiture2 = nullptr;
+		std::vector<ForceGenerator*> generatorsVoiture1;
+		std::vector<ForceGenerator*> generatorsVoiture2;
+
+		std::cout << "Creation de deux voitures" << std::endl;
+
+		voiture1 = new Rigidbody(Vector3D(-100, -20, 0), Quaternion(1, 0, 0, 0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1, 40));
+		voiture2 = new Rigidbody(Vector3D(100, 20, 0), Quaternion(1, 0, 0, 0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1, 40));
+		generatorsVoiture1.push_back(new GravityForceGenerator(Vector3D(50,0, 0)));
+		generatorsVoiture2.push_back(new GravityForceGenerator(Vector3D(-50, 0, 0)));
+		m_linkedPhysics->addRigidbody(voiture1, generatorsVoiture1);
+		m_linkedPhysics->addRigidbody(voiture2, generatorsVoiture2);
+	}
+	if (ImGui::Button("Generer une collision"))
+	{
+		m_linkedPhysics->getRigidbody(0)->AddForceAtBodyPoint(Vector3D(20,20,0), Vector3D(20,20));
+		m_linkedPhysics->getRigidbody(1)->AddForceAtBodyPoint(Vector3D(-20,-20,0), Vector3D(-20,-20));
 	}
 	ImGui::End();
 

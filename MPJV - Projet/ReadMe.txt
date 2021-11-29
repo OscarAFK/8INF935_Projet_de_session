@@ -1,0 +1,1 @@
+Pour faire fonctionner le programme, ouvrez le fichier "MPJV - Projet.sln" avec visual studio 2019. Puis lancez la compilation.
