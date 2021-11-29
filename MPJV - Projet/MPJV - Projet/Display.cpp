@@ -8,6 +8,7 @@
 Display::Display(int windowSizeX, int windowSizeY, Physics* physics, Camera* camera) : m_linkedPhysics(physics), m_camera(camera)
 {	
 	initDisplayLib(windowSizeX, windowSizeY);
+	initCube();
 }
 
 #pragma endregion
@@ -74,103 +75,6 @@ void Display::drawSquare(float cx, float cy, float d)
 	glVertex2f((d + cx) / (float)width, (d + cy) / (float)height);//output vertex 
 	glVertex2f((-d + cx) / (float)width, (d + cy) / (float)height);//output vertex 
 	glEnd();
-}
-
-void Display::initCube()
-{
-	unsigned int VBO;
-	float vertices[] = {
-
-		//back face
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-		//front face
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-
-		//left face
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-
-		//right face
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-
-		 //bottom face
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-
-		//top face
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
-	};
-
-	glGenVertexArrays(1, &m_cubeVAO);
-	glGenBuffers(1, &VBO);
-
-	glBindVertexArray(m_cubeVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// normal attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-}
-
-void Display::drawCube(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, Shader shader)
-{
-	int width, height;
-	glfwGetWindowSize(getWindow(), &width, &height);
-
-	glBindVertexArray(m_cubeVAO);
-	// activate shader
-	shader.use();
-
-	// pass projection matrix to shader (note that in this case it could change every frame)
-	glm::mat4 projection = glm::perspective(glm::radians(getCamera()->Zoom), (float)width / (float)height, 0.1f, 100.0f);
-	shader.setMat4("projection", projection);
-
-	// camera/view transformation
-	glm::mat4 view = getCamera()->GetViewMatrix();
-	shader.setMat4("view", view);
-
-	glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-	model = glm::translate(model, position);
-	model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0.f, 0.f, 1.f));
-	model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0.f, 1.f, 0.f));
-	model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1.f, 0.f, 0.f));
-	model = glm::scale(model, scale);
-	shader.setMat4("model", model);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
 #pragma endregion

@@ -44,18 +44,23 @@ int main()
     Time time = Time();
 
     std::vector<System*> systems;
-    systems.push_back(&physic);
+    //systems.push_back(&physic);
     systems.push_back(&display);
-    systems.push_back(&time);
+    //systems.push_back(&time);
 
 
     Shader cubeShader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
     Shader lightShader("Shaders/lightShader.vs", "Shaders/lightShader.fs");
 
+
+    Cube lightCube = Cube(lightPos, glm::vec3(45, 0, 0), glm::vec3(0.25f, 0.25f, 0.25f));
+    Cube cube = Cube(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 2, 1));
+
+
     std::vector<Entity*> entities;
     Entity e = Entity();
     e.addComponent<ShapeRenderer>();
-    e.getComponent<ShapeRenderer>()->setShape(Cube(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
+    e.getComponent<ShapeRenderer>()->setShape(cube);
     e.getComponent<ShapeRenderer>()->setShader(cubeShader);
     entities.push_back(&e);
 
@@ -70,8 +75,6 @@ int main()
     // tell GLFW to capture our mouse
     glfwSetInputMode(display.getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-    /*Cube lightCube = Cube(lightPos, glm::vec3(45, 0, 0), glm::vec3(0.25f, 0.25f, 0.25f), &lightShader);
-    Cube cube = Cube(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), &cubeShader);*/
 
 	while (!display.windowShouldClose()) {
 
@@ -111,12 +114,6 @@ int main()
         {
             systems[i]->tick(entities);
         }
-        
-        
-
-        /*cube.render(&display);
-        lightCube.render(&display);*/
-
 
 		display.renderUI();
 
@@ -172,7 +169,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
         }
 
         float xoffset = xpos - lastX;
-        float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+        float yoffset = lastY - ypos;
 
         lastX = xpos;
         lastY = ypos;

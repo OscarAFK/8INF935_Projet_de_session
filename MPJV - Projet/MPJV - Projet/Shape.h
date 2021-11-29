@@ -10,15 +10,14 @@ class Shape
 protected:
 	glm::vec3 m_position, m_rotation, m_scale;
 	unsigned int m_VBO, m_VAO;
-	Shader* m_shader;
 public:
+
 	Shape(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale)
 	{
 		m_position = position;
 		m_rotation = rotation;
 		m_scale = scale;
 	}
-	//virtual void render(Display* display) = 0;
 
 	unsigned int getVAO()
 	{

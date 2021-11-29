@@ -28,21 +28,18 @@ private:
 	_int64 selected;
 	char projectileName[64];
 	Physics* m_linkedPhysics;
-	unsigned int m_cubeVAO;
+	//unsigned int m_cubeVAO, m_cubeVBO;
 	Shader* m_cubeShader;
 	Shader* m_lightShader;
 
 	//Methods
 	void drawCircle(float cx, float cy, float r, int num_segments);
 	void drawSquare(float cx, float cy, float d);
-	void initCube();
-	void drawCube(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale, Shader shader);
 
 public:
 	Display() = default;
 	Display(int windowSizeX, int windowSizeY, Physics* physics, Camera* camera);
 	~Display() = default;
-
 
 	void linkToPhysics(Physics* physics);
 	void setCamera(Camera* camera);
