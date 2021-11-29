@@ -98,7 +98,7 @@ Matrix33 Matrix33::Inverse() const
     newMat.m_values[6] = m_values[3]* m_values[7] - m_values[4]* m_values[6];
     newMat.m_values[7] = m_values[1]* m_values[6] - m_values[0]* m_values[7];
     newMat.m_values[8] = m_values[0]* m_values[4] - m_values[1]* m_values[3];
-    newMat *= 1/Determinant(newMat);
+    newMat *= 1/det;
     return newMat;
 }
 

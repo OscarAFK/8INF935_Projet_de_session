@@ -317,17 +317,19 @@ void Display::renderUI()
 
 		std::cout << "Creation de deux voitures" << std::endl;
 
-		voiture1 = new Rigidbody(Vector3D(-100, -20, 0), Quaternion(1, 0, 0, 0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1, 40));
-		voiture2 = new Rigidbody(Vector3D(100, 20, 0), Quaternion(1, 0, 0, 0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1, 40));
-		generatorsVoiture1.push_back(new GravityForceGenerator(Vector3D(50,0, 0)));
-		generatorsVoiture2.push_back(new GravityForceGenerator(Vector3D(-50, 0, 0)));
+		voiture1 = new Rigidbody(Vector3D(-100, -20, 0), Quaternion(1, 0, 0, 0), 1, 1, 1, tenseursFormesDeBase::Cuboide(1, 40));
+		voiture2 = new Rigidbody(Vector3D(100, 20, 0), Quaternion(1, 0, 0, 0), 1, 1, 1, tenseursFormesDeBase::Cuboide(1, 40));
+		generatorsVoiture1.push_back(new GravityForceGenerator(Vector3D(0,0, 0)));
+		generatorsVoiture2.push_back(new GravityForceGenerator(Vector3D(0, 0, 0)));
 		m_linkedPhysics->addRigidbody(voiture1, generatorsVoiture1);
 		m_linkedPhysics->addRigidbody(voiture2, generatorsVoiture2);
+		voiture1->AddForce(Vector3D(2000,0,0));
+		voiture2->AddForce(Vector3D(-2000,0,0));
 	}
 	if (ImGui::Button("Generer une collision"))
 	{
-		m_linkedPhysics->getRigidbody(0)->AddForceAtBodyPoint(Vector3D(20,20,0), Vector3D(20,20));
-		m_linkedPhysics->getRigidbody(1)->AddForceAtBodyPoint(Vector3D(-20,-20,0), Vector3D(-20,-20));
+		m_linkedPhysics->getRigidbody(0)->AddForceAtBodyPoint(Vector3D(-1000,-1000,0), Vector3D(20,20));
+		m_linkedPhysics->getRigidbody(1)->AddForceAtBodyPoint(Vector3D(1000, 1000,0), Vector3D(-20,-20));
 	}
 	ImGui::End();
 

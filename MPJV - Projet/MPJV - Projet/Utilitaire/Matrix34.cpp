@@ -87,7 +87,7 @@ Vector3D operator*(const Matrix34& m1, const Vector3D& v1)
 
 Matrix34 Matrix34::Inverse()
 {
-    float valuesSousMat[9] = { m_values[0] , m_values[1], m_values[2], m_values[3], m_values[4], m_values[5], m_values[6], m_values[7], m_values[8] };
+    float valuesSousMat[9] = { m_values[0] , m_values[1], m_values[2], m_values[4], m_values[5], m_values[6], m_values[8], m_values[9], m_values[10] };
     Matrix33 sousMat = Matrix33(valuesSousMat).Inverse();
     float valuesVector[3] = { m_values[3], m_values[7], m_values[11] };
     Vector3D sousVect = sousMat*Vector3D(valuesVector)*(-1);

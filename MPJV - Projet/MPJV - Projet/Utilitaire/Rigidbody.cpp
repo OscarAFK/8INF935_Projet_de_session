@@ -93,12 +93,12 @@ void Rigidbody::ComputeTenseurInertiaWorld(Matrix33& inertiaTenseurWorld)
 
 Vector3D Rigidbody::LocalToWorld(const Vector3D& local)
 {
-	return m_transformMatrix.Inverse()*local;
+	return m_transformMatrix*local + m_position;
 }
 
 Vector3D Rigidbody::WorldToLocal(const Vector3D& world)
 {
-	return m_transformMatrix * world;
+	return m_transformMatrix.Inverse() * (world - m_position);
 }
 
 Matrix33 tenseursFormesDeBase::Sphere(float m, float r) {
