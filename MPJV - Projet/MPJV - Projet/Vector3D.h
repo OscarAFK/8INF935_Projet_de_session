@@ -14,9 +14,9 @@ class Vector3D
 		Vector3D(float values[3]);
 		~Vector3D() = default;
 
-		float getX() const;
-		float getY() const;
-		float getZ() const;
+		float* getX();
+		float* getY();
+		float* getZ();
 		std::vector<float> getValues() const;
 
 		void setX(const float value);

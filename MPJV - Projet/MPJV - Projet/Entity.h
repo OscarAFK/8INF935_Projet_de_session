@@ -1,18 +1,20 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "Component.h"
+#include "Transform.h"
+
 
 class Entity
 {
 public:
-	std::string m_name = "test";
-	Entity() = default;
-	Entity(std::vector<Component*> components) {
-		m_components = components;
+	std::string m_name = "Entity";
+	std::vector<Component*> m_components;
+
+	Entity(std::string name) {
+		m_name = name;
+		addComponent<Transform>();
 	}
 	~Entity() = default;
-	std::vector<Component*> m_components;
 
 
 	template <typename T = Component>

@@ -14,19 +14,19 @@ Vector3D::Vector3D(float values[3]) :
 
 #pragma region Accessors
 
-float Vector3D::getX() const
+float* Vector3D::getX()
 {
-	return m_x;
+	return &m_x;
 }
 
-float Vector3D::getY() const
+float* Vector3D::getY()
 {
-	return m_y;
+	return &m_y;
 }
 
-float Vector3D::getZ() const
+float* Vector3D::getZ()
 {
-	return m_z;
+	return &m_z;
 }
 
 std::vector<float> Vector3D::getValues() const

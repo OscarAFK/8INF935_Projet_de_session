@@ -33,7 +33,7 @@ void Display::drawPhysics()
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
 	
 	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
-		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
+		//drawCircle(*it->getPosition().getX(), *it->getPosition().getY(), 50, 10);
 	}
 }
 
@@ -42,7 +42,7 @@ void Display::drawIntermediatePhysics(const float alpha)
 	auto listOfParticles = m_linkedPhysics->getIntermediateParticle(alpha);
 
 	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
-		drawCircle((*it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
+		//drawCircle((it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
 	}
 
 	for (int i = 0; i < listOfParticles.size(); i++) {
@@ -159,7 +159,7 @@ void Display::setupView() // Add update camera here ----------------------------
 	//camera->updateView();
 }
 
-void Display::renderUI()
+void Display::renderUI(std::vector<Entity*> entities)
 {
 	//RENDER UI
 
@@ -168,25 +168,67 @@ void Display::renderUI()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Begin("Stand de tir");
-	ImGui::Text("Bienvenue au stand de tir\n");
-	ImGui::Text("Veuillez choisir votre projectile.\n");
-
-	if (ImGui::TreeNode("Liste des projectiles"))
+	// Menu Bar
+	if (ImGui::BeginMainMenuBar())
 	{
-		for (std::vector<std::string>::iterator it = projectileMap.begin(); it != projectileMap.end(); ++it) {
-			if (ImGui::Selectable(it->c_str(), selected == std::distance(projectileMap.begin(), it))) {
-				selected = std::distance(projectileMap.begin(), it);
-				sprintf_s(projectileName, "%s", it->c_str());
+		if (ImGui::BeginMenu("Demo"))
+		{
+			//ShowExampleMenuFile();
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Edit"))
+		{
+			if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+			if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+			ImGui::Separator();
+			if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+			if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+			if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+
+	// Stand de tir
+	if (ImGui::Begin("Stand de tir"))
+	{
+		ImGui::Text("Bienvenue au stand de tir\n");
+		ImGui::Text("Veuillez choisir votre projectile.\n");
+		if (ImGui::TreeNode("Liste des projectiles")) {
+			for (std::vector<std::string>::iterator it = projectileMap.begin(); it != projectileMap.end(); ++it) {
+				if (ImGui::Selectable(it->c_str(), selected == std::distance(projectileMap.begin(), it))) {
+					selected = std::distance(projectileMap.begin(), it);
+					sprintf_s(projectileName, "%s", it->c_str());
+				}
+			}
+			ImGui::TreePop();
+		}
+		if (ImGui::Button("Shoot"))
+		{
+			shootProjectile(selected);
+		}
+		ImGui::End();
+	}
+
+	//Demo window
+	if (ImGui::Begin("Demo"))
+	{
+		for (size_t i = 0; i < entities.size(); i++) {
+			if (ImGui::CollapsingHeader(entities[i]->m_name.c_str())) {
+				for (size_t j = 0; j < entities[i]->m_components.size(); j++) {
+					if (ImGui::TreeNode(entities[i]->m_components[j]->getName().c_str())) {
+						entities[i]->m_components[j]->renderComponentUI();
+						ImGui::TreePop();
+					}
+				}
 			}
 		}
-		ImGui::TreePop();
+		ImGui::End();
 	}
-	if (ImGui::Button("Shoot"))
-	{
-		shootProjectile(selected);
-	}
-	ImGui::End();
+	
+
+	
+
 	/*
 	ImGui::Begin("Blob");
 	if (ImGui::Button("Creer un blob"))
@@ -397,7 +439,7 @@ void Display::createCubeVAO()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	//Unbind everything
+	// unbind everything
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

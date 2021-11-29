@@ -176,6 +176,7 @@
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utilitaire\Matrix33.cpp" />
     <ClCompile Include="Utilitaire\Matrix34.cpp" />
     <ClCompile Include="Utilitaire\Quaternion.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleContactGenerators\NaiveParticleContactGenerator.h" />
     <ClInclude Include="ParticleContactGenerators\ParticleCable.h" />

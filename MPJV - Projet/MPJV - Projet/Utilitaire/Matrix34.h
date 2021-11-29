@@ -36,7 +36,7 @@ public:
 	Matrix34 Inverse();
 
 	// Set the matrix base on a quaternion and position
-	void SetOrientationAndPosition(const Quaternion& q, const Vector3D& p);
+	void SetOrientationAndPosition(Quaternion& q, Vector3D& p);
 
 	//Transform a position
 	Vector3D TransformPosition(const Vector3D& vector);

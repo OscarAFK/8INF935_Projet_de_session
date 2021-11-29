@@ -7,6 +7,7 @@ class ShapeRenderer : public Component
 public:
 	ShapeRenderer(Entity* owner) : Component(owner) 
 	{
+        m_name = "Shape Renderer";
         m_shader = new Shader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
         m_shape = new Cube(glm::vec3(0, 0, 0), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
 	}
@@ -26,9 +27,8 @@ public:
         int width, height;
         glfwGetWindowSize(display->getWindow(), &width, &height);
 
-        glBindVertexArray(display->getCubeVAO());
-        //glBindVertexArray(m_shape->getVAO());
-        // 
+        glBindVertexArray(m_shape->getVAO());
+
         // activate shader
         m_shader->use();
 
@@ -73,7 +73,13 @@ public:
         glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
+    void renderComponentUI()
+    {
+        ImGui::Text("This is a shape renderer component");
+    }
+
 private:
+    
 	Shape* m_shape;
 	Shader* m_shader;
 };

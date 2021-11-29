@@ -44,9 +44,9 @@ int main()
     Time time = Time();
 
     std::vector<System*> systems;
-    //systems.push_back(&physic);
+    systems.push_back(&physic);
     systems.push_back(&display);
-    //systems.push_back(&time);
+    systems.push_back(&time);
 
 
     Shader cubeShader("Shaders/cubeShader.vs", "Shaders/cubeShader.fs");
@@ -58,10 +58,8 @@ int main()
 
 
     std::vector<Entity*> entities;
-    Entity e = Entity();
+    Entity e = Entity("CubeTest");
     e.addComponent<ShapeRenderer>();
-    //e.getComponent<ShapeRenderer>()->setShape(cube);
-    //e.getComponent<ShapeRenderer>()->setShader(cubeShader);
     entities.push_back(&e);
 
 
@@ -115,7 +113,7 @@ int main()
             systems[i]->tick(entities);
         }
 
-		display.renderUI();
+		display.renderUI(entities); // MOVE THIS INSIDE display.tick(entities);
 
 		display.swapBuffers();
 

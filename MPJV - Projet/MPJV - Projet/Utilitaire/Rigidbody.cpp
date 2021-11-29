@@ -86,9 +86,9 @@ Matrix33 tenseursFormesDeBase::Sphere(float m, float r) {
 }
 
 Matrix33 tenseursFormesDeBase::Cuboide(float m, Vector3D d) {
-	float values[] = { 1 / 12.0f * m * (d.getY() * d.getY() + d.getZ() * d.getZ()), 0,0,
-						0,1 / 12.0f * m * (d.getX() * d.getX() + d.getZ() * d.getZ()), 0,
-						0,0,1 / 12.0f * m * (d.getY() * d.getY() + d.getX() * d.getX()) };
+	float values[] = { 1 / 12.0f * m * (*d.getY() * *d.getY() + *d.getZ() * *d.getZ()), 0,0,
+					 0,1 / 12.0f * m * (*d.getX() * *d.getX() + *d.getZ() * *d.getZ()), 0,
+					0,0,1 / 12.0f * m * (*d.getY() * *d.getY() + *d.getX() * *d.getX()) };
 	return Matrix33(values);
 }
 

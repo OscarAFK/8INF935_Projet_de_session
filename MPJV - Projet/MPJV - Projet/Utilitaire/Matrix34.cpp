@@ -94,7 +94,7 @@ Matrix34 Matrix34::Inverse()
     return Matrix34(sousMat, sousVect);
 }
 
-void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
+void Matrix34::SetOrientationAndPosition(Quaternion& q, Vector3D& p)
 {
     Matrix33 tmpMat = Matrix33();
     tmpMat.SetOrientation(q);
@@ -103,9 +103,9 @@ void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
             m_values[i+j*4] = tmpMat.getValueAt(i,j);
         }
     }
-    m_values[3] = p.getX();
-    m_values[7] = p.getY();
-    m_values[11] = p.getZ();
+    m_values[3] = *p.getX();
+    m_values[7] = *p.getY();
+    m_values[11] = *p.getZ();
 }
 
 Vector3D Matrix34::TransformPosition(const Vector3D& vector)

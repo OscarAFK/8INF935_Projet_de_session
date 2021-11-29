@@ -50,7 +50,7 @@ public:
 	Camera* getCamera();
 	const bool windowShouldClose();
 	void setupView();
-	void renderUI();
+	void renderUI(std::vector<Entity*> entities);
 	void shootProjectile(int projectileId);
 	void swapBuffers();
 	void quitLibraries();
