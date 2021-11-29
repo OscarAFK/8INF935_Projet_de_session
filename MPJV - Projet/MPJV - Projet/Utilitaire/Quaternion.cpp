@@ -79,10 +79,10 @@ void Quaternion::UpdateByAngularVelocity(const Vector3D& rotation, float duratio
 {
     Quaternion q = Quaternion(0, rotation.getX(), rotation.getY(), rotation.getZ());
     q *= (*this);
-    m_values[0] += q.getW() * 0.5f;
-    m_values[1] += q.getI() * 0.5f;
-    m_values[2] += q.getJ() * 0.5f;
-    m_values[3] += q.getK() * 0.5f;
+    m_values[0] += q.getW() * 0.5f * duration;
+    m_values[1] += q.getI() * 0.5f * duration;
+    m_values[2] += q.getJ() * 0.5f * duration;
+    m_values[3] += q.getK() * 0.5f * duration;
     Normalize();
 }
 

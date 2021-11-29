@@ -27,7 +27,7 @@ void Rigidbody::Integrate(float duration)
 	m_previousPos = m_position;
 	m_position = m_position + m_velocity * duration;
 	m_orientation.UpdateByAngularVelocity(m_rotation, duration);
-
+	
 	//Update datas
 	CalculateDerivedData();
 	ClearAccumulator();
