@@ -20,3 +20,15 @@ private:
 	Rigidbody * rigidbody;
 	std::vector<BvhNode> childrens;
 };
+
+class Bvh {
+public:
+	Bvh() = default;
+	~Bvh() = default;
+
+	BvhNode getStart();
+	void addStart(BvhNode node);
+
+private:
+	BvhNode start;
+};

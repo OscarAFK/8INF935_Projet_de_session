@@ -31,3 +31,13 @@ void BvhNode::setChildrens(std::vector<BvhNode> _childrens)
 {
 	childrens = _childrens;
 }
+
+BvhNode Bvh::getStart()
+{
+	return start;
+}
+
+void Bvh::addStart(BvhNode node)
+{
+	start = node;
+}
