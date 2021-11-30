@@ -1,31 +1,37 @@
 #include "Transform.h"
-/*
-void Transform::setPosition(Vector3D position)
+
+Transform::Transform(Entity* owner) : Component(owner)
 {
-	m_position = position;
+	m_name = "Transform";
 }
 
-Vector3D Transform::getPosition()
-{
+//void Transform::setPosition(Vector3D position){
+//	m_position = position;
+//}
+
+float* Transform::getPosition(){
 	return m_position;
 }
 
-void Transform::setRotation(Vector3D rotation)
-{
-	m_rotation = rotation;
-}
+//void Transform::setRotation(Vector3D rotation){
+//	m_rotation = rotation;
+//}
 
-Vector3D Transform::getRotation()
-{
+float* Transform::getRotation(){
 	return m_rotation;
 }
 
-void Transform::setScale(Vector3D scale)
-{
-	m_scale = scale;
+//void Transform::setScale(Vector3D scale){
+//	m_scale = scale;
+//}
+
+float* Transform::getScale(){
+	return m_scale;
 }
 
-Vector3D Transform::getScale()
+void Transform::renderComponentUI()
 {
-	return m_scale;
-}*/
+	ImGui::DragFloat3("Position", m_position, 0.005f);
+	ImGui::DragFloat3("Rotation", m_rotation, 0.005f);
+	ImGui::DragFloat3("Scale", m_scale, 0.005f);
+}

@@ -70,6 +70,7 @@ void Physics::update(float t, float dt)
     particleContactResolver.resolveContacts(particleContactList, nbContactsCrees, dt);          //Resolution des contacts
 }
 
+
 std::vector<Particle*> Physics::getIntermediateParticle(const float alpha)
 {
     std::vector<Particle*> intermediateParticles = std::vector<Particle*>();
@@ -85,4 +86,15 @@ void Physics::addParticleContactGenerator(ParticleContactGenerator* contactGener
 }
 
 
+void Physics::tick(std::vector<Entity*> entities)
+{
+    for (size_t i = 0; i < entities.size(); i++)
+    {
+        Rigidbody* rigidbody = entities[i]->getComponent<Rigidbody>();
+        if (rigidbody != nullptr)
+        {
+            rigidbody->Integrate(0.1f);
+        }
+    }
+}
 #pragma endregion

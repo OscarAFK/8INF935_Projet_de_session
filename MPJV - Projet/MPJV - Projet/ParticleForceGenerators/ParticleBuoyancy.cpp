@@ -2,7 +2,7 @@
 
 void ParticleBuoyancy::UpdateForce(Particle* particle, float deltaTime)
 {
-	float d = (*particle->getPosition().getY() - m_waterHeight - m_maxDepth) / m_maxDepth;
+	float d = (particle->getPosition().getY() - m_waterHeight - m_maxDepth) / m_maxDepth;
 	if (d <= 0) {
 		return;
 	}

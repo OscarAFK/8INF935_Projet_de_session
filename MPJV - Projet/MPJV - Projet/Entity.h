@@ -9,10 +9,11 @@ class Entity
 public:
 	std::string m_name = "Entity";
 	std::vector<Component*> m_components;
+	Transform* transform;
 
 	Entity(std::string name) {
 		m_name = name;
-		addComponent<Transform>();
+		transform = addComponent<Transform>();
 	}
 	~Entity() = default;
 
@@ -31,9 +32,11 @@ public:
 	}
 
 	template <typename T = Component>
-	void addComponent()
+	T* addComponent()
 	{
-		m_components.push_back(new T(this));
+		T* newComponent = new T(this);
+		m_components.push_back(newComponent);
+		return newComponent;
 	}
 
 private:

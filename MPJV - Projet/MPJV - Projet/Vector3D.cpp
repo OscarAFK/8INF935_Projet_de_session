@@ -14,24 +14,24 @@ Vector3D::Vector3D(float values[3]) :
 
 #pragma region Accessors
 
-float* Vector3D::getX()
+float Vector3D::getX() const
 {
-	return &m_x;
+	return m_x;
 }
 
-float* Vector3D::getY()
+float Vector3D::getY() const
 {
-	return &m_y;
+	return m_y;
 }
 
-float* Vector3D::getZ()
+float Vector3D::getZ() const
 {
-	return &m_z;
+	return m_z;
 }
 
 std::vector<float> Vector3D::getValues() const
 {
-	return {m_x, m_y,m_z};
+	return { m_x, m_y,m_z };
 }
 
 #pragma endregion
@@ -73,7 +73,7 @@ float Vector3D::scalarProduct(Vector3D v1, Vector3D v2)
 	return v1.m_x * v2.m_x + v1.m_y * v2.m_y + v1.m_z * v2.m_z;
 }
 
- Vector3D Vector3D::dotProduct(Vector3D v1, Vector3D v2)
+Vector3D Vector3D::vectProduct(Vector3D v1, Vector3D v2)
 {
 	return Vector3D(v1.m_y * v2.m_z - v1.m_z * v2.m_y,
 		v1.m_z * v2.m_x - v1.m_x * v2.m_z,
@@ -118,7 +118,7 @@ Vector3D& Vector3D::operator-=(const Vector3D& v)
 
 Vector3D& Vector3D::operator*=(const Vector3D& v)
 {
-	auto returnVector = Vector3D(m_x*v.m_x, m_y * v.m_y, m_z * v.m_z);
+	auto returnVector = Vector3D(m_x * v.m_x, m_y * v.m_y, m_z * v.m_z);
 	return returnVector;
 }
 
@@ -148,13 +148,14 @@ Vector3D operator*(const Vector3D& vector, const float& value)
 {
 	auto v = vector;
 	v *= value;
-	return vector;
+	return v;
 }
 
 Vector3D operator*(const float& value, Vector3D& vector)
 {
-	vector *= value;
-	return vector;
+	auto v = vector;
+	v *= value;
+	return v;
 }
 
 Vector3D& Vector3D::operator/=(const float& value)
@@ -169,7 +170,7 @@ Vector3D operator/(const Vector3D& vector, const float& value)
 {
 	auto v = vector;
 	v /= value;
-	return vector;
+	return v;
 }
 
 #pragma endregion

@@ -12,6 +12,7 @@
 #include "Utilitaire/stb_image.h"
 #include "Cube.h"
 #include "ShapeRenderer.h"
+#include "Utilitaire/Rigidbody.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -60,6 +61,7 @@ int main()
     std::vector<Entity*> entities;
     Entity e = Entity("CubeTest");
     e.addComponent<ShapeRenderer>();
+    e.addComponent<Rigidbody>();
     entities.push_back(&e);
 
 

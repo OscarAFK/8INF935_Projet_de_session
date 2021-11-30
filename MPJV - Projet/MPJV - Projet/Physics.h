@@ -2,6 +2,7 @@
 
 #include "System.h"
 #include "Particle.h"
+#include "Utilitaire/Rigidbody.h"
 #include <memory>
 #include <chrono>
 #include "ParticleForceGenerators/ParticleForceRegistry.h"
@@ -47,8 +48,5 @@ public:
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void addParticleContactGenerator(ParticleContactGenerator* contactGenerator);
 	void update(float t, float dt);
-	void tick(std::vector<Entity*> entities) override
-	{
-		//printf("physics tick");
-	}
+	void tick(std::vector<Entity*> entities) override;
 };

@@ -1,11 +1,24 @@
 #include "Rigidbody.h"
-
-Rigidbody::Rigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie) : 
-	m_position(position), m_orientation(orientation), m_inverseMass(1/mass), m_damping(damping), m_angularDamping(angularDamping),
-	m_forceAccum(Vector3D(0,0,0)), m_torqueAccum(Vector3D(0,0,0))
+/*
+Rigidbody::Rigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie) :
+	m_position(position), m_orientation(orientation), m_inverseMass(1 / mass), m_damping(damping), m_angularDamping(angularDamping),
+	m_forceAccum(Vector3D(0, 0, 0)), m_torqueAccum(Vector3D(0, 0, 0))
 {
 	CalculateDerivedData();
 	SetInertiaTenseur(tenseurInertie);
+}
+
+Rigidbody::Rigidbody(Vector3D position)
+{
+	m_position = position;
+}*/
+
+Rigidbody::Rigidbody(Entity* owner) : Component(owner)
+{
+	m_name = "Rigidbody";
+	m_inverseMass = 1.0f;
+	m_forceAccum = Vector3D(0, 0, 0);
+	m_torqueAccum = Vector3D(0, 0, 0);
 }
 
 void Rigidbody::Integrate(float duration)
@@ -13,18 +26,21 @@ void Rigidbody::Integrate(float duration)
 	//Acceleration
 	Vector3D linearAcceleration = m_inverseMass * m_forceAccum;
 	Vector3D angularAcceleration = m_inverseTenseurInertieWorld * m_torqueAccum;
-	
+
 	//Vitesse
 	m_velocity = m_velocity * pow(m_damping, duration) + linearAcceleration * duration;
 	m_rotation = m_rotation * pow(m_angularDamping, duration) + angularAcceleration * duration;
 
 	//Position
+	m_previousPos = m_position;
 	m_position = m_position + m_velocity * duration;
 	m_orientation.UpdateByAngularVelocity(m_rotation, duration);
 
 	//Update datas
 	CalculateDerivedData();
 	ClearAccumulator();
+
+	printf("%f", GetMass());
 }
 
 void Rigidbody::AddForce(const Vector3D& force)
@@ -55,6 +71,24 @@ void Rigidbody::SetInertiaTenseur(const Matrix33& tenseurInertie)
 	m_inverseTenseurInertie = tenseurInertie.Inverse();
 }
 
+float Rigidbody::GetMass() const
+{
+	if (m_inverseMass != 0) return 1 / m_inverseMass;
+	std::cout << "ERROR: infinite mass" << std::endl;
+	return -1;
+}
+
+Vector3D Rigidbody::GetPosition() const
+{
+	return m_position;
+}
+
+Vector3D Rigidbody::GetPreviousPosition() const
+{
+	return m_previousPos;
+}
+
+
 void Rigidbody::CalculateDerivedData()
 {
 	m_transformMatrix.SetOrientationAndPosition(m_orientation, m_position);
@@ -70,12 +104,12 @@ void Rigidbody::ComputeTenseurInertiaWorld(Matrix33& inertiaTenseurWorld)
 
 Vector3D Rigidbody::LocalToWorld(const Vector3D& local)
 {
-	return m_transformMatrix.Inverse()*local;
+	return m_transformMatrix * local + m_position;
 }
 
 Vector3D Rigidbody::WorldToLocal(const Vector3D& world)
 {
-	return m_transformMatrix * world;
+	return m_transformMatrix.Inverse() * (world - m_position);
 }
 
 Matrix33 tenseursFormesDeBase::Sphere(float m, float r) {
@@ -86,9 +120,9 @@ Matrix33 tenseursFormesDeBase::Sphere(float m, float r) {
 }
 
 Matrix33 tenseursFormesDeBase::Cuboide(float m, Vector3D d) {
-	float values[] = { 1 / 12.0f * m * (*d.getY() * *d.getY() + *d.getZ() * *d.getZ()), 0,0,
-					 0,1 / 12.0f * m * (*d.getX() * *d.getX() + *d.getZ() * *d.getZ()), 0,
-					0,0,1 / 12.0f * m * (*d.getY() * *d.getY() + *d.getX() * *d.getX()) };
+	float values[] = { 1 / 12.0f * m * (d.getY() * d.getY() + d.getZ() * d.getZ()), 0,0,
+						0,1 / 12.0f * m * (d.getX() * d.getX() + d.getZ() * d.getZ()), 0,
+						0,0,1 / 12.0f * m * (d.getY() * d.getY() + d.getX() * d.getX()) };
 	return Matrix33(values);
 }
 
@@ -97,4 +131,14 @@ Matrix33 tenseursFormesDeBase::Cylindre(float m, float r, float h) {
 						0,1 / 2.0f * m * r * r, 0,
 						0,0,1 / 12.0f * m * h * h + 1 / 4.0f * m * r * r };
 	return Matrix33(values);
+}
+
+
+void Rigidbody::renderComponentUI(){
+	ImGui::Text("This is a rigidbody component");
+	float mass = GetMass();
+	ImGui::DragFloat("Mass", &mass, 0.005f, 0.005f, 999999.9f);
+	m_inverseMass = 1 / mass;
+	ImGui::DragFloat("Damping", &m_damping, 0.005f);
+	ImGui::DragFloat("Angular damping", &m_angularDamping, 0.005f);
 }

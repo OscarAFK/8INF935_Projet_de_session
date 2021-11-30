@@ -40,12 +40,17 @@ public:
         glm::mat4 view = display->getCamera()->GetViewMatrix();
         m_shader->setMat4("view", view);
         
+        
+        float* position = m_owner->transform->getPosition();
+        float* rotation = m_owner->transform->getRotation();
+        float* scale = m_owner->transform->getScale();
+
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        model = glm::translate(model, m_shape->getPosition());
-        model = glm::rotate(model, glm::radians(m_shape->getRotation().z), glm::vec3(0.f, 0.f, 1.f));
-        model = glm::rotate(model, glm::radians(m_shape->getRotation().y), glm::vec3(0.f, 1.f, 0.f));
-        model = glm::rotate(model, glm::radians(m_shape->getRotation().x), glm::vec3(1.f, 0.f, 0.f));
-        model = glm::scale(model, m_shape->getScale());
+        model = glm::translate(model, glm::vec3(position[0], position[1], position[2]));
+        model = glm::rotate(model, glm::radians(rotation[2]), glm::vec3(0.f, 0.f, 1.f));
+        model = glm::rotate(model, glm::radians(rotation[1]), glm::vec3(0.f, 1.f, 0.f));
+        model = glm::rotate(model, glm::radians(rotation[0]), glm::vec3(1.f, 0.f, 0.f));
+        model = glm::scale(model, glm::vec3(scale[0], scale[1], scale[2]));
         m_shader->setMat4("model", model);
 
         glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
@@ -69,17 +74,25 @@ public:
         m_shader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
         m_shader->setFloat("material.shininess", 32.0f);
 
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        if (wireframeMode)
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        else
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
         glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
     void renderComponentUI()
     {
-        ImGui::Text("This is a shape renderer component");
+        ImGui::Checkbox("Enable wireframe mode", &wireframeMode);
     }
 
 private:
     
 	Shape* m_shape;
 	Shader* m_shader;
+    bool wireframeMode;
 };

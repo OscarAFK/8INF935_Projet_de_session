@@ -27,8 +27,8 @@ public:
 	//Methods
 	void Normalize();
 
-	void RotateByVector(Vector3D& vector);
+	void RotateByVector(const Vector3D& vector);
 
-	void UpdateByAngularVelocity(Vector3D& rotation, float duration);
+	void UpdateByAngularVelocity(const Vector3D& rotation, float duration);
 
 };

@@ -1,11 +1,11 @@
 #include "Quaternion.h"
 
 #pragma region Constructors
-Quaternion::Quaternion(float w, float i, float j, float k) : m_values {w,i,j,k}
+Quaternion::Quaternion(float w, float i, float j, float k) : m_values{ w,i,j,k }
 {
 }
 
-Quaternion::Quaternion(const Quaternion& other) : 
+Quaternion::Quaternion(const Quaternion& other) :
     m_values{ other.m_values[0], other.m_values[1], other.m_values[2], other.m_values[3] }
 {}
 
@@ -61,28 +61,28 @@ Quaternion operator*(const Quaternion& q1, const Quaternion& q2)
 
 void Quaternion::Normalize()
 {
-    float magnitude = sqrt(m_values[0]* m_values[0]+ m_values[1]* m_values[1]+ m_values[2]* m_values[2]+ m_values[3]* m_values[3]);
-    m_values[0] = m_values[0]/magnitude;
-    m_values[1] = m_values[1]/magnitude;
-    m_values[2] = m_values[2]/magnitude;
-    m_values[3] = m_values[3]/magnitude;
+    float magnitude = sqrt(m_values[0] * m_values[0] + m_values[1] * m_values[1] + m_values[2] * m_values[2] + m_values[3] * m_values[3]);
+    m_values[0] = m_values[0] / magnitude;
+    m_values[1] = m_values[1] / magnitude;
+    m_values[2] = m_values[2] / magnitude;
+    m_values[3] = m_values[3] / magnitude;
 }
 
-void Quaternion::RotateByVector(Vector3D& vector)
+void Quaternion::RotateByVector(const Vector3D& vector)
 {
-    Quaternion q = Quaternion(0, *vector.getX(), *vector.getY(), *vector.getZ());
+    Quaternion q = Quaternion(0, vector.getX(), vector.getY(), vector.getZ());
     (*this) *= q;
     Normalize();
 }
 
-void Quaternion::UpdateByAngularVelocity(Vector3D& rotation, float duration)
+void Quaternion::UpdateByAngularVelocity(const Vector3D& rotation, float duration)
 {
-    Quaternion q = Quaternion(0, *rotation.getX(), *rotation.getY(), *rotation.getZ());
+    Quaternion q = Quaternion(0, rotation.getX(), rotation.getY(), rotation.getZ());
     q *= (*this);
-    m_values[0] += q.getW() * 0.5f;
-    m_values[1] += q.getI() * 0.5f;
-    m_values[2] += q.getJ() * 0.5f;
-    m_values[3] += q.getK() * 0.5f;
+    m_values[0] += q.getW() * 0.5f * duration;
+    m_values[1] += q.getI() * 0.5f * duration;
+    m_values[2] += q.getJ() * 0.5f * duration;
+    m_values[3] += q.getK() * 0.5f * duration;
     Normalize();
 }
 
