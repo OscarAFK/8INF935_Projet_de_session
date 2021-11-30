@@ -63,7 +63,7 @@ Vector3D Vector3D::normalize()
 	return Vector3D(m_x / norm, m_y / norm, m_z / norm);
 }
 
-float Vector3D::norm()
+float Vector3D::norm() const
 {
 	return sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 }
@@ -116,10 +116,12 @@ Vector3D& Vector3D::operator-=(const Vector3D& v)
 	return *this;
 }
 
-Vector3D& Vector3D::operator*=(const Vector3D& v)
+/*Vector3D& Vector3D::operator*=(const Vector3D& v)
 {
-	auto returnVector = Vector3D(m_x * v.m_x, m_y * v.m_y, m_z * v.m_z);
-	return returnVector;
+	m_x *= v.m_x;
+	m_y *= v.m_y;
+	m_z *= v.m_z;
+	return *this;
 }
 
 Vector3D operator*(const Vector3D& v1, const Vector3D& v2)
@@ -127,7 +129,7 @@ Vector3D operator*(const Vector3D& v1, const Vector3D& v2)
 	auto v3 = v1;
 	v3 *= v2;
 	return v3;
-}
+}*/
 
 Vector3D operator-(const Vector3D& v1, const Vector3D& v2)
 {

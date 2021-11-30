@@ -19,6 +19,20 @@ Rigidbody::Rigidbody(Entity* owner) : Component(owner)
 	m_inverseMass = 1.0f;
 	m_forceAccum = Vector3D(0, 0, 0);
 	m_torqueAccum = Vector3D(0, 0, 0);
+	float* position = m_owner->transform->getPosition();
+	float* rotation = m_owner->transform->getRotation();
+	m_position = Vector3D(position);
+	m_orientation = Quaternion(1, 0, 0, 0);
+	m_orientation.RotateByVector(rotation);
+}
+
+void Rigidbody::Initialize(float mass, float damping, float angularDamping, Matrix33 tenseurInertie)
+{
+	m_inverseMass = 1 / mass;
+	m_damping = damping;
+	m_angularDamping = angularDamping;
+	CalculateDerivedData();
+	SetInertiaTenseur(tenseurInertie);
 }
 
 void Rigidbody::Integrate(float duration)
@@ -36,6 +50,9 @@ void Rigidbody::Integrate(float duration)
 	m_position = m_position + m_velocity * duration;
 	m_orientation.UpdateByAngularVelocity(m_rotation, duration);
 
+	m_owner->transform->setPosition(m_position);
+	m_owner->transform->setRotation(m_orientation.ToEuler()*360/(2*M_PI));
+
 	//Update datas
 	CalculateDerivedData();
 	ClearAccumulator();
@@ -49,7 +66,7 @@ void Rigidbody::AddForce(const Vector3D& force)
 void Rigidbody::AddForceAtPoint(const Vector3D& force, const Vector3D& worldPoint)
 {
 	AddForce(force);
-	m_torqueAccum += (m_position - worldPoint) * force;
+	m_torqueAccum += Vector3D::vectProduct((m_position - worldPoint),force);
 }
 
 void Rigidbody::AddForceAtBodyPoint(const Vector3D& force, const Vector3D& localPoint)
@@ -139,6 +156,16 @@ void Rigidbody::renderComponentUI(){
 	m_inverseMass = 1 / mass;
 	ImGui::DragFloat("Damping", &m_damping, 0.005f);
 	ImGui::DragFloat("Angular damping", &m_angularDamping, 0.005f);
+	ImGui::Text("Vitesse: \tX: %.2f\tY:%.2f\tZ:%.2f", m_velocity.getX(), m_velocity.getY(), m_velocity.getZ());
+	ImGui::Text("Vitesse angulaire: \tX: %.2f\tY:%.2f\tZ:%.2f", m_rotation.getX(), m_rotation.getY(), m_rotation.getZ());
+	if (ImGui::Button("Add force")) {
+		AddForce(Vector3D(1,0,0));
+	}
+
+	if (ImGui::Button("Add rotation")) {
+		AddForceAtBodyPoint(Vector3D(0, 10, 0), Vector3D(0.5, 0.5, 0));
+		AddForceAtBodyPoint(Vector3D(0, -10, 0), Vector3D(-0.5, -0.5, 0));
+	}
 
 	ImGui::PushItemWidth(-ImGui::GetWindowWidth() * 0.35f);
 }

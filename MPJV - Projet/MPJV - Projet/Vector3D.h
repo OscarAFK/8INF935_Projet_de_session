@@ -24,7 +24,7 @@ public:
 	void setZ(const float value);
 
 	Vector3D normalize();
-	float norm();
+	float norm() const;
 
 	static float scalarProduct(Vector3D v1, Vector3D v2);
 	static Vector3D vectProduct(Vector3D v1, Vector3D v2);
@@ -37,8 +37,8 @@ public:
 	Vector3D& operator-=(const Vector3D& v);
 	friend Vector3D operator-(const Vector3D& v1, const Vector3D& v2);
 
-	Vector3D& operator*=(const Vector3D& v);
-	friend Vector3D operator*(const Vector3D& v1, const Vector3D& v2);
+	/*Vector3D& operator*=(const Vector3D& v);
+	friend Vector3D operator*(const Vector3D& v1, const Vector3D& v2);*/
 
 	Vector3D& operator*=(const float& v);
 	friend Vector3D operator*(const Vector3D& v1, const float& v2);
