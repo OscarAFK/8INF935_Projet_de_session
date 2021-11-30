@@ -141,6 +141,9 @@
     <ClCompile Include="ForceGenerators\GravityForceGenerator.cpp">
       <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="Utilitaire\Bvh.cpp">
+      <Filter>Fichiers sources\Utilitaire</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -253,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="ForceGenerators\GravityForceGenerator.h">
       <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilitaire\Bvh.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
