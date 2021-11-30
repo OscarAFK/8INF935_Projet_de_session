@@ -39,8 +39,6 @@ void Rigidbody::Integrate(float duration)
 	//Update datas
 	CalculateDerivedData();
 	ClearAccumulator();
-
-	printf("%f", GetMass());
 }
 
 void Rigidbody::AddForce(const Vector3D& force)

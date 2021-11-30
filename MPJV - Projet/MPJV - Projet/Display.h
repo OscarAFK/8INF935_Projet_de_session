@@ -22,6 +22,7 @@ private:
 	//attribute used with the display libraries
 	GLFWwindow* window;
 	Camera* m_camera;
+	ImGuiContext* GImGui;
 
 	//Other variables
 	std::vector<std::string> projectileMap;
@@ -31,6 +32,10 @@ private:
 	unsigned int m_cubeVAO = -1;
 	Shader* m_lightShader;
 	Shader* m_cubeShader;
+
+	bool demoWindowOpened = true;
+	bool sceneWindowOpened = true;
+	bool debugWindowOpened = false;
 
 	//Methods
 	void drawCircle(float cx, float cy, float r, int num_segments);
@@ -58,5 +63,8 @@ public:
 	void tick(std::vector<Entity*> entities) override;
 	void createCubeVAO();
 	unsigned int getCubeVAO();
+	void showDemoWindow(bool* p_open);
+	void showSceneWindow(bool* p_open, std::vector<Entity*> entities);
+	void showDebugWindow(bool* p_open);
 };
 
