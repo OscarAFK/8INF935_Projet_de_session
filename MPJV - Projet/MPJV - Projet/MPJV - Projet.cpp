@@ -65,6 +65,16 @@ int main()
     e.addComponent<Rigidbody>();
     entities.push_back(&e);
 
+    Entity e1 = Entity("CubeTest1");
+    e1.addComponent<ShapeRenderer>();
+    e1.addComponent<Rigidbody>();
+    entities.push_back(&e1);
+
+    Entity e2 = Entity("CubeTest2");
+    e2.addComponent<ShapeRenderer>();
+    e2.addComponent<Rigidbody>();
+    entities.push_back(&e2);
+
 
     glEnable(GL_DEPTH_TEST);
 

@@ -141,6 +141,9 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="UniqueID.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -274,6 +277,9 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="UniqueID.h">
+      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

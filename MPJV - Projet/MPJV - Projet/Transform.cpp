@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include "Entity.h"
 
 Transform::Transform(Entity* owner) : Component(owner)
 {
@@ -29,9 +30,32 @@ float* Transform::getScale(){
 	return m_scale;
 }
 
+
 void Transform::renderComponentUI()
 {
-	ImGui::DragFloat3("Position", m_position, 0.01f);
-	ImGui::DragFloat3("Rotation", m_rotation, 0.01f);
-	ImGui::DragFloat3("Scale", m_scale, 0.01f);
+	ImGui::PushItemWidth(0);
+
+	std::string hideLabelString = "##";
+	std::string positionLabelString = "Position";
+	std::string rotationLabelString = "Rotation";
+	std::string    scaleLabelString = "   Scale";
+
+	std::string positionStr;
+	positionStr.append(hideLabelString);
+	positionStr.append(std::to_string(m_owner->id));
+	positionStr.append(positionLabelString);
+
+	std::string rotationStr;
+	rotationStr.append(hideLabelString);
+	rotationStr.append(std::to_string(m_owner->id));
+	rotationStr.append(rotationLabelString);
+
+	std::string scaleStr;
+	scaleStr.append(hideLabelString);
+	scaleStr.append(std::to_string(m_owner->id));
+	scaleStr.append(scaleLabelString);
+
+	ImGui::Text(positionLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(positionStr.c_str(), m_position, 0.01f);
+	ImGui::Text(rotationLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(rotationStr.c_str(), m_rotation, 0.01f);
+	ImGui::Text(scaleLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(scaleStr.c_str(), m_scale, 0.01f);
 }

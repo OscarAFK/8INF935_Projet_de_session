@@ -177,6 +177,7 @@
     <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UniqueID.cpp" />
     <ClCompile Include="Utilitaire\Matrix33.cpp" />
     <ClCompile Include="Utilitaire\Matrix34.cpp" />
     <ClCompile Include="Utilitaire\Quaternion.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="ShapeRenderer.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="UniqueID.h" />
     <ClInclude Include="Utilitaire\Matrix33.h" />
     <ClInclude Include="Utilitaire\Matrix34.h" />
     <ClInclude Include="Utilitaire\Quaternion.h" />
