@@ -59,6 +59,7 @@ int main()
 
 
     std::vector<Entity*> entities;
+
     Entity e = Entity("CubeTest");
     e.addComponent<ShapeRenderer>();
     e.addComponent<Rigidbody>();

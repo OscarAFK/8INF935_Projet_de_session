@@ -133,10 +133,12 @@ Matrix33 tenseursFormesDeBase::Cylindre(float m, float r, float h) {
 
 
 void Rigidbody::renderComponentUI(){
-	ImGui::Text("This is a rigidbody component");
+	ImGui::PushItemWidth(ImGui::GetFontSize() * -12);
 	float mass = GetMass();
 	ImGui::DragFloat("Mass", &mass, 0.005f, 0.005f, 999999.9f);
 	m_inverseMass = 1 / mass;
 	ImGui::DragFloat("Damping", &m_damping, 0.005f);
 	ImGui::DragFloat("Angular damping", &m_angularDamping, 0.005f);
+
+	ImGui::PushItemWidth(-ImGui::GetWindowWidth() * 0.35f);
 }

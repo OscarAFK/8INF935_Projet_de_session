@@ -31,7 +31,7 @@ float* Transform::getScale(){
 
 void Transform::renderComponentUI()
 {
-	ImGui::DragFloat3("Position", m_position, 0.005f);
-	ImGui::DragFloat3("Rotation", m_rotation, 0.005f);
-	ImGui::DragFloat3("Scale", m_scale, 0.005f);
+	ImGui::DragFloat3("Position", m_position, 0.01f);
+	ImGui::DragFloat3("Rotation", m_rotation, 0.01f);
+	ImGui::DragFloat3("Scale", m_scale, 0.01f);
 }

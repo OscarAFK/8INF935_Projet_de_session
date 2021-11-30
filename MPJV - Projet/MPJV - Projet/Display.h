@@ -36,6 +36,7 @@ private:
 	bool demoWindowOpened = true;
 	bool sceneWindowOpened = true;
 	bool debugWindowOpened = false;
+	bool helpWindowOpened = false;
 
 	//Methods
 	void drawCircle(float cx, float cy, float r, int num_segments);
@@ -66,5 +67,6 @@ public:
 	void showDemoWindow(bool* p_open);
 	void showSceneWindow(bool* p_open, std::vector<Entity*> entities);
 	void showDebugWindow(bool* p_open);
+	void showHelpWindow(bool* p_open);
 };
 

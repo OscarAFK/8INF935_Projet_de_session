@@ -373,9 +373,7 @@ void Display::renderUI(std::vector<Entity*> entities)
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
-			if (ImGui::MenuItem("Scene", NULL, &sceneWindowOpened)) {}
-			if (ImGui::MenuItem("Demo", NULL, &demoWindowOpened)) {}
-			if (ImGui::MenuItem("Debug", NULL, &debugWindowOpened)) {}
+			if (ImGui::MenuItem("Controls", NULL, &helpWindowOpened)) {}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -411,6 +409,9 @@ void Display::renderUI(std::vector<Entity*> entities)
 	//Debug window
 	if (debugWindowOpened)
 		showDebugWindow(&debugWindowOpened);
+	//Help window
+	if (helpWindowOpened)
+		showHelpWindow(&helpWindowOpened);
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -420,6 +421,8 @@ void Display::showDemoWindow(bool* p_open)
 {
 	if (ImGui::Begin("Demo", p_open, ImGuiWindowFlags_NoCollapse))
 	{
+		//Combo of the available demos
+		//button to start the demo
 		ImGui::End();
 	}
 }
@@ -450,6 +453,19 @@ void Display::showDebugWindow(bool* p_open)
 		ImGui::Text("%d vertices, %d indices (%d triangles)", io.MetricsRenderVertices, io.MetricsRenderIndices, io.MetricsRenderIndices / 3);
 		ImGui::Text("%d active windows (%d visible)", io.MetricsActiveWindows, io.MetricsRenderWindows);
 		ImGui::Text("%d active allocations", io.MetricsActiveAllocations);
+		ImGui::End();
+	}
+}
+
+void Display::showHelpWindow(bool* p_open)
+{
+	if (ImGui::Begin("Help", p_open, ImGuiWindowFlags_NoCollapse))
+	{
+		ImGui::Text("Controls");
+		ImGui::Spacing();
+		ImGui::Text("Drag an input field to modify its value");
+		ImGui::Text("Control + right click on an input field to write a custom value");
+		ImGui::Text("Hold right click + WASD to move the camera into the scene");
 		ImGui::End();
 	}
 }
