@@ -15,10 +15,12 @@ public:
 
 	Transform(Entity* owner);
 	
-	//void setPosition(Vector3D position);
+	void setPosition(Vector3D position);
+	void addPosition(Vector3D position);
 	float* getPosition();
 
-	//void setRotation(Vector3D rotation);
+	void setRotation(Vector3D rotation);
+	void addRotation(Vector3D rotation);
 	float* getRotation();
 
 	//void setScale(Vector3D scale);

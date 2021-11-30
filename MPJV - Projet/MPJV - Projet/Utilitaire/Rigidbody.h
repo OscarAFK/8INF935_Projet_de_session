@@ -4,6 +4,7 @@
 #include "../Component.h"
 #include "Matrix34.h"
 #include <iostream>
+#include "../Entity.h"
 
 class Rigidbody : public Component{
 private:
@@ -41,6 +42,8 @@ public:
 	Rigidbody(Entity* owner);
 	//Rigidbody(Vector3D position, Quaternion orientation, float mass, float damping, float angularDamping, Matrix33 tenseurInertie);
 	//Rigidbody(Vector3D position = Vector3D());
+
+	void Initialize(float mass, float damping, float angularDamping, Matrix33 tenseurInertie);
 
 	//Integrate the rigidbody by modifying position, orientation and velocities
 	void Integrate(float duration);

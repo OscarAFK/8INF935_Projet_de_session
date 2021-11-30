@@ -63,6 +63,7 @@ int main()
     Entity e = Entity("CubeTest");
     e.addComponent<ShapeRenderer>();
     e.addComponent<Rigidbody>();
+    e.getComponent<Rigidbody>()->Initialize(1,0.9,0.9, tenseursFormesDeBase::Cuboide(1,Vector3D(1,1,1)));
     entities.push_back(&e);
 
     Entity e1 = Entity("CubeTest1");
