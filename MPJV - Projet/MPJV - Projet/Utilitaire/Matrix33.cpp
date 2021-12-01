@@ -36,10 +36,7 @@ Matrix33& Matrix33::operator*=(const Matrix33& other)
             for (int k = 0; k < 3; k++)
                 newMat.m_values[i + j * 3] += m_values[k + i * 3] * other.m_values[j + k * 3];
         }
-    for (int i = 0; i < 9; i++) {
-        m_values[i] = newMat.m_values[i];
-    }
-    return (*this);
+    return newMat;
 }
 
 Matrix33 operator*(const Matrix33& m1, const Matrix33& m2)
@@ -53,8 +50,8 @@ Matrix33& Matrix33::operator*=(const float& f1)
 {
     Matrix33 newMat = Matrix33();
     for (int i = 0; i < 9; i++)
-        m_values[i] *= f1;
-    return (*this);
+        newMat.m_values[i] = m_values[i] * f1;
+    return newMat;
 }
 
 Matrix33 operator*(const Matrix33& m1, const float& f1)

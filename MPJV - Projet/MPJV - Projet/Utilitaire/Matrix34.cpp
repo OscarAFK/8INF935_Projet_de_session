@@ -18,7 +18,7 @@ Matrix34::Matrix34(const Matrix33& mat33, const Vector3D& vect)
 {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            m_values[i + j * 4] = mat33.getValueAt(i, j);
+            m_values[i + j * 4] = mat33.getValueAt(i,j);
         }
     }
     auto valuesVect = vect.getValues();
@@ -90,7 +90,7 @@ Matrix34 Matrix34::Inverse()
     float valuesSousMat[9] = { m_values[0] , m_values[1], m_values[2], m_values[4], m_values[5], m_values[6], m_values[8], m_values[9], m_values[10] };
     Matrix33 sousMat = Matrix33(valuesSousMat).Inverse();
     float valuesVector[3] = { m_values[3], m_values[7], m_values[11] };
-    Vector3D sousVect = sousMat * Vector3D(valuesVector) * (-1);
+    Vector3D sousVect = sousMat*Vector3D(valuesVector)*(-1);
     return Matrix34(sousMat, sousVect);
 }
 
@@ -100,7 +100,7 @@ void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
     tmpMat.SetOrientation(q);
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            m_values[i + j * 4] = tmpMat.getValueAt(i, j);
+            m_values[i+j*4] = tmpMat.getValueAt(i,j);
         }
     }
     m_values[3] = p.getX();
@@ -111,7 +111,7 @@ void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
 Vector3D Matrix34::TransformPosition(const Vector3D& vector)
 {
     auto valuesVec = vector.getValues();
-    float vectReturn[3] = { 0,0,0 };
+    float vectReturn[3] = {0,0,0};
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             vectReturn[i] += valuesVec[j] * m_values[j + i * 4];

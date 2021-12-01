@@ -1,8 +1,5 @@
 #pragma once
 #include "../Vector3D.h"
-#include <iostream>
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 class Quaternion {
 private:
@@ -33,7 +30,5 @@ public:
 	void RotateByVector(const Vector3D& vector);
 
 	void UpdateByAngularVelocity(const Vector3D& rotation, float duration);
-
-	Vector3D ToEuler();
 
 };

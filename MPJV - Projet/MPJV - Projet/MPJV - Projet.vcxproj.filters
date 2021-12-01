@@ -37,11 +37,6 @@
     <Filter Include="Fichiers sources\Utilitaire">
       <UniqueIdentifier>{6dea7059-bb32-4d61-8568-b03189877088}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Utilitaire\ShapePrimitives">
-      <UniqueIdentifier>{f999dbd4-2944-46d3-a058-fbad4b158f96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Utilitaire\ECS">
-      <UniqueIdentifier>{bf86f973-6b87-4a83-96af-529f9de1d3c0}</UniqueIdentifier>
     <Filter Include="Fichiers d%27en-tête\ForceGenerators">
       <UniqueIdentifier>{1448c400-669a-4860-9f0d-776a2143a10d}</UniqueIdentifier>
     </Filter>
@@ -140,14 +135,6 @@
     <ClCompile Include="Utilitaire\Rigidbody.cpp">
       <Filter>Fichiers sources\Utilitaire</Filter>
     </ClCompile>
-    <ClCompile Include="Utilitaire\stb_image.cpp">
-      <Filter>Fichiers sources\Utilitaire</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="UniqueID.cpp">
-      <Filter>Fichiers sources</Filter>
     <ClCompile Include="ForceGenerators\ForceRegistry.cpp">
       <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
@@ -258,59 +245,6 @@
     <ClInclude Include="Utilitaire\Rigidbody.h">
       <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilitaire\stb_image.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
-    </ClInclude>
-    <ClInclude Include="Shape.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire\ShapePrimitives</Filter>
-    </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire\ShapePrimitives</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="System.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="ShapeRenderer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="UniqueID.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\shader.fs">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="Shaders\shader.vs">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="Shaders\cubeShader.vs">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="Shaders\cubeShader.fs">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="Shaders\lightShader.fs">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
-    <None Include="Shaders\lightShader.vs">
-      <Filter>Fichiers de ressources</Filter>
-    </None>
     <ClInclude Include="ForceGenerators\ForceGenerator.h">
       <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
     </ClInclude>
