@@ -159,16 +159,28 @@ void Rigidbody::renderComponentUI(){
 	}
 	ImGui::DragFloat("Damping", &m_damping, 0.005f);
 	ImGui::DragFloat("Angular damping", &m_angularDamping, 0.005f);
-	ImGui::Text("Vitesse: \tX: %.2f\tY:%.2f\tZ:%.2f", m_velocity.getX(), m_velocity.getY(), m_velocity.getZ());
-	ImGui::Text("Vitesse angulaire: \tX: %.2f\tY:%.2f\tZ:%.2f", m_rotation.getX(), m_rotation.getY(), m_rotation.getZ());
-	if (ImGui::Button("Add force")) {
-		AddForce(Vector3D(1,0,0));
+	ImGui::Text("Speed (unite/s): \tX: %.2f\tY:%.2f\tZ:%.2f", m_velocity.getX(), m_velocity.getY(), m_velocity.getZ());
+	ImGui::Text("Angular speed (rps): \tX: %.2f\tY:%.2f\tZ:%.2f", m_rotation.getX(), m_rotation.getY(), m_rotation.getZ());
+	ImGui::Separator();
+	ImGui::Text("FORCES: ");
+	static float forceToAdd[3] = { 0.0f, 0.0f, 0.0f};
+	ImGui::Text("Force to add: "); ImGui::SameLine(); ImGui::DragFloat3("##Force to add: ", forceToAdd, 0.1f);
+	
+	if (ImGui::Button("Add force at center of gravity")) {
+		AddForce(Vector3D(forceToAdd));
 	}
-
-	if (ImGui::Button("Add rotation")) {
-		AddForceAtPoint(Vector3D(0, 1, 0), Vector3D(0.5, 0.5, 0));
-		AddForceAtPoint(Vector3D(0, -1, 0), Vector3D(-0.5, -0.5, 0));
+	ImGui::SameLine();
+	if (ImGui::Button("Add force at random point")) {
+		AddForceAtBodyPoint(Vector3D(forceToAdd), Vector3D(getRandomValue(0,1), getRandomValue(0, 1), getRandomValue(0, 1)));
 	}
 
 	ImGui::PushItemWidth(-ImGui::GetWindowWidth() * 0.35f);
+}
+
+float getRandomValue(float min, float max)
+{
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = max - min;
+	float r = random * diff;
+	return min + r;
 }

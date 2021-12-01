@@ -88,3 +88,5 @@ namespace tenseursFormesDeBase {
 
 	Matrix33 Cylindre(float m, float r, float h);
 };
+
+float getRandomValue(float min, float max);
