@@ -31,26 +31,42 @@ void Display::setCamera(Camera* camera)
 void Display::drawPhysics()
 {
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
+	auto listOfRigidbody = m_linkedPhysics->getAllRigidbody();
 	
 	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
 		//drawCircle(*it->getPosition().getX(), *it->getPosition().getY(), 50, 10);
 	}
+
+	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
+		drawSquare((*it)->GetPosition().getX(), (*it)->GetPosition().getY(), 40);
+	}
+
 }
 
 void Display::drawIntermediatePhysics(const float alpha)
 {
 	auto listOfParticles = m_linkedPhysics->getIntermediateParticle(alpha);
+	auto listOfRigidbody = m_linkedPhysics->getIntermediateRigidbody(alpha);
 
 	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
 		//drawCircle((it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
 	}
 
+
+	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
+		drawSquare((*it)->GetPosition().getX(), (*it)->GetPosition().getY(), 40);
+	}
+
 	for (int i = 0; i < listOfParticles.size(); i++) {
 		delete listOfParticles[i];
 	}
+
+	for (int i = 0; i < listOfRigidbody.size(); i++) {
+		delete listOfRigidbody[i];
+	}
 }
 
-void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction récupérée sur stackOverflow à cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
+void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction rÃ©cupÃ©rÃ©e sur stackOverflow Ã  cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
 {
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
@@ -159,7 +175,6 @@ void Display::setupView()
 }
 
 
-
 void Display::shootProjectile(int projectileId)
 {
 	if (projectileId != -1)
@@ -218,7 +233,7 @@ void Display::quitLibraries()
 	glfwTerminate;
 }
 
-void Display::terminalCommand()	//Non utilisé, mais gardé au cas ou
+void Display::terminalCommand()	//Non utilisÃ©, mais gardÃ© au cas ou
 {
 	std::cout << "Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x,y,z)" << std::endl;
 	int choice;

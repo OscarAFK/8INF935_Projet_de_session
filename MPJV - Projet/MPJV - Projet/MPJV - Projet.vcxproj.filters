@@ -42,6 +42,11 @@
     </Filter>
     <Filter Include="Fichiers d%27en-tête\Utilitaire\ECS">
       <UniqueIdentifier>{bf86f973-6b87-4a83-96af-529f9de1d3c0}</UniqueIdentifier>
+    <Filter Include="Fichiers d%27en-tête\ForceGenerators">
+      <UniqueIdentifier>{1448c400-669a-4860-9f0d-776a2143a10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ForceGenerators">
+      <UniqueIdentifier>{800ed4a5-89a0-4a1d-b054-6954f0a18716}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +148,11 @@
     </ClCompile>
     <ClCompile Include="UniqueID.cpp">
       <Filter>Fichiers sources</Filter>
+    <ClCompile Include="ForceGenerators\ForceRegistry.cpp">
+      <Filter>Fichiers sources\ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenerators\GravityForceGenerator.cpp">
+      <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,5 +311,14 @@
     <None Include="Shaders\lightShader.vs">
       <Filter>Fichiers de ressources</Filter>
     </None>
+    <ClInclude Include="ForceGenerators\ForceGenerator.h">
+      <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerators\ForceRegistry.h">
+      <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerators\GravityForceGenerator.h">
+      <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

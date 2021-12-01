@@ -112,7 +112,6 @@ Vector3D Rigidbody::GetPreviousPosition() const
 	return m_previousPos;
 }
 
-
 void Rigidbody::CalculateDerivedData()
 {
 	m_transformMatrix.SetOrientationAndPosition(m_orientation, m_position);

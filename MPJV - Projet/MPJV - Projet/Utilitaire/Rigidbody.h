@@ -14,8 +14,8 @@ private:
 	Vector3D m_velocity;
 	Vector3D m_position;
 	Vector3D m_previousPos;
-
 	bool m_isSleeping;
+
 
 	// orientation of the rigidbody
 	Quaternion m_orientation;
@@ -70,6 +70,11 @@ public:
 	Vector3D GetPreviousPosition() const;
 
 	void renderComponentUI();
+
+	float GetMass() const;
+
+	Vector3D GetPosition() const;
+	Vector3D GetPreviousPosition() const;
 
 private:
 

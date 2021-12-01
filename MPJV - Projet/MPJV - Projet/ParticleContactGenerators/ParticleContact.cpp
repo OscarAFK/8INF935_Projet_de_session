@@ -7,7 +7,7 @@ ParticleContact::ParticleContact(Particle* p1, Particle *p2, float restitution, 
     m_particles[0] = p1;
     m_particles[1] = p2;
     if (p2 != nullptr) {
-        m_contactNormal = (m_particles[0]->getPosition() - m_particles[1]->getPosition()).normalize();
+        m_contactNormal = (m_particles[0]->getPosition() -  m_particles[1]->getPosition()).normalize();
 ;    }
     else {
         m_contactNormal = Vector3D(0,1,0);
@@ -42,7 +42,6 @@ void ParticleContact::resolveVelocity()
     float numerateur;
     float denominateur;
     if (m_particles[1] != nullptr) {    //Si on a définit une seconde particule, on l'utilise pour calculer k
-        
         numerateur = (m_restitution + 1) * Vector3D::scalarProduct(m_particles[0]->getVelocity() - m_particles[1]->getVelocity(), m_contactNormal);
         denominateur = (m_particles[0]->getInverseMass() + m_particles[1]->getInverseMass());
     }
@@ -60,6 +59,7 @@ void ParticleContact::resolveVelocity()
 
 void ParticleContact::resolveInterpretation()
 {
+
     if (m_particles[1] != nullptr) {    //Si on définit une seconde particule, alors on calcule la distance dont chaque particule doit être déplacée
         m_particles[0]->setPosition(m_particles[0]->getPosition() + (m_particles[1]->getMass() / (m_particles[0]->getMass() + m_particles[1]->getMass()) * m_penetration * m_contactNormal));
         m_particles[1]->setPosition(m_particles[1]->getPosition()+(-m_particles[0]->getMass()/ (m_particles[0]->getMass() + m_particles[1]->getMass()) * m_penetration * m_contactNormal));
