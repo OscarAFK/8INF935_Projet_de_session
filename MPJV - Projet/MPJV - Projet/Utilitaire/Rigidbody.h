@@ -15,6 +15,8 @@ private:
 	Vector3D m_position;
 	Vector3D m_previousPos;
 
+	bool m_isSleeping;
+
 	// orientation of the rigidbody
 	Quaternion m_orientation;
 

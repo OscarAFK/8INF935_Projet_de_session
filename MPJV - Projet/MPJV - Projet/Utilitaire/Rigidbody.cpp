@@ -24,6 +24,7 @@ Rigidbody::Rigidbody(Entity* owner) : Component(owner)
 	m_position = Vector3D(position);
 	m_orientation = Quaternion(1, 0, 0, 0);
 	m_orientation.RotateByVector(rotation);
+	m_isSleeping = true;
 }
 
 void Rigidbody::Initialize(float mass, float damping, float angularDamping, Matrix33 tenseurInertie)
@@ -37,29 +38,37 @@ void Rigidbody::Initialize(float mass, float damping, float angularDamping, Matr
 
 void Rigidbody::Integrate(float duration)
 {
-	//Acceleration
-	Vector3D linearAcceleration = m_inverseMass * m_forceAccum;
-	Vector3D angularAcceleration = m_inverseTenseurInertieWorld * m_torqueAccum;
+	if (!m_isSleeping)
+	{
+		//Acceleration
+		Vector3D linearAcceleration = m_inverseMass * m_forceAccum;
+		Vector3D angularAcceleration = m_inverseTenseurInertieWorld * m_torqueAccum;
 
-	//Vitesse
-	m_velocity = m_velocity * pow(m_damping, duration) + linearAcceleration * duration;
-	m_rotation = m_rotation * pow(m_angularDamping, duration) + angularAcceleration * duration;
+		//Vitesse
+		m_velocity = m_velocity * pow(m_damping, duration) + linearAcceleration * duration;
+		m_rotation = m_rotation * pow(m_angularDamping, duration) + angularAcceleration * duration;
 
-	//Position
-	m_previousPos = m_position;
-	m_position = m_position + m_velocity * duration;
-	m_orientation.UpdateByAngularVelocity(m_rotation, duration);
+		//Position
+		m_previousPos = m_position;
+		m_position = m_position + m_velocity * duration;
+		m_orientation.UpdateByAngularVelocity(m_rotation, duration);
 
-	m_owner->transform->setPosition(m_position);
-	m_owner->transform->setRotation(m_orientation.ToEuler()*360/(2*M_PI));
+		m_owner->transform->setPosition(m_position);
+		m_owner->transform->setRotation(m_orientation.ToEuler() * 360 / (2 * M_PI));
 
-	//Update datas
-	CalculateDerivedData();
-	ClearAccumulator();
+		//Update datas
+		CalculateDerivedData();
+		ClearAccumulator();
+		if (m_velocity.norm() < 0.05f && m_rotation.norm() < 0.05f)
+		{
+			m_isSleeping = true;
+		}
+	}
 }
 
 void Rigidbody::AddForce(const Vector3D& force)
 {
+	m_isSleeping = false;
 	m_forceAccum += force;
 }
 
@@ -173,8 +182,6 @@ void Rigidbody::renderComponentUI(){
 	if (ImGui::Button("Add force at random point")) {
 		AddForceAtBodyPoint(Vector3D(forceToAdd), Vector3D(getRandomValue(0,1), getRandomValue(0, 1), getRandomValue(0, 1)));
 	}
-
-	ImGui::PushItemWidth(-ImGui::GetWindowWidth() * 0.35f);
 }
 
 float getRandomValue(float min, float max)
