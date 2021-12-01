@@ -1,44 +1,13 @@
 #include "Display.h"
 #include <map>
+#include "ShapeRenderer.h"
 
-
-#define WINDOW_SIZE_X	480
-#define WINDOW_SIZE_Y	480
-
-
-#pragma region FunctionShaders
-static unsigned int CompileShader(unsigned int type, const std::string& source) {
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-	return id;
-}
-
-static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader) {
-	unsigned int program = glCreateProgram();
-	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-	glLinkProgram(program);
-	glValidateProgram(program);
-
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-
-	return program;
-}
-
-#pragma endregion
 
 #pragma region Constructors
 
-Display::Display(Physics* physics) : m_linkedPhysics(physics)
+Display::Display(int windowSizeX, int windowSizeY, Physics* physics, Camera* camera) : m_linkedPhysics(physics), m_camera(camera)
 {	
-	camera = new Camera();
-	initDisplayLib();
+	initDisplayLib(windowSizeX, windowSizeY);
 }
 
 #pragma endregion
@@ -48,6 +17,11 @@ Display::Display(Physics* physics) : m_linkedPhysics(physics)
 void Display::linkToPhysics(Physics *physics)
 {
 	m_linkedPhysics = physics;
+}
+
+void Display::setCamera(Camera* camera)
+{
+	m_camera = camera;
 }
 
 #pragma endregion
@@ -60,7 +34,7 @@ void Display::drawPhysics()
 	auto listOfRigidbody = m_linkedPhysics->getAllRigidbody();
 	
 	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
-		drawCircle(it->getPosition().getX(), it->getPosition().getY(), 50, 10);
+		//drawCircle(*it->getPosition().getX(), *it->getPosition().getY(), 50, 10);
 	}
 
 	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
@@ -75,7 +49,7 @@ void Display::drawIntermediatePhysics(const float alpha)
 	auto listOfRigidbody = m_linkedPhysics->getIntermediateRigidbody(alpha);
 
 	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
-		drawCircle((*it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
+		//drawCircle((it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
 	}
 
 
@@ -92,7 +66,7 @@ void Display::drawIntermediatePhysics(const float alpha)
 	}
 }
 
-void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction récupérée sur stackOverflow à cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
+void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction rÃ©cupÃ©rÃ©e sur stackOverflow Ã  cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
 {
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
@@ -122,20 +96,29 @@ void Display::drawSquare(float cx, float cy, float d)
 
 #pragma region Methods Libraries
 
-void Display::initDisplayLib()
+void Display::initDisplayLib(int windowSizeX, int windowSizeY)
 {
 	//GLFW initialization
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);
 	}
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-	window = glfwCreateWindow(WINDOW_SIZE_X, WINDOW_SIZE_Y, "OpenGL Example", NULL, NULL);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+#ifdef __APPLE__
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+	window = glfwCreateWindow(windowSizeX, windowSizeY, "OpenGL Example", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+
 	glfwMakeContextCurrent(window);
+
+	// tell GLFW to capture our mouse
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSwapInterval(1);
 
 	if (glewInit() != GLEW_OK) {
@@ -159,42 +142,6 @@ void Display::initDisplayLib()
 	ImGui_ImplOpenGL3_Init("#version 330");
 	#pragma endregion
 
-	float positions[6] = {
-		-0.5f, -0.5f,
-		0.0f,  0.5f,
-		0.5f, -0.5f
-	};
-
-
-	//Vertex buffer
-	/*unsigned int buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);*/
-
-	std::string vertexShader =
-		"#version 330\n"\
-		"layout(location=0) in vec4 position;\n"\
-		"void main(void)\n"\
-		"{\n"\
-		"   gl_Position = position;\n"\
-		"}\n";
-
-	std::string FragmentShader =
-		"#version 330\n"\
-		"layout(location=0)out vec4 color;\n"\
-		"void main(void)\n"\
-		"{\n"\
-		"   color = vec4(1.0, 1.0, 1.0, 1.0);\n"\
-		"}\n";
-
-	shader = CreateShader(vertexShader, FragmentShader);
-	glUseProgram(shader);
-
-
 	projectileMap = { 
 		"Boulet de Canon",
 		"Boule de feu",
@@ -202,7 +149,6 @@ void Display::initDisplayLib()
 		"Balle"
 	};
 	selected = -1;
-
 }
 
 GLFWwindow* Display::getWindow()
@@ -215,7 +161,7 @@ const bool Display::windowShouldClose()
 	return glfwWindowShouldClose(window);
 }
 
-void Display::setupView() // Add update camera here ------------------------------------------------------------------------------------------------
+void Display::setupView()
 {
 	//Setup View
 	float ratio;
@@ -226,116 +172,8 @@ void Display::setupView() // Add update camera here ----------------------------
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//camera->updateView();
 }
 
-void Display::renderUI()
-{
-	//RENDER UI
-
-	//Create new ImGui frame
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-
-	ImGui::Begin("Stand de tir");
-	ImGui::Text("Bienvenue au stand de tir\n");
-	ImGui::Text("Veuillez choisir votre projectile.\n");
-
-	if (ImGui::TreeNode("Liste des projectiles"))
-	{
-		for (std::vector<std::string>::iterator it = projectileMap.begin(); it != projectileMap.end(); ++it) {
-			if (ImGui::Selectable(it->c_str(), selected == std::distance(projectileMap.begin(), it))) {
-				selected = std::distance(projectileMap.begin(), it);
-				sprintf_s(projectileName, "%s", it->c_str());
-			}
-		}
-		ImGui::TreePop();
-	}
-	if (ImGui::Button("Shoot"))
-	{
-		shootProjectile(selected);
-	}
-
-	ImGui::End();
-
-	ImGui::Begin("Blob");
-	if (ImGui::Button("Creer un blob"))
-	{
-		Particle* particle1 = new Particle(0.01f, 1, Vector3D(50, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
-		Particle* particle2 = new Particle(0.01f, 1, Vector3D(-50, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
-		Particle* particle3 = new Particle(0.01f, 1, Vector3D(-50, 50, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
-		Particle* particle4 = new Particle(0.01f, 1, Vector3D(50, 50, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
-		Particle* particle5 = new Particle(0.01f, 1, Vector3D(0, 75, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0));
-
-		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle1, particle2, 300, 0.5f));
-		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle2, particle3, 300, 0.5f));
-		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle3, particle4, 300, 0.5f));
-		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle4, particle5, 300, 0.5f));
-		m_linkedPhysics->addParticleContactGenerator(new ParticleCable(particle5, particle1, 300, 0.5f));
-
-		std::vector<ParticleForceGenerator*> forceGenerators1;
-		std::vector<ParticleForceGenerator*> forceGenerators2;
-		std::vector<ParticleForceGenerator*> forceGenerators3;
-		std::vector<ParticleForceGenerator*> forceGenerators4;
-		std::vector<ParticleForceGenerator*> forceGenerators5;
-
-		forceGenerators1.push_back(new ParticleSpring(particle5, 10, 50));
-		forceGenerators2.push_back(new ParticleSpring(particle1, 10, 50));
-		forceGenerators3.push_back(new ParticleSpring(particle2, 10, 50));
-		forceGenerators4.push_back(new ParticleSpring(particle3, 10, 50));
-		forceGenerators5.push_back(new ParticleSpring(particle4, 10, 50));
-
-		m_linkedPhysics->addParticle(particle1, forceGenerators1);
-		m_linkedPhysics->addParticle(particle2, forceGenerators2);
-		m_linkedPhysics->addParticle(particle3, forceGenerators3);
-		m_linkedPhysics->addParticle(particle4, forceGenerators4);
-		m_linkedPhysics->addParticle(particle5, forceGenerators5);
-		
-	}
-	ImGui::End();
-
-	ImGui::Begin("Rigidbodies");
-	if (ImGui::Button("Creer une forme irreguliere"))
-	{
-		Rigidbody * rg = nullptr;
-		std::vector<ForceGenerator*> generators;
-
-		std::cout << "Creation d'un rigidbody" << std::endl;
-
-		rg = new Rigidbody(Vector3D(0, 0, 0), Quaternion(1,0,0,0), 1, 0.1, 0.1, tenseursFormesDeBase::Cuboide(1,40));
-		generators.push_back(new GravityForceGenerator(Vector3D(0, -100, 0)));
-		m_linkedPhysics->addRigidbody(rg, generators);
-	}
-
-	if (ImGui::Button("Creer deux voitures"))
-	{
-		Rigidbody* voiture1 = nullptr;
-		Rigidbody* voiture2 = nullptr;
-		std::vector<ForceGenerator*> generatorsVoiture1;
-		std::vector<ForceGenerator*> generatorsVoiture2;
-
-		std::cout << "Creation de deux voitures" << std::endl;
-
-		voiture1 = new Rigidbody(Vector3D(-100, -20, 0), Quaternion(1, 0, 0, 0), 1, 1, 1, tenseursFormesDeBase::Cuboide(1, 40));
-		voiture2 = new Rigidbody(Vector3D(100, 20, 0), Quaternion(1, 0, 0, 0), 1, 1, 1, tenseursFormesDeBase::Cuboide(1, 40));
-		generatorsVoiture1.push_back(new GravityForceGenerator(Vector3D(0,0, 0)));
-		generatorsVoiture2.push_back(new GravityForceGenerator(Vector3D(0, 0, 0)));
-		m_linkedPhysics->addRigidbody(voiture1, generatorsVoiture1);
-		m_linkedPhysics->addRigidbody(voiture2, generatorsVoiture2);
-		voiture1->AddForce(Vector3D(2000,0,0));
-		voiture2->AddForce(Vector3D(-2000,0,0));
-	}
-	if (ImGui::Button("Generer une collision"))
-	{
-		m_linkedPhysics->getRigidbody(0)->AddForceAtBodyPoint(Vector3D(-1000,-1000,0), Vector3D(20,20));
-		m_linkedPhysics->getRigidbody(1)->AddForceAtBodyPoint(Vector3D(1000, 1000,0), Vector3D(-20,-20));
-	}
-	ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}
 
 void Display::shootProjectile(int projectileId)
 {
@@ -392,11 +230,10 @@ void Display::quitLibraries()
 	ImGui::DestroyContext();
 
 	glfwDestroyWindow(window);
-	glDeleteProgram(shader);
 	glfwTerminate;
 }
 
-void Display::terminalCommand()	//Non utilisé, mais gardé au cas ou
+void Display::terminalCommand()	//Non utilisÃ©, mais gardÃ© au cas ou
 {
 	std::cout << "Bienvenue au stand de tir\nVeuillez choisir votre projectile.\n1 : Boulet de canon\n2 : Boule de feu\n3 : Laser\n4 : Balle\n5 : Projectile modifiable\nLes vecteurs sont au format(x,y,z)" << std::endl;
 	int choice;
@@ -424,7 +261,231 @@ void Display::terminalCommand()	//Non utilisé, mais gardé au cas ou
 
 Camera* Display::getCamera()
 {
-	return camera;
+	return m_camera;
 }
 
+void Display::tick(std::vector<Entity*> entities)
+{
+	for (size_t i = 0; i < entities.size(); i++)
+	{
+		ShapeRenderer* shapeRenderer = entities[i]->getComponent<ShapeRenderer>();
+		if (shapeRenderer != nullptr)
+		{
+			shapeRenderer->render(this);
+		}
+	}
+}
+
+void Display::createCubeVAO()
+{
+	float vertices[] = {
+
+		//back face
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+		//front face
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+
+		//left face
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+		//right face
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+		 //bottom face
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+		//top face
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+	};
+	unsigned int VBO;
+	glGenVertexArrays(1, &m_cubeVAO);
+	glGenBuffers(1, &VBO);
+
+	glBindVertexArray(m_cubeVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	// unbind everything
+	glBindVertexArray(0);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+unsigned int Display::getCubeVAO()
+{
+	return m_cubeVAO;
+}
+
+
+void Display::renderUI(std::vector<Entity*> entities)
+{
+	//RENDER UI
+
+	//Create new ImGui frame
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
+	// Menu Bar
+	if (ImGui::BeginMainMenuBar())
+	{
+		/*if (ImGui::BeginMenu("Edit"))
+		{
+			if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+			if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+			ImGui::Separator();
+			if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+			if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+			if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+			ImGui::EndMenu();
+		}*/
+		if (ImGui::BeginMenu("Show"))
+		{
+			if (ImGui::MenuItem("Scene", NULL, &sceneWindowOpened)) {}
+			if (ImGui::MenuItem("Demo", NULL, &demoWindowOpened)) {}
+			if (ImGui::MenuItem("Debug", NULL, &debugWindowOpened)) {}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Help"))
+		{
+			if (ImGui::MenuItem("Controls", NULL, &helpWindowOpened)) {}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+
+	// Stand de tir
+	/*if (ImGui::Begin("Stand de tir"))
+	{
+		ImGui::Text("Bienvenue au stand de tir\n");
+		ImGui::Text("Veuillez choisir votre projectile.\n");
+		if (ImGui::TreeNode("Liste des projectiles")) {
+			for (std::vector<std::string>::iterator it = projectileMap.begin(); it != projectileMap.end(); ++it) {
+				if (ImGui::Selectable(it->c_str(), selected == std::distance(projectileMap.begin(), it))) {
+					selected = std::distance(projectileMap.begin(), it);
+					sprintf_s(projectileName, "%s", it->c_str());
+				}
+			}
+			ImGui::TreePop();
+		}
+		if (ImGui::Button("Shoot"))
+		{
+			shootProjectile(selected);
+		}
+		ImGui::End();
+	}*/
+
+	//Scene window
+	if (sceneWindowOpened)
+		showSceneWindow(&sceneWindowOpened, entities);
+	//Demo window
+	if (demoWindowOpened)
+		showDemoWindow(&demoWindowOpened);
+	//Debug window
+	if (debugWindowOpened)
+		showDebugWindow(&debugWindowOpened);
+	//Help window
+	if (helpWindowOpened)
+		showHelpWindow(&helpWindowOpened);
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Display::showDemoWindow(bool* p_open)
+{
+	if (ImGui::Begin("Demo", p_open, ImGuiWindowFlags_NoCollapse))
+	{
+		//Combo of the available demos
+		//button to start the demo
+		ImGui::End();
+	}
+}
+void Display::showSceneWindow(bool* p_open, std::vector<Entity*> entities)
+{
+	if (ImGui::Begin("Scene", p_open, ImGuiWindowFlags_NoCollapse))
+	{
+		for (size_t i = 0; i < entities.size(); i++) {
+			if (ImGui::CollapsingHeader(entities[i]->getName().c_str())) {
+				for (size_t j = 0; j < entities[i]->getComponents().size(); j++) {
+					std::string treeNodeName;
+					treeNodeName.append(entities[i]->getComponents()[j]->getName());
+					treeNodeName.append("##");
+					treeNodeName.append(std::to_string(entities[i]->id));
+					if (ImGui::TreeNode(treeNodeName.c_str())) {
+						entities[i]->getComponents()[j]->renderComponentUI();
+						ImGui::TreePop();
+					}
+				}
+			}
+		}
+		ImGui::End();
+	}
+}
+void Display::showDebugWindow(bool* p_open)
+{
+	if (ImGui::Begin("Debug", p_open, ImGuiWindowFlags_NoCollapse))
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		ImGui::Text("Dear ImGui %s", ImGui::GetVersion());
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+		ImGui::Text("%d vertices, %d indices (%d triangles)", io.MetricsRenderVertices, io.MetricsRenderIndices, io.MetricsRenderIndices / 3);
+		ImGui::Text("%d active windows (%d visible)", io.MetricsActiveWindows, io.MetricsRenderWindows);
+		ImGui::Text("%d active allocations", io.MetricsActiveAllocations);
+		ImGui::End();
+	}
+}
+
+void Display::showHelpWindow(bool* p_open)
+{
+	if (ImGui::Begin("Help", p_open, ImGuiWindowFlags_NoCollapse))
+	{
+		ImGui::Text("Controls");
+		ImGui::Spacing();
+		ImGui::Text("Drag an input field to modify its value");
+		ImGui::Text("Control + click on an input field to write a custom value");
+		ImGui::Text("Hold right click + WASD to move the camera into the scene");
+		ImGui::End();
+	}
+}
 #pragma endregion

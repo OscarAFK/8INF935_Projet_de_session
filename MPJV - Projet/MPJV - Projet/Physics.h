@@ -1,7 +1,8 @@
 #pragma once
 
+#include "System.h"
 #include "Particle.h"
-#include <vector>
+#include "Utilitaire/Rigidbody.h"
 #include <memory>
 #include <chrono>
 #include "ParticleForceGenerators/ParticleForceRegistry.h"
@@ -25,7 +26,7 @@
 
 #define CONTACT_MAX		200
 
-class Physics
+class Physics : public System
 {
 
 private:
@@ -57,13 +58,5 @@ public:
 	std::vector<Particle*> getIntermediateParticle(const float alpha);
 	void addParticleContactGenerator(ParticleContactGenerator* contactGenerator);
 	void update(float t, float dt);
-
-	void addRigidbody(Vector3D position = Vector3D(), Quaternion orientation = Quaternion(), float mass = 0.0f, float damping= 0.0f, float angularDamping = 0.0f, Matrix33 tenseurInertie = Matrix33());
-	void addRigidbody(Rigidbody *rigidbody);
-	void addRigidbody(Rigidbody *rigidbody, std::vector<ForceGenerator*> generators);
-	void removeRigidbody(int id);
-	Rigidbody* getRigidbody(int id);
-	std::vector<Rigidbody*> getAllRigidbody();
-	std::vector<Rigidbody*> getIntermediateRigidbody(const float alpha);
-	
+	void tick(std::vector<Entity*> entities) override;
 };
