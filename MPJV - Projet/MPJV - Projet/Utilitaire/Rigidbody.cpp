@@ -159,21 +159,43 @@ Matrix33 tenseursFormesDeBase::Cylindre(float m, float r, float h) {
 
 
 void Rigidbody::renderComponentUI(){
-	ImGui::PushItemWidth(ImGui::GetFontSize() * -12);
+
+	std::string    hideLabelString = "##";
+
+	std::string massStr;
+	massStr.append(hideLabelString);
+	massStr.append(std::to_string(m_owner->id));
+	massStr.append("Mass");
+
+	std::string dampStr;
+	dampStr.append(hideLabelString);
+	dampStr.append(std::to_string(m_owner->id));
+	dampStr.append("Damping");
+
+	std::string angDampStr;
+	angDampStr.append(hideLabelString);
+	angDampStr.append(std::to_string(m_owner->id));
+	angDampStr.append("AngularDamping");
+
+	std::string forceStr;
+	forceStr.append(hideLabelString);
+	forceStr.append(std::to_string(m_owner->id));
+	forceStr.append("Force");
+
 	float mass = GetMass();
-	ImGui::DragFloat("Mass", &mass, 0.005f, 0.005f, 999999.9f);
+	ImGui::Text("           Mass"); ImGui::SameLine(); ImGui::DragFloat(massStr.c_str(), &mass, 0.005f, 0.005f, 999999.9f);
 	if (mass != GetMass()) {
 		m_inverseMass = 1 / mass;
 		SetInertiaTenseur(tenseursFormesDeBase::Cuboide(mass, Vector3D(1, 1, 1)));
 	}
-	ImGui::DragFloat("Damping", &m_damping, 0.005f);
-	ImGui::DragFloat("Angular damping", &m_angularDamping, 0.005f);
+	ImGui::Text("        Damping"); ImGui::SameLine(); ImGui::DragFloat(dampStr.c_str(), &m_damping, 0.005f);
+	ImGui::Text("Angular damping"); ImGui::SameLine(); ImGui::DragFloat(angDampStr.c_str(), &m_angularDamping, 0.005f);
 	ImGui::Text("Speed (unite/s): \tX: %.2f\tY:%.2f\tZ:%.2f", m_velocity.getX(), m_velocity.getY(), m_velocity.getZ());
 	ImGui::Text("Angular speed (rps): \tX: %.2f\tY:%.2f\tZ:%.2f", m_rotation.getX(), m_rotation.getY(), m_rotation.getZ());
 	ImGui::Separator();
 	ImGui::Text("FORCES: ");
 	static float forceToAdd[3] = { 0.0f, 0.0f, 0.0f};
-	ImGui::Text("Force to add: "); ImGui::SameLine(); ImGui::DragFloat3("##Force to add: ", forceToAdd, 0.1f);
+	ImGui::Text("Force to add: "); ImGui::SameLine(); ImGui::DragFloat3(forceStr.c_str(), forceToAdd, 0.1f);
 	
 	if (ImGui::Button("Add force at center of gravity")) {
 		AddForce(Vector3D(forceToAdd));
