@@ -153,7 +153,10 @@ void Rigidbody::renderComponentUI(){
 	ImGui::PushItemWidth(ImGui::GetFontSize() * -12);
 	float mass = GetMass();
 	ImGui::DragFloat("Mass", &mass, 0.005f, 0.005f, 999999.9f);
-	m_inverseMass = 1 / mass;
+	if (mass != GetMass()) {
+		m_inverseMass = 1 / mass;
+		SetInertiaTenseur(tenseursFormesDeBase::Cuboide(mass, Vector3D(1, 1, 1)));
+	}
 	ImGui::DragFloat("Damping", &m_damping, 0.005f);
 	ImGui::DragFloat("Angular damping", &m_angularDamping, 0.005f);
 	ImGui::Text("Vitesse: \tX: %.2f\tY:%.2f\tZ:%.2f", m_velocity.getX(), m_velocity.getY(), m_velocity.getZ());
@@ -163,8 +166,8 @@ void Rigidbody::renderComponentUI(){
 	}
 
 	if (ImGui::Button("Add rotation")) {
-		AddForceAtBodyPoint(Vector3D(0, 10, 0), Vector3D(0.5, 0.5, 0));
-		AddForceAtBodyPoint(Vector3D(0, -10, 0), Vector3D(-0.5, -0.5, 0));
+		AddForceAtPoint(Vector3D(0, 1, 0), Vector3D(0.5, 0.5, 0));
+		AddForceAtPoint(Vector3D(0, -1, 0), Vector3D(-0.5, -0.5, 0));
 	}
 
 	ImGui::PushItemWidth(-ImGui::GetWindowWidth() * 0.35f);

@@ -112,8 +112,6 @@ Vector3D Quaternion::ToEuler()
     float siny_cosp = 2 * (m_values[0] * m_values[3] + m_values[1] * m_values[2]);
     float cosy_cosp = 1 - 2 * (m_values[2] * m_values[2] + m_values[3] * m_values[3]);
     angles.setZ(std::atan2(siny_cosp, cosy_cosp));
-    //std::cout << "Euler angles: " << angles.to_string() << std::endl;
-    //std::cout << "Quaternion angles: " << getI() << "\t" << getJ() << "\t" << getK() << "\t" << std::endl << std::endl;
     return angles;
 }
 
