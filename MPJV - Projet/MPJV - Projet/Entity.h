@@ -13,7 +13,6 @@ public:
 	Entity(std::string name) {
 		m_name = name;
 		transform = addComponent<Transform>();
-		printf("%i", id);
 	}
 	~Entity() = default;
 

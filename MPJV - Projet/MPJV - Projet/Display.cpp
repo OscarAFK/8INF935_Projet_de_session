@@ -433,7 +433,11 @@ void Display::showSceneWindow(bool* p_open, std::vector<Entity*> entities)
 		for (size_t i = 0; i < entities.size(); i++) {
 			if (ImGui::CollapsingHeader(entities[i]->getName().c_str())) {
 				for (size_t j = 0; j < entities[i]->getComponents().size(); j++) {
-					if (ImGui::TreeNode(entities[i]->getComponents()[j]->getName().c_str())) {
+					std::string treeNodeName;
+					treeNodeName.append(entities[i]->getComponents()[j]->getName());
+					treeNodeName.append("##");
+					treeNodeName.append(std::to_string(entities[i]->id));
+					if (ImGui::TreeNode(treeNodeName.c_str())) {
 						entities[i]->getComponents()[j]->renderComponentUI();
 						ImGui::TreePop();
 					}
