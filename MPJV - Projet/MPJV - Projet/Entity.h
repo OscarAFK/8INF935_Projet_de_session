@@ -2,21 +2,30 @@
 #include <vector>
 #include <string>
 #include "Transform.h"
+#include "UniqueID.h"
 
 
-class Entity
+class Entity : public UniqueID
 {
 public:
-	std::string m_name = "Entity";
-	std::vector<Component*> m_components;
 	Transform* transform;
 
 	Entity(std::string name) {
 		m_name = name;
 		transform = addComponent<Transform>();
+		printf("%i", id);
 	}
 	~Entity() = default;
 
+	std::string getName()
+	{
+		return m_name;
+	}
+
+	std::vector<Component*> getComponents()
+	{
+		return m_components;
+	}
 
 	template <typename T = Component>
 	T* getComponent()
@@ -32,6 +41,20 @@ public:
 	}
 
 	template <typename T = Component>
+	std::vector<T*> getComponents()
+	{
+		std::vector<T*> components;
+		for (size_t i = 0; i < m_components.size(); i++)
+		{
+			if (dynamic_cast<T*>(m_components[i]))
+			{
+				components.push_back(m_components[i]);
+			}
+		}
+		return components;
+	}
+
+	template <typename T = Component>
 	T* addComponent()
 	{
 		T* newComponent = new T(this);
@@ -40,5 +63,6 @@ public:
 	}
 
 private:
-	
+	std::string m_name = "Entity";
+	std::vector<Component*> m_components;
 };

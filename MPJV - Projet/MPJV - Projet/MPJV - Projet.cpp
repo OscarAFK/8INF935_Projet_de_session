@@ -66,6 +66,16 @@ int main()
     e.getComponent<Rigidbody>()->Initialize(1,0.9,0.9, tenseursFormesDeBase::Cuboide(1,Vector3D(1,1,1)));
     entities.push_back(&e);
 
+    Entity e1 = Entity("CubeTest1");
+    e1.addComponent<ShapeRenderer>();
+    e1.addComponent<Rigidbody>();
+    entities.push_back(&e1);
+
+    Entity e2 = Entity("CubeTest2");
+    e2.addComponent<ShapeRenderer>();
+    e2.addComponent<Rigidbody>();
+    entities.push_back(&e2);
+
 
     glEnable(GL_DEPTH_TEST);
 

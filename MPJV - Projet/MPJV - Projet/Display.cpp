@@ -431,10 +431,10 @@ void Display::showSceneWindow(bool* p_open, std::vector<Entity*> entities)
 	if (ImGui::Begin("Scene", p_open, ImGuiWindowFlags_NoCollapse))
 	{
 		for (size_t i = 0; i < entities.size(); i++) {
-			if (ImGui::CollapsingHeader(entities[i]->m_name.c_str())) {
-				for (size_t j = 0; j < entities[i]->m_components.size(); j++) {
-					if (ImGui::TreeNode(entities[i]->m_components[j]->getName().c_str())) {
-						entities[i]->m_components[j]->renderComponentUI();
+			if (ImGui::CollapsingHeader(entities[i]->getName().c_str())) {
+				for (size_t j = 0; j < entities[i]->getComponents().size(); j++) {
+					if (ImGui::TreeNode(entities[i]->getComponents()[j]->getName().c_str())) {
+						entities[i]->getComponents()[j]->renderComponentUI();
 						ImGui::TreePop();
 					}
 				}
@@ -464,7 +464,7 @@ void Display::showHelpWindow(bool* p_open)
 		ImGui::Text("Controls");
 		ImGui::Spacing();
 		ImGui::Text("Drag an input field to modify its value");
-		ImGui::Text("Control + right click on an input field to write a custom value");
+		ImGui::Text("Control + click on an input field to write a custom value");
 		ImGui::Text("Hold right click + WASD to move the camera into the scene");
 		ImGui::End();
 	}
