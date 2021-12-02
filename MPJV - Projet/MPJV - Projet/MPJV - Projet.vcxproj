@@ -161,6 +161,7 @@
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="ForceGenerators\ForceRegistry.cpp" />
     <ClCompile Include="ForceGenerators\GravityForceGenerator.cpp" />
+    <ClCompile Include="ForceGenerators\SpringForceGenerator.cpp" />
     <ClCompile Include="MPJV - Projet.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleContactGenerators\NaiveParticleContactGenerator.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="ForceGenerators\SpringForceGenerator.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="ForceGenerators\ForceGenerator.h" />
     <ClInclude Include="ForceGenerators\ForceRegistry.h" />

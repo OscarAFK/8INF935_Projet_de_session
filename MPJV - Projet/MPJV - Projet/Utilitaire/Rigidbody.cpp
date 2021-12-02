@@ -32,8 +32,8 @@ void Rigidbody::Initialize(float mass, float damping, float angularDamping, Matr
 	m_inverseMass = 1 / mass;
 	m_damping = damping;
 	m_angularDamping = angularDamping;
-	CalculateDerivedData();
 	SetInertiaTenseur(tenseurInertie);
+	CalculateDerivedData();
 }
 
 void Rigidbody::Integrate(float duration)

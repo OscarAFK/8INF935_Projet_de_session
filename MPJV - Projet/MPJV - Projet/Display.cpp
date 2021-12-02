@@ -1,7 +1,7 @@
 #include "Display.h"
 #include <map>
 #include "ShapeRenderer.h"
-
+#include "ForceGenerators/SpringForceGenerator.h"
 
 #pragma region Constructors
 
@@ -448,12 +448,13 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 		if (ImGui::Button("Creer un rigidbody affecte par la gravite"))
 		{
 			std::cout << "Creation d'un rigidbody" << std::endl;
-			(*entities).push_back(new Entity("Rigidbody avec gravite"));
+			(*entities).push_back(new Entity("Rigidbody lance en l'air"));
 			(*entities).back()->addComponent<ShapeRenderer>();
 			(*entities).back()->addComponent<Rigidbody>();
 			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
 			(*entities).back()->addComponent<GravityForceGenerator>();
 			(*entities).back()->getComponent<GravityForceGenerator>()->Initialize(Vector3D(0, -0.05f, 0));
+			(*entities).back()->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(0,2,0), Vector3D(0.1,0.25,0.15));
 		}
 
 		if (ImGui::Button("Creer deux voitures"))
@@ -476,9 +477,37 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 		if (ImGui::Button("Simuler l'impact des deux derniere entites") && (*entities).size() >= 2)
 		{
 			std::cout << "IMPACT!" << std::endl;
-			(*entities).at((*entities).size()-1)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(5, 0, 0), Vector3D(0.5,0,-0.5));
+			(*entities).at((*entities).size()-1)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(5, 0, 0), Vector3D(0.5,0,0.5));
 			(*entities).at((*entities).size()-2)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(-5, 0, 0), Vector3D(-0.5,0,0.5));
 		}
+
+		if (ImGui::Button("Creer deux objets lies par un ressort"))
+		{
+			(*entities).push_back(new Entity("Objet ressort 1"));
+			(*entities).back()->addComponent<ShapeRenderer>();
+			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(-2, -2, -1.75));
+			(*entities).back()->addComponent<Rigidbody>();
+			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
+			(*entities).back()->addComponent<SpringForceGenerator>();
+			
+
+			(*entities).push_back(new Entity("Objet ressort 2"));
+			(*entities).back()->addComponent<ShapeRenderer>();
+			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(2, -2, -2.25));
+			(*entities).back()->addComponent<Rigidbody>();
+			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
+			(*entities).back()->addComponent<SpringForceGenerator>();
+
+			(*entities).at((*entities).size()-2)->getComponent<SpringForceGenerator>()->Initialize(
+							Vector3D(0.5f, 0, 0), (*entities).back()->getComponent<Rigidbody>(),
+							Vector3D(-0.5f, 0.5f, 0),
+							1, 3);
+			(*entities).at((*entities).size() - 1)->getComponent<SpringForceGenerator>()->Initialize(
+				Vector3D(-0.5f, 0.5f, 0), (*entities).at((*entities).size() - 2)->getComponent<Rigidbody>(),
+				Vector3D(0.5f, 0, 0),
+				1, 3);
+		}
+
 		ImGui::End();
 	}
 }

@@ -42,7 +42,7 @@
     </Filter>
     <Filter Include="Fichiers d%27en-tête\Utilitaire\ECS">
       <UniqueIdentifier>{bf86f973-6b87-4a83-96af-529f9de1d3c0}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Fichiers d%27en-tête\ForceGenerators">
       <UniqueIdentifier>{1448c400-669a-4860-9f0d-776a2143a10d}</UniqueIdentifier>
     </Filter>
@@ -150,10 +150,13 @@
     <ClCompile Include="UniqueID.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-	<ClCompile Include="ForceGenerators\ForceRegistry.cpp">
+    <ClCompile Include="ForceGenerators\ForceRegistry.cpp">
       <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
     <ClCompile Include="ForceGenerators\GravityForceGenerator.cpp">
+      <Filter>Fichiers sources\ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenerators\SpringForceGenerator.cpp">
       <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
   </ItemGroup>
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="UniqueID.h">
       <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerators\SpringForceGenerator.h">
+      <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
