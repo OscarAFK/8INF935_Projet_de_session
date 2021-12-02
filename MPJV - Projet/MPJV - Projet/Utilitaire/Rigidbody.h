@@ -71,11 +71,6 @@ public:
 
 	void renderComponentUI();
 
-	float GetMass() const;
-
-	Vector3D GetPosition() const;
-	Vector3D GetPreviousPosition() const;
-
 private:
 
 	//call each frame to calculate the transform matrix and normalize the rotation

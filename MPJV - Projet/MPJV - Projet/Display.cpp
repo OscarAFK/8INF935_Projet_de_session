@@ -31,39 +31,39 @@ void Display::setCamera(Camera* camera)
 void Display::drawPhysics()
 {
 	auto listOfParticles = m_linkedPhysics->getAllParticle();
-	auto listOfRigidbody = m_linkedPhysics->getAllRigidbody();
+	//auto listOfRigidbody = m_linkedPhysics->getAllRigidbody();
 	
 	for (std::vector<Particle>::iterator it = listOfParticles->begin(); it != listOfParticles->end(); ++it) {
 		//drawCircle(*it->getPosition().getX(), *it->getPosition().getY(), 50, 10);
 	}
 
-	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
+	/*for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
 		drawSquare((*it)->GetPosition().getX(), (*it)->GetPosition().getY(), 40);
-	}
+	}*/
 
 }
 
 void Display::drawIntermediatePhysics(const float alpha)
 {
 	auto listOfParticles = m_linkedPhysics->getIntermediateParticle(alpha);
-	auto listOfRigidbody = m_linkedPhysics->getIntermediateRigidbody(alpha);
+	//auto listOfRigidbody = m_linkedPhysics->getIntermediateRigidbody(alpha);
 
 	for (std::vector<Particle*>::iterator it = listOfParticles.begin(); it != listOfParticles.end(); ++it) {
 		//drawCircle((it)->getPosition().getX(), (*it)->getPosition().getY(), 50, 10);
 	}
 
 
-	for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
+	/*for (std::vector<Rigidbody*>::iterator it = listOfRigidbody.begin(); it != listOfRigidbody.end(); ++it) {
 		drawSquare((*it)->GetPosition().getX(), (*it)->GetPosition().getY(), 40);
-	}
+	}*/
 
 	for (int i = 0; i < listOfParticles.size(); i++) {
 		delete listOfParticles[i];
 	}
 
-	for (int i = 0; i < listOfRigidbody.size(); i++) {
+	/*for (int i = 0; i < listOfRigidbody.size(); i++) {
 		delete listOfRigidbody[i];
-	}
+	}*/
 }
 
 void Display::drawCircle(float cx, float cy, float r, int num_segments)		//Fonction récupérée sur stackOverflow à cette adresse: https://stackoverflow.com/questions/22444450/drawing-circle-with-opengl
