@@ -62,13 +62,13 @@ void SpringForceGenerator::renderComponentUI()
 
 	//OTHER BODY ANCHOR
 	float otherBodyAnchor[3];
-	std::vector<float> otherBodyAnchor2 = m_bodyAnchor.getValues();
+	std::vector<float> otherBodyAnchor2 = m_otherBodyAnchor.getValues();
 	std::copy(otherBodyAnchor2.begin(), otherBodyAnchor2.end(), otherBodyAnchor);
 
-	ImGui::Text("Body Anchor: "); ImGui::SameLine(); ImGui::DragFloat3(otherBodyAnchorStr.c_str(), otherBodyAnchor, 0.01f);
-	m_bodyAnchor.setX(otherBodyAnchor[0]);
-	m_bodyAnchor.setY(otherBodyAnchor[1]);
-	m_bodyAnchor.setZ(otherBodyAnchor[2]);
+	ImGui::Text("Other Body Anchor: "); ImGui::SameLine(); ImGui::DragFloat3(otherBodyAnchorStr.c_str(), otherBodyAnchor, 0.01f);
+	m_otherBodyAnchor.setX(otherBodyAnchor[0]);
+	m_otherBodyAnchor.setY(otherBodyAnchor[1]);
+	m_otherBodyAnchor.setZ(otherBodyAnchor[2]);
 
 	//OTHERS
 	ImGui::Text("k"); ImGui::SameLine(); ImGui::DragFloat(kStr.c_str(), &m_k, 0.005f);

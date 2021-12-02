@@ -477,8 +477,8 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 		if (ImGui::Button("Simuler l'impact des deux derniere entites") && (*entities).size() >= 2)
 		{
 			std::cout << "IMPACT!" << std::endl;
-			(*entities).at((*entities).size()-1)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(5, 0, 0), Vector3D(0.5,0,0.5));
-			(*entities).at((*entities).size()-2)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(-5, 0, 0), Vector3D(-0.5,0,0.5));
+			(*entities).at((*entities).size()-1)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(5, 0, 0), Vector3D(1,0,1));
+			(*entities).at((*entities).size()-2)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(-5, 0, 0), Vector3D(-1,0,1));
 		}
 
 		if (ImGui::Button("Creer deux objets lies par un ressort"))
@@ -499,13 +499,14 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 			(*entities).back()->addComponent<SpringForceGenerator>();
 
 			(*entities).at((*entities).size()-2)->getComponent<SpringForceGenerator>()->Initialize(
-							Vector3D(0.5f, 0, 0), (*entities).back()->getComponent<Rigidbody>(),
-							Vector3D(-0.5f, 0.5f, 0),
+							Vector3D(0, 0, 0), (*entities).back()->getComponent<Rigidbody>(),
+							Vector3D(0, 0, 0),
 							1, 3);
+
 			(*entities).at((*entities).size() - 1)->getComponent<SpringForceGenerator>()->Initialize(
-				Vector3D(-0.5f, 0.5f, 0), (*entities).at((*entities).size() - 2)->getComponent<Rigidbody>(),
-				Vector3D(0.5f, 0, 0),
-				1, 3);
+							Vector3D(0, 0, 0), (*entities).at((*entities).size() - 2)->getComponent<Rigidbody>(),
+							Vector3D(0, 0, 0),
+							1, 3);
 		}
 
 		ImGui::End();
