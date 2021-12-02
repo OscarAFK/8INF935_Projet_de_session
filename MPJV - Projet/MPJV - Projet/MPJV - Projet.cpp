@@ -60,7 +60,7 @@ int main()
 
     std::vector<Entity*> entities;
 
-    Entity e = Entity("CubeTest");
+    /*Entity e = Entity("CubeTest");
     e.addComponent<ShapeRenderer>();
     e.addComponent<Rigidbody>();
     e.getComponent<Rigidbody>()->Initialize(1,0.9,0.9, tenseursFormesDeBase::Cuboide(1,Vector3D(1,1,1)));
@@ -74,8 +74,7 @@ int main()
     Entity e2 = Entity("CubeTest2");
     e2.addComponent<ShapeRenderer>();
     e2.addComponent<Rigidbody>();
-    entities.push_back(&e2);
-
+    entities.push_back(&e2);*/
 
     glEnable(GL_DEPTH_TEST);
 
@@ -127,7 +126,7 @@ int main()
             systems[i]->tick(entities);
         }
 
-		display.renderUI(entities); // MOVE THIS INSIDE display.tick(entities);
+		display.renderUI(&entities); // MOVE THIS INSIDE display.tick(entities);
 
 		display.swapBuffers();
 

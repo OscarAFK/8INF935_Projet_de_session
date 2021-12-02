@@ -357,7 +357,7 @@ unsigned int Display::getCubeVAO()
 }
 
 
-void Display::renderUI(std::vector<Entity*> entities)
+void Display::renderUI(std::vector<Entity*> *entities)
 {
 	//RENDER UI
 
@@ -417,10 +417,10 @@ void Display::renderUI(std::vector<Entity*> entities)
 
 	//Scene window
 	if (sceneWindowOpened)
-		showSceneWindow(&sceneWindowOpened, entities);
+		showSceneWindow(&sceneWindowOpened, *entities);
 	//Demo window
 	if (demoWindowOpened)
-		showDemoWindow(&demoWindowOpened);
+		showDemoWindow(&demoWindowOpened, entities);
 	//Debug window
 	if (debugWindowOpened)
 		showDebugWindow(&debugWindowOpened);
@@ -432,12 +432,37 @@ void Display::renderUI(std::vector<Entity*> entities)
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void Display::showDemoWindow(bool* p_open)
+void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 {
 	if (ImGui::Begin("Demo", p_open, ImGuiWindowFlags_NoCollapse))
 	{
-		//Combo of the available demos
-		//button to start the demo
+		if (ImGui::Button("Creer un rigidbocy affecte par la gravite"))
+		{
+			std::cout << "Creation d'un rigidbody" << std::endl;
+			(*entities).push_back(new Entity("CubeTest"));
+			(*entities).back()->addComponent<ShapeRenderer>();
+			(*entities).back()->addComponent<Rigidbody>();
+			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
+			(*entities).back()->addComponent<GravityForceGenerator>();
+			(*entities).back()->getComponent<GravityForceGenerator>()->Initialize(Vector3D(0, -0.05f, 0));
+		}
+
+		if (ImGui::Button("Creer deux voitures"))
+		{
+			(*entities).push_back(new Entity("CubeTest"));
+			(*entities).back()->addComponent<ShapeRenderer>();
+			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(-2,0,0));
+			(*entities).back()->addComponent<Rigidbody>();
+			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
+			(*entities).back()->getComponent<Rigidbody>()->AddForce(Vector3D(5, 0, 0));
+
+			(*entities).push_back(new Entity("CubeTest"));
+			(*entities).back()->addComponent<ShapeRenderer>();
+			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(2, 0, 0));
+			(*entities).back()->addComponent<Rigidbody>();
+			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
+			(*entities).back()->getComponent<Rigidbody>()->AddForce(Vector3D(-5, 0, 0));
+		}
 		ImGui::End();
 	}
 }

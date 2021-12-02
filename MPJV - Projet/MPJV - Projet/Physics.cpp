@@ -145,8 +145,10 @@ void Physics::tick(std::vector<Entity*> entities)
     for (size_t i = 0; i < entities.size(); i++)
     {
         Rigidbody* rigidbody = entities[i]->getComponent<Rigidbody>();
+        ForceGenerator* forceGenerator = entities[i]->getComponent<ForceGenerator>();
         if (rigidbody != nullptr)
         {
+            if (forceGenerator != nullptr) forceGenerator->UpdateForce(rigidbody,0.1f);
             rigidbody->Integrate(0.1f);
         }
     }

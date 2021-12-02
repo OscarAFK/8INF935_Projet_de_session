@@ -56,7 +56,7 @@ public:
 	Camera* getCamera();
 	const bool windowShouldClose();
 	void setupView();
-	void renderUI(std::vector<Entity*> entities);
+	void renderUI(std::vector<Entity*> *entities);
 	void shootProjectile(int projectileId);
 	void swapBuffers();
 	void quitLibraries();
@@ -64,7 +64,7 @@ public:
 	void tick(std::vector<Entity*> entities) override;
 	void createCubeVAO();
 	unsigned int getCubeVAO();
-	void showDemoWindow(bool* p_open);
+	void showDemoWindow(bool* p_open, std::vector<Entity*>* entities);
 	void showSceneWindow(bool* p_open, std::vector<Entity*> entities);
 	void showDebugWindow(bool* p_open);
 	void showHelpWindow(bool* p_open);
