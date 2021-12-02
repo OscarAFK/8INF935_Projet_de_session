@@ -436,10 +436,19 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 {
 	if (ImGui::Begin("Demo", p_open, ImGuiWindowFlags_NoCollapse))
 	{
-		if (ImGui::Button("Creer un rigidbocy affecte par la gravite"))
+		if (ImGui::Button("Creer un rigidbody"))
 		{
 			std::cout << "Creation d'un rigidbody" << std::endl;
-			(*entities).push_back(new Entity("CubeTest"));
+			(*entities).push_back(new Entity("Rigidbody simple"));
+			(*entities).back()->addComponent<ShapeRenderer>();
+			(*entities).back()->addComponent<Rigidbody>();
+			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
+		}
+
+		if (ImGui::Button("Creer un rigidbody affecte par la gravite"))
+		{
+			std::cout << "Creation d'un rigidbody" << std::endl;
+			(*entities).push_back(new Entity("Rigidbody avec gravite"));
 			(*entities).back()->addComponent<ShapeRenderer>();
 			(*entities).back()->addComponent<Rigidbody>();
 			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
@@ -449,19 +458,26 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 
 		if (ImGui::Button("Creer deux voitures"))
 		{
-			(*entities).push_back(new Entity("CubeTest"));
+			(*entities).push_back(new Entity("Voiture 1"));
 			(*entities).back()->addComponent<ShapeRenderer>();
-			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(-2,0,0));
+			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(-2,-2,-1.75));
 			(*entities).back()->addComponent<Rigidbody>();
 			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
 			(*entities).back()->getComponent<Rigidbody>()->AddForce(Vector3D(5, 0, 0));
 
-			(*entities).push_back(new Entity("CubeTest"));
+			(*entities).push_back(new Entity("Voiture 2"));
 			(*entities).back()->addComponent<ShapeRenderer>();
-			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(2, 0, 0));
+			(*entities).back()->getComponent<Transform>()->setPosition(Vector3D(2, -2, -2.25));
 			(*entities).back()->addComponent<Rigidbody>();
 			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
 			(*entities).back()->getComponent<Rigidbody>()->AddForce(Vector3D(-5, 0, 0));
+		}
+
+		if (ImGui::Button("Simuler l'impact des deux derniere entites") && (*entities).size() >= 2)
+		{
+			std::cout << "IMPACT!" << std::endl;
+			(*entities).at((*entities).size()-1)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(5, 0, 0), Vector3D(0.5,0,-0.5));
+			(*entities).at((*entities).size()-2)->getComponent<Rigidbody>()->AddForceAtBodyPoint(Vector3D(-5, 0, 0), Vector3D(-0.5,0,0.5));
 		}
 		ImGui::End();
 	}
