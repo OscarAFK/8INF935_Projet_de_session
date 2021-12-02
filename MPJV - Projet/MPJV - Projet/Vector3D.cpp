@@ -31,7 +31,7 @@ float Vector3D::getZ() const
 
 std::vector<float> Vector3D::getValues() const
 {
-	return {m_x, m_y,m_z};
+	return { m_x, m_y,m_z };
 }
 
 #pragma endregion
@@ -63,7 +63,7 @@ Vector3D Vector3D::normalize()
 	return Vector3D(m_x / norm, m_y / norm, m_z / norm);
 }
 
-float Vector3D::norm()
+float Vector3D::norm() const
 {
 	return sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 }
@@ -73,7 +73,7 @@ float Vector3D::scalarProduct(Vector3D v1, Vector3D v2)
 	return v1.m_x * v2.m_x + v1.m_y * v2.m_y + v1.m_z * v2.m_z;
 }
 
- Vector3D Vector3D::vectProduct(Vector3D v1, Vector3D v2)
+Vector3D Vector3D::vectProduct(Vector3D v1, Vector3D v2)
 {
 	return Vector3D(v1.m_y * v2.m_z - v1.m_z * v2.m_y,
 		v1.m_z * v2.m_x - v1.m_x * v2.m_z,
@@ -116,10 +116,12 @@ Vector3D& Vector3D::operator-=(const Vector3D& v)
 	return *this;
 }
 
-Vector3D& Vector3D::operator*=(const Vector3D& v)
+/*Vector3D& Vector3D::operator*=(const Vector3D& v)
 {
-	auto returnVector = Vector3D(m_x*v.m_x, m_y * v.m_y, m_z * v.m_z);
-	return returnVector;
+	m_x *= v.m_x;
+	m_y *= v.m_y;
+	m_z *= v.m_z;
+	return *this;
 }
 
 Vector3D operator*(const Vector3D& v1, const Vector3D& v2)
@@ -127,7 +129,7 @@ Vector3D operator*(const Vector3D& v1, const Vector3D& v2)
 	auto v3 = v1;
 	v3 *= v2;
 	return v3;
-}
+}*/
 
 Vector3D operator-(const Vector3D& v1, const Vector3D& v2)
 {
