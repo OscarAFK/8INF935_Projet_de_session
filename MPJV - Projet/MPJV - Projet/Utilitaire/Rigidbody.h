@@ -67,7 +67,10 @@ public:
 	float GetMass() const;
 
 	Vector3D GetPosition() const;
+	void SetPosition(Vector3D newPos);
 	Vector3D GetPreviousPosition() const;
+
+	void SetOrientation(Vector3D newPos);
 
 	void renderComponentUI();
 

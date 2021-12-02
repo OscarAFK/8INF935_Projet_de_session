@@ -107,9 +107,20 @@ Vector3D Rigidbody::GetPosition() const
 	return m_position;
 }
 
+void Rigidbody::SetPosition(Vector3D newPos)
+{
+	m_position = newPos;
+}
+
+
 Vector3D Rigidbody::GetPreviousPosition() const
 {
 	return m_previousPos;
+}
+
+void Rigidbody::SetOrientation(Vector3D newPos)
+{
+	m_orientation.SetByEulerRotation(newPos);
 }
 
 void Rigidbody::CalculateDerivedData()

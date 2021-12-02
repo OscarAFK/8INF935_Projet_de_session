@@ -35,5 +35,6 @@ public:
 	void UpdateByAngularVelocity(const Vector3D& rotation, float duration);
 
 	Vector3D ToEuler();
+	void SetByEulerRotation(Vector3D euler);
 
 };
