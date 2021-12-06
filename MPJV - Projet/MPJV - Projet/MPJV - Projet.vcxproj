@@ -184,6 +184,7 @@
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Utilitaire\Bvh.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UniqueID.cpp" />
     <ClCompile Include="Utilitaire\Matrix33.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="ParticleForceGenerators\ParticleGravity.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleSpring.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Utilitaire\Bvh.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="ShapeRenderer.h" />
