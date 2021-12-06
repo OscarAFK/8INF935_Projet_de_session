@@ -123,6 +123,11 @@ void Rigidbody::SetOrientation(Vector3D newPos)
 	m_orientation.SetByEulerRotation(newPos);
 }
 
+Vector3D Rigidbody::GetVelocity()
+{
+	return m_velocity;
+}
+
 void Rigidbody::CalculateDerivedData()
 {
 	m_transformMatrix.SetOrientationAndPosition(m_orientation, m_position);

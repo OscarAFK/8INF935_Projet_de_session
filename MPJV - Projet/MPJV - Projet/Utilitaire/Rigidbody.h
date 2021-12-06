@@ -72,6 +72,8 @@ public:
 
 	void SetOrientation(Vector3D newPos);
 
+	Vector3D GetVelocity();
+
 	void renderComponentUI();
 
 private:

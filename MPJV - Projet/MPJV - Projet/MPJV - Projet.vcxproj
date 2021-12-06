@@ -202,6 +202,9 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Colliders\Collider.h" />
+    <ClInclude Include="Colliders\Contact.h" />
+    <ClInclude Include="Colliders\ContactGenerator.h" />
+    <ClInclude Include="Colliders\ContactResolver.h" />
     <ClInclude Include="Colliders\SphereCollider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />

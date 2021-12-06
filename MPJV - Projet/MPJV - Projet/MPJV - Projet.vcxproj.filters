@@ -166,10 +166,10 @@
       <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
     <ClCompile Include="Colliders\Collider.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Colliders\SphereCollider.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -315,6 +315,15 @@
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Colliders\SphereCollider.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\ContactGenerator.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\ContactResolver.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\Contact.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
   </ItemGroup>
