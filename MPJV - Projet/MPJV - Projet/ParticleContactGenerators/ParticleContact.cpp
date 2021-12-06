@@ -8,7 +8,7 @@ ParticleContact::ParticleContact(Particle* p1, Particle *p2, float restitution, 
     m_particles[1] = p2;
     if (p2 != nullptr) {
         m_contactNormal = (m_particles[0]->getPosition() -  m_particles[1]->getPosition()).normalize();
-;    }
+    }
     else {
         m_contactNormal = Vector3D(0,1,0);
     }
