@@ -177,7 +177,7 @@
     <ClCompile Include="Colliders\Contact.cpp">
       <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Colliders\ContactGeneratorOctree.cpp">
+    <ClCompile Include="Colliders\BroadphaseOctree.cpp">
       <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,16 +326,16 @@
     <ClInclude Include="Colliders\SphereCollider.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Colliders\ContactGenerator.h">
-      <Filter>Fichiers d%27en-tête\Collider</Filter>
-    </ClInclude>
     <ClInclude Include="Colliders\ContactResolver.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Colliders\Contact.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Colliders\ContactGeneratorOctree.h">
+    <ClInclude Include="Colliders\BroadphaseOctree.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\ContactGeneratorBroadphase.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
   </ItemGroup>

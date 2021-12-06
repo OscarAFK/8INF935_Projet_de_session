@@ -158,9 +158,9 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Colliders\BroadphaseOctree.cpp" />
     <ClCompile Include="Colliders\Collider.cpp" />
     <ClCompile Include="Colliders\Contact.cpp" />
-    <ClCompile Include="Colliders\ContactGeneratorOctree.cpp" />
     <ClCompile Include="Colliders\ContactResolver.cpp" />
     <ClCompile Include="Colliders\SphereCollider.cpp" />
     <ClCompile Include="Display.cpp" />
@@ -204,10 +204,10 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Colliders\BroadphaseOctree.h" />
     <ClInclude Include="Colliders\Collider.h" />
     <ClInclude Include="Colliders\Contact.h" />
-    <ClInclude Include="Colliders\ContactGenerator.h" />
-    <ClInclude Include="Colliders\ContactGeneratorOctree.h" />
+    <ClInclude Include="Colliders\ContactGeneratorBroadphase.h" />
     <ClInclude Include="Colliders\ContactResolver.h" />
     <ClInclude Include="Colliders\SphereCollider.h" />
     <ClInclude Include="Component.h" />
