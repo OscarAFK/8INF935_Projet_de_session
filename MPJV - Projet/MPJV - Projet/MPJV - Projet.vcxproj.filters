@@ -49,6 +49,12 @@
     <Filter Include="Fichiers sources\ForceGenerators">
       <UniqueIdentifier>{800ed4a5-89a0-4a1d-b054-6954f0a18716}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Collider">
+      <UniqueIdentifier>{36667781-a42b-43bf-b7ad-a77ebcbc170d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Collider">
+      <UniqueIdentifier>{9ad7d893-f742-42b8-822f-4900a0ea7049}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MPJV - Projet.cpp">
@@ -158,6 +164,12 @@
     </ClCompile>
     <ClCompile Include="ForceGenerators\SpringForceGenerator.cpp">
       <Filter>Fichiers sources\ForceGenerators</Filter>
+    </ClCompile>
+    <ClCompile Include="Colliders\Collider.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Colliders\SphereCollider.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="ForceGenerators\SpringForceGenerator.h">
       <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\Collider.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\SphereCollider.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

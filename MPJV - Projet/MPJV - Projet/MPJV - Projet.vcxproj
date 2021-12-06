@@ -158,6 +158,8 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Colliders\Collider.cpp" />
+    <ClCompile Include="Colliders\SphereCollider.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="ForceGenerators\ForceRegistry.cpp" />
     <ClCompile Include="ForceGenerators\GravityForceGenerator.cpp" />
@@ -199,6 +201,8 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Colliders\Collider.h" />
+    <ClInclude Include="Colliders\SphereCollider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Display.h" />
