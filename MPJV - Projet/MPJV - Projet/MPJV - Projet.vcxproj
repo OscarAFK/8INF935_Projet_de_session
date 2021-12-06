@@ -159,6 +159,9 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Colliders\Collider.cpp" />
+    <ClCompile Include="Colliders\Contact.cpp" />
+    <ClCompile Include="Colliders\ContactGeneratorOctree.cpp" />
+    <ClCompile Include="Colliders\ContactResolver.cpp" />
     <ClCompile Include="Colliders\SphereCollider.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="ForceGenerators\ForceRegistry.cpp" />
@@ -204,6 +207,7 @@
     <ClInclude Include="Colliders\Collider.h" />
     <ClInclude Include="Colliders\Contact.h" />
     <ClInclude Include="Colliders\ContactGenerator.h" />
+    <ClInclude Include="Colliders\ContactGeneratorOctree.h" />
     <ClInclude Include="Colliders\ContactResolver.h" />
     <ClInclude Include="Colliders\SphereCollider.h" />
     <ClInclude Include="Component.h" />
