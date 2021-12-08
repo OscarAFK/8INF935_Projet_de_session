@@ -7,7 +7,7 @@ enum colliderShapes { SPHERE, PLANE, BOX };
 
 class Collider : public Component
 {
-private:
+protected:
 	Vector3D m_offset;
 	Rigidbody* rigidbody;
 
