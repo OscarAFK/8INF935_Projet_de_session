@@ -210,6 +210,7 @@
     <ClInclude Include="Colliders\Contact.h" />
     <ClInclude Include="Colliders\ContactGeneratorBroadphase.h" />
     <ClInclude Include="Colliders\ContactResolver.h" />
+    <ClInclude Include="Colliders\PlaneCollider.h" />
     <ClInclude Include="Colliders\SphereCollider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />

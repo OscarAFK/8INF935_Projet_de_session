@@ -341,6 +341,9 @@
     <ClInclude Include="Colliders\ContactGeneratorBroadphase.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="Colliders\PlaneCollider.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\shader.fs">

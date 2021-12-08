@@ -126,9 +126,9 @@ int main()
             systems[i]->tick(entities);
         }
 
-		display.renderUI(&entities); // MOVE THIS INSIDE display.tick(entities);
+        display.renderUI(&entities); // MOVE THIS INSIDE display.tick(entities);
 
-		display.swapBuffers();
+        display.swapBuffers();
 
 		glfwPollEvents();
 	}

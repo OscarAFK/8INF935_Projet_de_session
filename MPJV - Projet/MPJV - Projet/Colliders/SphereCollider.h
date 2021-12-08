@@ -13,7 +13,7 @@ public:
 	void Initialize(float radius = 1, Vector3D offset = Vector3D(0,0,0));
 	
 	float getRadius();
-	float setRadius();
+	void setRadius(float radius);
 
 	colliderShapes getShape();
 

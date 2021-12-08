@@ -1,13 +1,15 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "../Entity.h"
+#include "../Utilitaire/Rigidbody.h"
 
-enum colliderShapes { SPHERE };
+enum colliderShapes { SPHERE, PLANE, BOX };
 
 class Collider : public Component
 {
 private:
 	Vector3D m_offset;
+	Rigidbody* rigidbody;
 
 public:
 
