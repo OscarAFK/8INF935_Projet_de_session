@@ -158,11 +158,11 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Colliders\BoxCollider.cpp" />
-    <ClCompile Include="Colliders\BroadphaseOctree.cpp" />
     <ClCompile Include="Colliders\Collider.cpp" />
     <ClCompile Include="Colliders\Contact.cpp" />
     <ClCompile Include="Colliders\ContactResolver.cpp" />
+    <ClCompile Include="Colliders\Octree.cpp" />
+    <ClCompile Include="Colliders\BoxCollider.cpp" />
     <ClCompile Include="Colliders\PlaneCollider.cpp" />
     <ClCompile Include="Colliders\SphereCollider.cpp" />
     <ClCompile Include="Display.cpp" />
@@ -186,7 +186,6 @@
     <ClCompile Include="ParticleForceGenerators\ParticleSpring.cpp" />
     <ClCompile Include="ParticleForceGenerators\ParticleGravity.cpp" />
     <ClCompile Include="Physics.cpp" />
-    <ClCompile Include="Utilitaire\Bvh.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UniqueID.cpp" />
     <ClCompile Include="Utilitaire\Matrix33.cpp" />
@@ -208,11 +207,10 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Colliders\BoxCollider.h" />
-    <ClInclude Include="Colliders\BroadphaseOctree.h" />
     <ClInclude Include="Colliders\Collider.h" />
     <ClInclude Include="Colliders\Contact.h" />
-    <ClInclude Include="Colliders\ContactGeneratorBroadphase.h" />
     <ClInclude Include="Colliders\ContactResolver.h" />
+    <ClInclude Include="Colliders\Octree.h" />
     <ClInclude Include="Colliders\PlaneCollider.h" />
     <ClInclude Include="Colliders\SphereCollider.h" />
     <ClInclude Include="Component.h" />
@@ -242,7 +240,6 @@
     <ClInclude Include="ParticleForceGenerators\ParticleGravity.h" />
     <ClInclude Include="ParticleForceGenerators\ParticleSpring.h" />
     <ClInclude Include="Physics.h" />
-    <ClInclude Include="Utilitaire\Bvh.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="ShapeRenderer.h" />

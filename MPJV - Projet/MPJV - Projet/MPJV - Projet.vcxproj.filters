@@ -162,9 +162,6 @@
     <ClCompile Include="ForceGenerators\GravityForceGenerator.cpp">
       <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
-    <ClCompile Include="Utilitaire\Bvh.cpp">
-      <Filter>Fichiers sources\Utilitaire</Filter>
-    </ClCompile>
     <ClCompile Include="ForceGenerators\SpringForceGenerator.cpp">
       <Filter>Fichiers sources\ForceGenerators</Filter>
     </ClCompile>
@@ -180,7 +177,7 @@
     <ClCompile Include="Colliders\Contact.cpp">
       <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Colliders\BroadphaseOctree.cpp">
+    <ClCompile Include="Colliders\Octree.cpp">
       <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Colliders\BoxCollider.cpp">
@@ -341,10 +338,7 @@
     <ClInclude Include="Colliders\Contact.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Colliders\BroadphaseOctree.h">
-      <Filter>Fichiers d%27en-tête\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Colliders\ContactGeneratorBroadphase.h">
+    <ClInclude Include="Colliders\Octree.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Colliders\PlaneCollider.h">
@@ -381,9 +375,6 @@
     </ClInclude>
     <ClInclude Include="ForceGenerators\GravityForceGenerator.h">
       <Filter>Fichiers d%27en-tête\ForceGenerators</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilitaire\Bvh.h">
-      <Filter>Fichiers d%27en-tête\Utilitaire</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
