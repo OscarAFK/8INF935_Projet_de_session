@@ -11,9 +11,9 @@ float SphereCollider::getRadius()
     return m_radius;
 }
 
-float SphereCollider::setRadius()
+void SphereCollider::setRadius(float radius)
 {
-    return m_radius;
+    m_radius = radius;
 }
 
 colliderShapes SphereCollider::getShape()

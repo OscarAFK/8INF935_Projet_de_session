@@ -180,6 +180,12 @@
     <ClCompile Include="Colliders\Octree.cpp">
       <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Colliders\BoxCollider.cpp">
+      <Filter>Fichiers sources\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Colliders\PlaneCollider.cpp">
+      <Filter>Fichiers sources\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -333,6 +339,12 @@
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Colliders\Octree.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\PlaneCollider.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\BoxCollider.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
   </ItemGroup>

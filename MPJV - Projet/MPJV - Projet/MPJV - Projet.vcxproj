@@ -162,6 +162,8 @@
     <ClCompile Include="Colliders\Contact.cpp" />
     <ClCompile Include="Colliders\ContactResolver.cpp" />
     <ClCompile Include="Colliders\Octree.cpp" />
+    <ClCompile Include="Colliders\BoxCollider.cpp" />
+    <ClCompile Include="Colliders\PlaneCollider.cpp" />
     <ClCompile Include="Colliders\SphereCollider.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="ForceGenerators\ForceRegistry.cpp" />
@@ -204,10 +206,12 @@
     <ClInclude Include="..\Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\Dependencies\ImGui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Colliders\BoxCollider.h" />
     <ClInclude Include="Colliders\Collider.h" />
     <ClInclude Include="Colliders\Contact.h" />
     <ClInclude Include="Colliders\ContactResolver.h" />
     <ClInclude Include="Colliders\Octree.h" />
+    <ClInclude Include="Colliders\PlaneCollider.h" />
     <ClInclude Include="Colliders\SphereCollider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />

@@ -274,6 +274,7 @@ void Display::tick(std::vector<Entity*> entities)
 			shapeRenderer->render(this);
 		}
 	}
+	
 }
 
 void Display::createCubeVAO()
