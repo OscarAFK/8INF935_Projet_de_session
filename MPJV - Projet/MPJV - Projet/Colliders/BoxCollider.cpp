@@ -6,6 +6,20 @@ void BoxCollider::Initialize(Vector3D halfSize, Vector3D offset)
     setOffset(offset);
 }
 
+
+Vector3D* BoxCollider::getVertex(int i) const
+{
+	if(i>8)
+		return nullptr;
+
+	return m_vertices[i];
+}
+
+Vector3D* BoxCollider::getVertices() const
+{
+	return m_vertices;
+}
+
 Vector3D BoxCollider::getHalfSize() const
 {
 	return m_halfSize;

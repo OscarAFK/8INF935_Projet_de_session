@@ -76,6 +76,8 @@ public:
 
 	void renderComponentUI();
 
+	Matrix34 GetTransformMatrix() const;
+
 private:
 
 	//call each frame to calculate the transform matrix and normalize the rotation

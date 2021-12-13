@@ -25,6 +25,10 @@ public:
 		const PlaneCollider& two,
 		CollisionData* data);
 
+	static unsigned sphereAndBox(const SphereCollider& one,
+		const BoxCollider& two,
+		CollisionData* data);
+
 	static unsigned boxAndPlane(const BoxCollider& one,
 		const PlaneCollider& two,
 		CollisionData* data);

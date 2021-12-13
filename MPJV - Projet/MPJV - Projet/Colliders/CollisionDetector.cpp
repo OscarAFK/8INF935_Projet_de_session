@@ -4,8 +4,8 @@ unsigned CollisionDetector::sphereAndSphere(const SphereCollider& one, const Sph
 {
 	if (data->contactLeft <= 0) return 0;
 
-	Vector3D positionOne = one.getOffset();
-	Vector3D positionTwo = two.getOffset();
+	Vector3D positionOne = one.getOffset()->getPosition();
+	Vector3D positionTwo = two.getOffset()->getPosition();
 
 	Vector3D midline = positionOne - positionTwo;
 	float size = midline.norm();
@@ -23,7 +23,6 @@ unsigned CollisionDetector::sphereAndSphere(const SphereCollider& one, const Sph
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	//contact->friction = data->friction;
 	return 1;
 }
 
@@ -31,7 +30,7 @@ unsigned CollisionDetector::sphereAndPlane(const SphereCollider& one, const Plan
 {
 	if (data->contactLeft <= 0) return 0;
 
-	Vector3D positionOne = one.getOffset();
+	Vector3D positionOne = one.getOffset()->getPosition();
 
 	float ballDistance = Vector3D::scalarProduct(two.getNormal(), positionOne) - one.getRadius() - two.getPlaneOffset();
 
@@ -47,17 +46,83 @@ unsigned CollisionDetector::sphereAndPlane(const SphereCollider& one, const Plan
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	//contact->friction = data->friction;
 	return 1;
 }
 
-unsigned CollisionDetector::boxAndPlane(const BoxCollider& one, const PlaneCollider& two, CollisionData* data)
+unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const BoxCollider& box, CollisionData* data)
+{
+	if (data->contactLeft <= 0) return 0;
+	Vector3D relCenterSphere = box.getRigidbody()->GetTransformMatrix().Inverse().TransformPosition(sphere.getOffset()->getPosition());
+
+	//early check out
+	if (abs(relCenterSphere.getX()) - sphere.getRadius() > box.getHalfSize().getX() ||
+		abs(relCenterSphere.getY()) - sphere.getRadius() > box.getHalfSize().getY() ||
+		abs(relCenterSphere.getZ()) - sphere.getRadius() > box.getHalfSize().getZ())
+		return 0;
+
+	Vector3D closestPoint = Vector3D(0, 0, 0);
+	float dist;
+
+	dist = relCenterSphere.getX();
+	if (dist > box.getHalfSize().getX()) dist = box.getHalfSize().getX();
+	if (dist < -box.getHalfSize().getX()) dist = -box.getHalfSize().getX();
+	closestPoint.setX(dist);
+
+	dist = relCenterSphere.getY();
+	if (dist > box.getHalfSize().getY()) dist = box.getHalfSize().getY();
+	if (dist < -box.getHalfSize().getY()) dist = -box.getHalfSize().getY();
+	closestPoint.setY(dist);
+
+	dist = relCenterSphere.getZ();
+	if (dist > box.getHalfSize().getZ()) dist = box.getHalfSize().getZ();
+	if (dist < -box.getHalfSize().getZ()) dist = -box.getHalfSize().getZ();
+	closestPoint.setZ(dist);
+
+	dist = (closestPoint - relCenterSphere).squareNorm();
+	if (dist > sphere.getRadius() * sphere.getRadius()) return 0;
+
+	Vector3D closestPtWorld = box.getRigidbody()->GetTransformMatrix().TransformPosition(closestPoint);
+
+	Contact* contact = data->contact;
+	contact->m_contactNormal = (sphere.getOffset()->getPosition() - closestPtWorld);
+	contact->m_contactNormal = contact->m_contactNormal.normalize();
+	contact->m_contactPoint = closestPtWorld;
+	contact->m_penetration = sphere.getRadius() - sqrt(dist);
+
+	contact->m_rigidbodies[0] = box.getRigidbody();
+	contact->m_rigidbodies[1] = sphere.getRigidbody();
+	//contact->m_restitution = data->m_restitution;
+
+	return 0;
+}
+
+unsigned CollisionDetector::boxAndPlane(const BoxCollider& box, const PlaneCollider& plane, CollisionData* data)
 {
 	if (data->contactLeft <= 0) return 0;
 
+	for(size_t i = 0; i < 8; i++)
+	{
+		// Calculate the distance from the plane with dot product(vertexPos, planeNormal)
+		float vertexDistance = box.getVertex(i) * plane.getNormal(); // <---------------------------modify with dot product
 
+		// Compare this to the plane’s distance.
+		if (vertexDistance <= plane.getPlaneOffset())
+		{
+			// Create the contact data.
+			// The contact point is halfway between the vertex and the
+			// plane - we multiply the direction by half the separation
+			// distance and add the vertex location.
+			contact->contactPoint = plane.getNormal();
+			contact->contactPoint *= (vertexDistance-plane.getPlaneOffset());
+			contact->contactPoint += vertexPos;
+			contact->contactNormal = plane.getNormal();
+			contact->penetration = plane.getPlaneOffset() - vertexDistance;
+		}
+	}
 }
 
 unsigned CollisionDetector::boxAndBox(const BoxCollider& one, const BoxCollider& two, CollisionData* data)
 {
+	if (data->contactLeft <= 0) return 0;
+	return 0;
 }

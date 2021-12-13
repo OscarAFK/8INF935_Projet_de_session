@@ -8,16 +8,16 @@ enum colliderShapes { SPHERE, PLANE, BOX };
 class Collider : public Component
 {
 protected:
-	Vector3D m_offset;
+	//Vector3D m_offset;
+	Transform * m_offset;
 	Rigidbody* rigidbody;
 
 public:
 
-	Collider(Entity* owner) : Component(owner) { rigidbody = owner->getComponent<Rigidbody>(); };
+	Collider(Entity* owner) : Component(owner) { rigidbody = owner->getComponent<Rigidbody>(); m_offset = owner->transform; };
 	
-	Vector3D getOffset() const;
+	Transform *getOffset() const;
 	Rigidbody* getRigidbody() const;
-	void setOffset(Vector3D offset);
 
 	virtual colliderShapes getShape() const = 0;
 };

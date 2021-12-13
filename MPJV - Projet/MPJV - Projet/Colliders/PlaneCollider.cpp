@@ -33,23 +33,20 @@ void PlaneCollider::renderComponentUI()
 	std::string offsetStr;
 	offsetStr.append(hideLabelString);
 	offsetStr.append(std::to_string(m_owner->id));
-	offsetStr.append("Offset");
+	offsetStr.append("PlaneOffset");
 
 	std::string normalStr;
 	normalStr.append(hideLabelString);
 	normalStr.append(std::to_string(m_owner->id));
 	normalStr.append("Normal");
 
-	float off[3];
-	std::vector<float> off2 = getOffset().getValues();
-
-	std::copy(off2.begin(), off2.end(), off);
-
-	ImGui::Text("Offset: "); ImGui::SameLine(); ImGui::DragFloat3(offsetStr.c_str(), off, 0.1f);
-	setOffset(Vector3D(off));
+	float off = getPlaneOffset();
+	
+	ImGui::Text("Plane Offset: "); ImGui::SameLine(); ImGui::DragFloat(offsetStr.c_str(), &off, 0.1f);
+	m_planeOffset = off;
 
 	float normal[3];
-	std::vector<float> normal2 = getOffset().getValues();
+	std::vector<float> normal2 = getNormal().getValues();
 
 	std::copy(normal2.begin(), normal2.end(), normal);
 

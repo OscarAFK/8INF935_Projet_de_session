@@ -221,6 +221,11 @@ void Rigidbody::renderComponentUI(){
 	}
 }
 
+Matrix34 Rigidbody::GetTransformMatrix() const
+{
+	return m_transformMatrix;
+}
+
 float getRandomValue(float min, float max)
 {
 	float random = ((float)rand()) / (float)RAND_MAX;

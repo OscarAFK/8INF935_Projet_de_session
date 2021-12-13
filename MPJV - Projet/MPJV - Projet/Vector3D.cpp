@@ -68,6 +68,11 @@ float Vector3D::norm() const
 	return sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 }
 
+float Vector3D::squareNorm() const
+{
+	return m_x * m_x + m_y * m_y + m_z * m_z;
+}
+
 float Vector3D::scalarProduct(const Vector3D v1, const Vector3D v2)
 {
 	return v1.m_x * v2.m_x + v1.m_y * v2.m_y + v1.m_z * v2.m_z;

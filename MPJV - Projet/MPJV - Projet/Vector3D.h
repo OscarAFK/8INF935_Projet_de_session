@@ -25,6 +25,7 @@ public:
 
 	Vector3D normalize();
 	float norm() const;
+	float squareNorm() const;
 
 	static float scalarProduct(const Vector3D v1, const Vector3D v2);
 	static Vector3D vectProduct(Vector3D v1, Vector3D v2);
