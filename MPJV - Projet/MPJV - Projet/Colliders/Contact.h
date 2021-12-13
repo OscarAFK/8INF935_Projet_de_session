@@ -23,9 +23,9 @@ public:
 	float m_penetration;
 
 	Vector3D m_contactNormal;
+	Vector3D m_contactPoint;
 
 private:
-	virtual void resolveVelocity() = 0;
-
-	virtual void resolveInterpretation() = 0;
+	//void resolveVelocity();
+	//void resolveInterpretation();
 };

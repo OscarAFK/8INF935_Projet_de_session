@@ -12,10 +12,10 @@ public:
 	BoxCollider(Entity* owner) : Collider(owner) { m_name = "Box Collider"; };
 	void Initialize(Vector3D halfSize = Vector3D(0.5f, 0.5f, 0.5f), Vector3D offset = Vector3D(0, 0, 0));
 
-	Vector3D getHalfSize();
+	Vector3D getHalfSize() const;
 	void setHalfSize(Vector3D halfSize);
 
-	colliderShapes getShape();
+	colliderShapes getShape() const;
 
 	void renderComponentUI();
 };

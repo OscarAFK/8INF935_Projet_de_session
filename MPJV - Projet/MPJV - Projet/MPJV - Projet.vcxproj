@@ -159,6 +159,7 @@
     <ClCompile Include="..\Dependencies\ImGui\imgui_tables.cpp" />
     <ClCompile Include="..\Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Colliders\Collider.cpp" />
+    <ClCompile Include="Colliders\CollisionDetector.cpp" />
     <ClCompile Include="Colliders\Contact.cpp" />
     <ClCompile Include="Colliders\ContactResolver.cpp" />
     <ClCompile Include="Colliders\Octree.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Colliders\BoxCollider.h" />
     <ClInclude Include="Colliders\Collider.h" />
+    <ClInclude Include="Colliders\CollisionDetector.h" />
     <ClInclude Include="Colliders\Contact.h" />
     <ClInclude Include="Colliders\ContactResolver.h" />
     <ClInclude Include="Colliders\Octree.h" />

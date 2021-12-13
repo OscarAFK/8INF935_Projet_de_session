@@ -12,10 +12,10 @@ public:
 	SphereCollider(Entity* owner) : Collider(owner) { m_name = "Sphere Collider"; };
 	void Initialize(float radius = 1, Vector3D offset = Vector3D(0,0,0));
 	
-	float getRadius();
+	float getRadius() const;
 	void setRadius(float radius);
 
-	colliderShapes getShape();
+	colliderShapes getShape() const;
 
 	void renderComponentUI();
 };

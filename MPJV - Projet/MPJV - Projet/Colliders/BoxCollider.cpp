@@ -6,7 +6,7 @@ void BoxCollider::Initialize(Vector3D halfSize, Vector3D offset)
     setOffset(offset);
 }
 
-Vector3D BoxCollider::getHalfSize()
+Vector3D BoxCollider::getHalfSize() const
 {
 	return m_halfSize;
 }
@@ -17,7 +17,7 @@ void BoxCollider::setHalfSize(Vector3D halfSize)
 }
 
 
-colliderShapes BoxCollider::getShape()
+colliderShapes BoxCollider::getShape() const
 {
     return colliderShapes::BOX;
 }

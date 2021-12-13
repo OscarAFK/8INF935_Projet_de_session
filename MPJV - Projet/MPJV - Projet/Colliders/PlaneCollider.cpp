@@ -6,9 +6,14 @@ void PlaneCollider::Initialize(Vector3D normal, Vector3D offset)
     setOffset(offset);
 }
 
-Vector3D PlaneCollider::getNormal()
+Vector3D PlaneCollider::getNormal() const
 {
 	return m_normal;
+}
+
+float PlaneCollider::getPlaneOffset() const
+{
+	return m_planeOffset;
 }
 
 void PlaneCollider::setNormal(Vector3D normal)
@@ -16,7 +21,7 @@ void PlaneCollider::setNormal(Vector3D normal)
 	m_normal = normal;
 }
 
-colliderShapes PlaneCollider::getShape()
+colliderShapes PlaneCollider::getShape() const
 {
     return colliderShapes::PLANE;
 }

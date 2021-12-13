@@ -186,6 +186,9 @@
     <ClCompile Include="Colliders\PlaneCollider.cpp">
       <Filter>Fichiers sources\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Colliders\CollisionDetector.cpp">
+      <Filter>Fichiers sources\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vector3D.h">
@@ -345,6 +348,9 @@
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Colliders\BoxCollider.h">
+      <Filter>Fichiers d%27en-tête\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders\CollisionDetector.h">
       <Filter>Fichiers d%27en-tête\Collider</Filter>
     </ClInclude>
   </ItemGroup>

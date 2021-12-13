@@ -15,8 +15,8 @@ Contact::Contact(Rigidbody* r1, Rigidbody* r2, float restitution, float penetrat
 
 void Contact::resolve(float duration)
 {
-	resolveVelocity();
-	resolveInterpretation();
+	//resolveVelocity();
+	//resolveInterpretation();
 }
 
 float Contact::calculateSeperatingVelocity()

@@ -13,10 +13,11 @@ protected:
 
 public:
 
-	Collider(Entity* owner) : Component(owner) {};;
+	Collider(Entity* owner) : Component(owner) { rigidbody = owner->getComponent<Rigidbody>(); };
 	
-	Vector3D getOffset();
+	Vector3D getOffset() const;
+	Rigidbody* getRigidbody() const;
 	void setOffset(Vector3D offset);
 
-	virtual colliderShapes getShape() = 0;
+	virtual colliderShapes getShape() const = 0;
 };
