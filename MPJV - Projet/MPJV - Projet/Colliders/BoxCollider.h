@@ -10,14 +10,14 @@ private:
     //std::vector<Vector3D> 
 	Vector3D m_vertices[8] =
 	{
-		Vector3D(-halfSize.x -halfSize.y -halfSize.z),
-		Vector3D(-halfSize.x -halfSize.y +halfSize.z),
-		Vector3D(-halfSize.x +halfSize.y -halfSize.z),
-		Vector3D(-halfSize.x +halfSize.y +halfSize.z),
-		Vector3D(+halfSize.x -halfSize.y -halfSize.z),
-		Vector3D(+halfSize.x -halfSize.y +halfSize.z),
-		Vector3D(+halfSize.x +halfSize.y -halfSize.z),
-		Vector3D(+halfSize.x +halfSize.y +halfSize.z)
+		Vector3D(-m_halfSize.getX(), - m_halfSize.getY(), - m_halfSize.getZ()),
+		Vector3D(-m_halfSize.getX(), - m_halfSize.getY(), + m_halfSize.getZ()),
+		Vector3D(-m_halfSize.getX(), + m_halfSize.getY(), - m_halfSize.getZ()),
+		Vector3D(-m_halfSize.getX(), + m_halfSize.getY(), + m_halfSize.getZ()),
+		Vector3D(+m_halfSize.getX(), - m_halfSize.getY(), - m_halfSize.getZ()),
+		Vector3D(+m_halfSize.getX(), - m_halfSize.getY(), + m_halfSize.getZ()),
+		Vector3D(+m_halfSize.getX(), + m_halfSize.getY(), - m_halfSize.getZ()),
+		Vector3D(+m_halfSize.getX(), + m_halfSize.getY(), + m_halfSize.getZ())
 	};
 
 public:

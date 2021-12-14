@@ -103,7 +103,7 @@ unsigned CollisionDetector::boxAndPlane(const BoxCollider& box, const PlaneColli
 	for(size_t i = 0; i < 8; i++)
 	{
 		// Calculate the distance from the plane with dot product(vertexPos, planeNormal)
-		float vertexDistance = box.getVertex(i) * plane.getNormal(); // <---------------------------modify with dot product
+		float vertexDistance = Vector3D::scalarProduct(*box.getVertex(i), plane.getNormal()); // <---------------------------modify with dot product
 
 		// Compare this to the plane’s distance.
 		if (vertexDistance <= plane.getPlaneOffset())
@@ -112,11 +112,12 @@ unsigned CollisionDetector::boxAndPlane(const BoxCollider& box, const PlaneColli
 			// The contact point is halfway between the vertex and the
 			// plane - we multiply the direction by half the separation
 			// distance and add the vertex location.
-			contact->contactPoint = plane.getNormal();
-			contact->contactPoint *= (vertexDistance-plane.getPlaneOffset());
-			contact->contactPoint += vertexPos;
-			contact->contactNormal = plane.getNormal();
-			contact->penetration = plane.getPlaneOffset() - vertexDistance;
+			Contact* contact = data->contact;
+			contact->m_contactPoint = plane.getNormal();
+			contact->m_contactPoint *= (vertexDistance-plane.getPlaneOffset());
+			contact->m_contactPoint += *box.getVertex(i);
+			contact->m_contactNormal = plane.getNormal();
+			contact->m_penetration = plane.getPlaneOffset() - vertexDistance;
 		}
 	}
 }
