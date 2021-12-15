@@ -5,50 +5,80 @@
 Transform::Transform(Entity* owner) : Component(owner)
 {
 	m_name = "Transform";
+	//m_position = Vector3D(0, 0, 0);
+	//m_rotation = Quaternion(1, 0, 0, 0);
+	//m_scale = Vector3D(1, 1, 1);
 }
 
 void Transform::setPosition(Vector3D position)
 {
-	m_position[0] = position.getX();
-	m_position[1] = position.getY();
-	m_position[2] = position.getZ();
+	m_position = position;
 }
 
-void Transform::addPosition(Vector3D position)
+void Transform::translate(Vector3D position)
 {
-	m_position[0] += position.getX();
-	m_position[1] += position.getY();
-	m_position[2] += position.getZ();
+	m_position += position;
 }
 
-float* Transform::getPosition(){
+Vector3D Transform::getPosition() const{
 	return m_position;
 }
 
-void Transform::setRotation(Vector3D rotation)
+void Transform::setRotation(Vector3D eulerRotation)
 {
-	m_rotation[0] = rotation.getX();
-	m_rotation[1] = rotation.getY();
-	m_rotation[2] = rotation.getZ();
+	m_rotation = Quaternion(eulerRotation);
 }
 
-void Transform::addRotation(Vector3D rotation)
+void Transform::rotate(Vector3D eulerRotation)
 {
-	m_rotation[0] += rotation.getX();
-	m_rotation[1] += rotation.getY();
-	m_rotation[2] += rotation.getZ();
+	//m_rotation = Quaternion(m_rotation.ToEuler() + eulerRotation);
+	m_rotation *= Quaternion(eulerRotation);
 }
 
-float* Transform::getRotation(){
+void Transform::setRotation(Quaternion rotation)
+{
+	m_rotation = rotation;
+}
+
+void Transform::rotate(Quaternion rotation)
+{
+	//m_rotation = Quaternion(m_rotation * rotation);
+	m_rotation *= rotation;
+}
+
+Quaternion Transform::getRotation() const{
 	return m_rotation;
 }
 
-//void Transform::setScale(Vector3D scale){
-//	m_scale = scale;
-//}
+void Transform::setScale(Vector3D scale){
+	m_scale = scale;
+}
 
-float* Transform::getScale(){
+void Transform::scale(Vector3D scale) {
+	m_scale = Vector3D(m_scale.getX() * scale.getX(),
+					   m_scale.getY() * scale.getY(),
+					   m_scale.getZ() * scale.getZ());
+}
+
+Vector3D Transform::getScale() const{
 	return m_scale;
+}
+
+Matrix34 Transform::getTransformMatrix() const
+{
+	Matrix34 transform = Matrix34();
+	transform.SetRotationAndPosition(m_rotation, m_position);
+	return transform;
+}
+
+Vector3D Transform::localToWorld(const Vector3D& local)
+{
+	return getTransformMatrix() * local + m_position;
+}
+
+Vector3D Transform::worldToLocal(const Vector3D& world)
+{
+	return getTransformMatrix().Inverse() * (world - m_position);
 }
 
 
@@ -76,22 +106,29 @@ void Transform::renderComponentUI()
 	scaleStr.append(std::to_string(m_owner->id));
 	scaleStr.append(scaleLabelString);
 
-	float oldPos[3];
-	oldPos[0] = m_position[0];
-	oldPos[1] = m_position[1];
-	oldPos[2] = m_position[2];
-	ImGui::Text(positionLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(positionStr.c_str(), m_position, 0.01f);
-	if (m_owner->getComponent<Rigidbody>()!= nullptr && (m_position[0] != oldPos[0] || m_position[1] != oldPos[1] || m_position[2] != oldPos[2])) {
+	float pos[3];
+	std::vector<float> pos2 = m_position.getValues();
+	std::copy(pos2.begin(), pos2.end(), pos);
+	ImGui::Text(positionLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(positionStr.c_str(), pos, 0.01f);
+	m_position = Vector3D(pos);
+	/*if (m_owner->getComponent<Rigidbody>() != nullptr && (m_position[0] != oldPos[0] || m_position[1] != oldPos[1] || m_position[2] != oldPos[2])) {
 		m_owner->getComponent<Rigidbody>()->SetPosition(Vector3D(m_position));
-	}
+	}*/
 
-	float oldRot[3];
-	oldRot[0] = m_rotation[0];
-	oldRot[1] = m_rotation[1];
-	oldRot[2] = m_rotation[2];
-	ImGui::Text(rotationLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(rotationStr.c_str(), m_rotation, 0.01f);
-	if (m_owner->getComponent<Rigidbody>() != nullptr && (m_rotation[0] != oldRot[0] || m_rotation[1] != oldRot[1] || m_rotation[2] != oldRot[2])) {
+	float rot[3];
+	std::vector<float> rot2 = m_rotation.ToEuler().getValues();
+	std::copy(rot2.begin(), rot2.end(), rot);
+	ImGui::Text(rotationLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(rotationStr.c_str(), rot, 0.01f);
+	m_rotation = Quaternion(Vector3D(rot));
+	/*if (m_owner->getComponent<Rigidbody>() != nullptr && (m_rotation[0] != oldRot[0] || m_rotation[1] != oldRot[1] || m_rotation[2] != oldRot[2])) {
 		m_owner->getComponent<Rigidbody>()->SetOrientation(Vector3D(m_rotation) * (2 * M_PI) / 360);
-	}
-	ImGui::Text(scaleLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(scaleStr.c_str(), m_scale, 0.01f);
+	}*/
+
+	float scale[3];
+	std::vector<float> scale2 = m_scale.getValues();
+	std::copy(scale2.begin(), scale2.end(), scale);
+	ImGui::Text(scaleLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(scaleStr.c_str(), scale, 0.01f);
+	m_scale = Vector3D(scale);
+
+	//std::cout << m_position.to_string();//, m_rotation.ToEuler().to_string(), m_scale.to_string());
 }

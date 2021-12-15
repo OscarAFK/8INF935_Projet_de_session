@@ -19,11 +19,11 @@ Rigidbody::Rigidbody(Entity* owner) : Component(owner)
 	m_inverseMass = 1.0f;
 	m_forceAccum = Vector3D(0, 0, 0);
 	m_torqueAccum = Vector3D(0, 0, 0);
-	float* position = m_owner->transform->getPosition();
-	float* rotation = m_owner->transform->getRotation();
-	m_position = Vector3D(position);
-	m_orientation = Quaternion(1, 0, 0, 0);
-	m_orientation.RotateByVector(rotation);
+	//float* position = m_owner->transform->getPosition();
+	//float* rotation = m_owner->transform->getRotation();
+	//m_position = Vector3D(position);
+	//m_orientation = Quaternion(1, 0, 0, 0);
+	//m_orientation.RotateByVector(rotation);
 	m_isSleeping = true;
 }
 
@@ -49,38 +49,38 @@ void Rigidbody::Integrate(float duration)
 		m_rotation = m_rotation * pow(m_angularDamping, duration) + angularAcceleration * duration;
 
 		//Position
-		m_previousPos = m_position;
-		m_position = m_position + m_velocity * duration;
-		m_orientation.UpdateByAngularVelocity(m_rotation, duration);
+		//m_previousPos = m_position;
+		//m_position = m_position + m_velocity * duration;
+		//m_orientation.UpdateByAngularVelocity(m_rotation, duration);
 
-		m_owner->transform->setPosition(m_position);
-		m_owner->transform->setRotation(m_orientation.ToEuler() * 360 / (2 * M_PI));
+		getOwner()->transform->translate(m_velocity * duration);
+		getOwner()->transform->setRotation(getOwner()->transform->getRotation().ToEuler() * 360 / (2 * M_PI));
 
 		//Update datas
 		CalculateDerivedData();
 		ClearAccumulator();
 		if (m_velocity.norm() < 0.05f && m_rotation.norm() < 0.05f)
 		{
-			m_isSleeping = true;
+			Sleep();
 		}
 	}
 }
 
 void Rigidbody::AddForce(const Vector3D& force)
 {
-	m_isSleeping = false;
+	if(m_isSleeping) WakeUp();
 	m_forceAccum += force;
 }
 
 void Rigidbody::AddForceAtPoint(const Vector3D& force, const Vector3D& worldPoint)
 {
 	AddForce(force);
-	m_torqueAccum += Vector3D::vectProduct((m_position - worldPoint),force);
+	m_torqueAccum += Vector3D::vectProduct((m_owner->transform->getPosition()- worldPoint),force);
 }
 
 void Rigidbody::AddForceAtBodyPoint(const Vector3D& force, const Vector3D& localPoint)
 {
-	Vector3D world = LocalToWorld(localPoint);
+	Vector3D world = getOwner()->transform->localToWorld(localPoint);
 	AddForceAtPoint(force, world);
 }
 
@@ -102,26 +102,26 @@ float Rigidbody::GetMass() const
 	return -1;
 }
 
-Vector3D Rigidbody::GetPosition() const
+/*Vector3D Rigidbody::GetPosition() const
 {
 	return m_position;
-}
+}*/
 
-void Rigidbody::SetPosition(Vector3D newPos)
+/*void Rigidbody::SetPosition(Vector3D newPos)
 {
 	m_position = newPos;
-}
+}*/
 
 
-Vector3D Rigidbody::GetPreviousPosition() const
+/*Vector3D Rigidbody::GetPreviousPosition() const
 {
 	return m_previousPos;
-}
+}*/
 
-void Rigidbody::SetOrientation(Vector3D newPos)
+/*void Rigidbody::SetOrientation(Vector3D newPos)
 {
 	m_orientation.SetByEulerRotation(newPos);
-}
+}*/
 
 Vector3D Rigidbody::GetVelocity()
 {
@@ -130,18 +130,18 @@ Vector3D Rigidbody::GetVelocity()
 
 void Rigidbody::CalculateDerivedData()
 {
-	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
+	//m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 	ComputeTenseurInertiaWorld(m_inverseTenseurInertieWorld);
 }
 
 void Rigidbody::ComputeTenseurInertiaWorld(Matrix33& inertiaTenseurWorld)
 {
-	Matrix33 transformMatrix33 = m_transformMatrix.ToMatrix33();
+	Matrix33 transformMatrix33 = m_owner->transform->getTransformMatrix().ToMatrix33();
 	inertiaTenseurWorld = transformMatrix33 * m_inverseTenseurInertie;
 	inertiaTenseurWorld *= transformMatrix33.Inverse();
 }
 
-Vector3D Rigidbody::LocalToWorld(const Vector3D& local)
+/*Vector3D Rigidbody::LocalToWorld(const Vector3D& local)
 {
 	return m_transformMatrix * local + m_position;
 }
@@ -149,7 +149,18 @@ Vector3D Rigidbody::LocalToWorld(const Vector3D& local)
 Vector3D Rigidbody::WorldToLocal(const Vector3D& world)
 {
 	return m_transformMatrix.Inverse() * (world - m_position);
+}*/
+
+void Rigidbody::Sleep() 
+{
+	m_isSleeping = true;
 }
+
+void Rigidbody::WakeUp()
+{
+	m_isSleeping = false;
+}
+
 
 Matrix33 tenseursFormesDeBase::Sphere(float m, float r) {
 	float values[] = { 2 / 5.0f * m * r * r, 0,0,
@@ -221,10 +232,10 @@ void Rigidbody::renderComponentUI(){
 	}
 }
 
-Matrix34 Rigidbody::GetTransformMatrix() const
+/*Matrix34 Rigidbody::GetTransformMatrix() const
 {
 	return m_transformMatrix;
-}
+}*/
 
 float getRandomValue(float min, float max)
 {

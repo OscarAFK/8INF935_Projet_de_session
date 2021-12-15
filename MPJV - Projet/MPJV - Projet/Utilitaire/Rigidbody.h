@@ -12,13 +12,13 @@ private:
 	float m_inverseMass;
 	float m_damping;
 	Vector3D m_velocity;
-	Vector3D m_position;
-	Vector3D m_previousPos;
+	//Vector3D m_position;
+	//Vector3D m_previousPos;
 	bool m_isSleeping;
 
 
 	// orientation of the rigidbody
-	Quaternion m_orientation;
+	//Quaternion m_orientation;
 
 	//angular velocity of the rigidbody
 	Vector3D m_rotation;
@@ -66,17 +66,17 @@ public:
 
 	float GetMass() const;
 
-	Vector3D GetPosition() const;
-	void SetPosition(Vector3D newPos);
-	Vector3D GetPreviousPosition() const;
+	//Vector3D GetPosition() const;
+	//void SetPosition(Vector3D newPos);
+	//Vector3D GetPreviousPosition() const;
 
-	void SetOrientation(Vector3D newPos);
+	//void SetOrientation(Vector3D newPos);
 
 	Vector3D GetVelocity();
 
 	void renderComponentUI();
 
-	Matrix34 GetTransformMatrix() const;
+	//Matrix34 GetTransformMatrix() const;
 
 private:
 
@@ -85,9 +85,11 @@ private:
 
 	void ComputeTenseurInertiaWorld(Matrix33& inertiaTenseur);
 
-	//
-	Vector3D LocalToWorld(const Vector3D& local);
-	Vector3D WorldToLocal(const Vector3D& world);
+	//Vector3D LocalToWorld(const Vector3D& local);
+	//Vector3D WorldToLocal(const Vector3D& world);
+
+	void Sleep();
+	void WakeUp();
 };
 
 namespace tenseursFormesDeBase {

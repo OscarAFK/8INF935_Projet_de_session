@@ -51,7 +51,7 @@ unsigned CollisionDetector::sphereAndPlane(const SphereCollider& one, const Plan
 unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const BoxCollider& box, CollisionData* data)
 {
 	if (data->contactLeft <= 0) return 0;
-	Vector3D relCenterSphere = box.getRigidbody()->GetTransformMatrix().Inverse().TransformPosition(sphere.getOffset().getPosition());//============================================== calculer position en fonction de la transform+offset
+	Vector3D relCenterSphere = box.getRigidbody()->getOwner()->transform->getTransformMatrix().Inverse().TransformPosition(sphere.getOffset().getPosition());//============================================== calculer position en fonction de la transform+offset
 
 	//early check out
 	if (abs(relCenterSphere.getX()) - sphere.getRadius() > box.getHalfSize().getX() ||
@@ -80,7 +80,7 @@ unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const Box
 	dist = (closestPoint - relCenterSphere).squareNorm();
 	if (dist > sphere.getRadius() * sphere.getRadius()) return 0;
 
-	Vector3D closestPtWorld = box.getRigidbody()->GetTransformMatrix().TransformPosition(closestPoint);//============================================== calculer position en fonction de la transform+offset
+	Vector3D closestPtWorld = box.getRigidbody()->getOwner()->transform->getTransformMatrix().TransformPosition(closestPoint);//============================================== calculer position en fonction de la transform+offset
 
 	Contact* contact = data->contact;
 	contact->m_contactNormal = (sphere.getOffset().getPosition() - closestPtWorld);

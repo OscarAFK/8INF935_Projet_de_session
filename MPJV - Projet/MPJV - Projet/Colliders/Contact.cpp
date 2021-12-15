@@ -6,7 +6,7 @@ Contact::Contact(Rigidbody* r1, Rigidbody* r2, float restitution, float penetrat
 	m_rigidbodies[0] = r1;
 	m_rigidbodies[1] = r2;
 	if (r2 != nullptr) {
-		m_contactNormal = (m_rigidbodies[0]->GetPosition() - m_rigidbodies[1]->GetPosition()).normalize();
+		m_contactNormal = (m_rigidbodies[0]->getOwner()->transform->getPosition() - m_rigidbodies[1]->getOwner()->transform->getPosition()).normalize();
 	}
 	else {
 		m_contactNormal = Vector3D(0, 1, 0);

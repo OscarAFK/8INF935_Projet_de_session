@@ -18,10 +18,16 @@ public:
 
 	virtual void renderComponentUI() = 0;
 
-	std::string getName()
+	std::string getName() const
 	{
 		return m_name;
 	}
+
+	Entity* getOwner() const
+	{
+		return m_owner;
+	}
+
 
 protected:
 	std::string m_name;

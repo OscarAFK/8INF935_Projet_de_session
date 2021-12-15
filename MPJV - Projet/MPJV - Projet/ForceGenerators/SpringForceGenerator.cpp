@@ -13,11 +13,11 @@ void SpringForceGenerator::Initialize(Vector3D bodyAnchor, Rigidbody* rgbd, Vect
 void SpringForceGenerator::UpdateForce(Rigidbody* rg, float deltaTime)
 {
 	if (m_otherRgbd != nullptr) {
-		Vector3D d = (rg->GetPosition() + m_bodyAnchor - (m_otherRgbd->GetPosition() + m_otherBodyAnchor));
+		Vector3D d = (rg->getOwner()->transform->getPosition() + m_bodyAnchor - (m_otherRgbd->getOwner()->transform->getPosition() + m_otherBodyAnchor));
 		rg->AddForceAtBodyPoint(d.normalize()* (-m_k * (d.norm() - m_restLength)), m_bodyAnchor);
 	}
 	else {
-		Vector3D d = m_otherBodyAnchor - (rg->GetPosition() + m_bodyAnchor);
+		Vector3D d = m_otherBodyAnchor - (rg->getOwner()->transform->getPosition() + m_bodyAnchor);
 		rg->AddForceAtBodyPoint(d.normalize() * (-m_k * (d.norm() - m_restLength)), m_bodyAnchor);
 	}
 }
