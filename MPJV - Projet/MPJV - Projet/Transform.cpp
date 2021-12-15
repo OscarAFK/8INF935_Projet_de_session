@@ -26,27 +26,27 @@ Vector3D Transform::getPosition() const{
 
 void Transform::setRotation(Vector3D eulerRotation)
 {
-	m_rotation = Quaternion(eulerRotation);
+	m_rotation = eulerRotation;
 }
 
 void Transform::rotate(Vector3D eulerRotation)
 {
 	//m_rotation = Quaternion(m_rotation.ToEuler() + eulerRotation);
-	m_rotation *= Quaternion(eulerRotation);
+	m_rotation += eulerRotation;
 }
 
 void Transform::setRotation(Quaternion rotation)
 {
-	m_rotation = rotation;
+	m_rotation = rotation.ToEuler();
 }
 
 void Transform::rotate(Quaternion rotation)
 {
 	//m_rotation = Quaternion(m_rotation * rotation);
-	m_rotation *= rotation;
+	m_rotation += rotation.ToEuler();
 }
 
-Quaternion Transform::getRotation() const{
+Vector3D Transform::getRotation() const{
 	return m_rotation;
 }
 
@@ -116,10 +116,10 @@ void Transform::renderComponentUI()
 	}*/
 
 	float rot[3];
-	std::vector<float> rot2 = m_rotation.ToEuler().getValues();
+	std::vector<float> rot2 = m_rotation.getValues();
 	std::copy(rot2.begin(), rot2.end(), rot);
 	ImGui::Text(rotationLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(rotationStr.c_str(), rot, 0.01f);
-	m_rotation = Quaternion(Vector3D(rot));
+	m_rotation = Vector3D(rot);
 	/*if (m_owner->getComponent<Rigidbody>() != nullptr && (m_rotation[0] != oldRot[0] || m_rotation[1] != oldRot[1] || m_rotation[2] != oldRot[2])) {
 		m_owner->getComponent<Rigidbody>()->SetOrientation(Vector3D(m_rotation) * (2 * M_PI) / 360);
 	}*/

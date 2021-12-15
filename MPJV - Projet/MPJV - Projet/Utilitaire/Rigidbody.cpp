@@ -54,7 +54,11 @@ void Rigidbody::Integrate(float duration)
 		//m_orientation.UpdateByAngularVelocity(m_rotation, duration);
 
 		getOwner()->transform->translate(m_velocity * duration);
-		getOwner()->transform->setRotation(getOwner()->transform->getRotation().ToEuler() * 360 / (2 * M_PI));
+
+		Vector3D rotation = getOwner()->transform->getRotation();
+		Quaternion newRotation = Quaternion();
+		newRotation.UpdateByAngularVelocity(m_rotation, duration);
+		getOwner()->transform->rotate(newRotation.ToEuler());
 
 		//Update datas
 		CalculateDerivedData();

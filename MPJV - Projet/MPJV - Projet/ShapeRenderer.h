@@ -41,7 +41,7 @@ public:
         m_shader->setMat4("view", view);
         
         Vector3D position = m_owner->transform->getPosition();
-        Vector3D rotation = m_owner->transform->getRotation().ToEuler();
+        Vector3D rotation = m_owner->transform->getRotation();
         Vector3D scale = m_owner->transform->getScale();
 
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first

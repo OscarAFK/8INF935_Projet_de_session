@@ -534,6 +534,7 @@ void Display::showSceneWindow(bool* p_open, std::vector<Entity*> entities)
 		ImGui::End();
 	}
 }
+
 void Display::showDebugWindow(bool* p_open)
 {
 	if (ImGui::Begin("Debug", p_open, ImGuiWindowFlags_NoCollapse))

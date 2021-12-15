@@ -13,7 +13,7 @@ private:
 	float m_scale[3] = { 1.0f, 1.0f, 1.0f };*/
 
 	Vector3D m_position = Vector3D(0, 0, 0);
-	Quaternion m_rotation = Quaternion(1, 0, 0, 0);
+	Vector3D m_rotation = Vector3D(0, 0, 0);
 	Vector3D m_scale = Vector3D(1, 1, 1);
 
 public:
@@ -28,7 +28,7 @@ public:
 	void rotate(Vector3D eulerRotation);
 	void setRotation(Quaternion rotation);
 	void rotate(Quaternion rotation);
-	Quaternion getRotation() const;
+	Vector3D getRotation() const;
 
 	Matrix34 getTransformMatrix() const;
 
