@@ -1,24 +1,20 @@
 #include "BoxCollider.h"
 
-void BoxCollider::Initialize(Vector3D halfSize, Vector3D offset)
+void BoxCollider::Initialize(Vector3D halfSize, Matrix34 offset)
 {
     m_halfSize = halfSize;
-    setOffset(offset);
+    m_offset = offset;
 }
 
-
-Vector3D* BoxCollider::getVertex(int i) const
+const Vector3D& BoxCollider::getVertex(int i) const
 {
-	if(i>8)
-		return nullptr;
-
 	return m_vertices[i];
 }
 
-Vector3D* BoxCollider::getVertices() const
+/*Vector3D* BoxCollider::getVertices() const
 {
-	return m_vertices;
-}
+	return &m_vertices;
+}*/
 
 Vector3D BoxCollider::getHalfSize() const
 {
@@ -38,7 +34,7 @@ colliderShapes BoxCollider::getShape() const
 
 void BoxCollider::renderComponentUI()
 {
-	std::string    hideLabelString = "##";
+	std::string hideLabelString = "##";
 
 	std::string offsetStr;
 	offsetStr.append(hideLabelString);
@@ -50,17 +46,25 @@ void BoxCollider::renderComponentUI()
 	halfSizeStr.append(std::to_string(m_owner->id));
 	halfSizeStr.append("Halfsize");
 
-	float off[3];
-	std::vector<float> off2 = getOffset().getValues();
+	float pos[3];
+	std::vector<float> pos2 = m_offset.getPosition().getValues();
 
-	std::copy(off2.begin(), off2.end(), off);
+	std::copy(pos2.begin(), pos2.end(), pos);
 
-	ImGui::Text("Offset: "); ImGui::SameLine(); ImGui::DragFloat3(offsetStr.c_str(), off, 0.1f);
-	setOffset(Vector3D(off));
+	ImGui::Text("Offset: "); ImGui::SameLine(); ImGui::DragFloat3(offsetStr.c_str(), pos, 0.1f);
+	m_offset.setPosition(Vector3D(pos));
+
+	float rot[3];
+	std::vector<float> rot2 = m_offset.getRotation().ToEuler().getValues();
+
+	std::copy(rot2.begin(), rot2.end(), rot);
+
+	ImGui::Text("Offset: "); ImGui::SameLine(); ImGui::DragFloat3(offsetStr.c_str(), rot, 0.1f);
+	m_offset.setRotation(Quaternion(Vector3D(rot)));
 
 
 	float halfSize[3];
-	std::vector<float> halfSize2 = getOffset().getValues();
+	std::vector<float> halfSize2 = m_halfSize.getValues();
 
 	std::copy(halfSize2.begin(), halfSize2.end(), halfSize);
 

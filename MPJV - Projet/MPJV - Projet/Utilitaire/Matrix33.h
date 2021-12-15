@@ -9,7 +9,9 @@ private:
 public:
 
 	//Constructor
-	Matrix33() = default;
+	Matrix33() : m_values{ 1, 0, 0,
+						   0, 1, 0,
+						   0, 0, 1} {}
 	Matrix33(float values[9]);
 	Matrix33(const Matrix33& other);
 
@@ -33,7 +35,11 @@ public:
 
 	Matrix33 Transpose();
 
-	void SetOrientation(const Quaternion& q);
+	void rotate(const Quaternion& rotation);
+
+	Quaternion getRotation() const;
+
+	void SetRotation(const Quaternion& q);
 
 	static float Determinant(const Matrix33& mat);
 

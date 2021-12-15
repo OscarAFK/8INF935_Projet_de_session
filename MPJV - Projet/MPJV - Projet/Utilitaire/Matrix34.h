@@ -10,7 +10,9 @@ private:
 public:
 
 	//Constructor
-	Matrix34() = default;
+	Matrix34() : m_values{ 1, 0, 0, 0,
+						   0, 1, 0, 0,
+						   0, 0, 1, 0 } {}
 	Matrix34(float values[12]);
 	Matrix34(const Matrix34& other);
 	Matrix34(const Matrix33& mat33, const Vector3D& vect);
@@ -35,8 +37,17 @@ public:
 	// Return the Inverse Matrix. It is supposed that the matrix is always affine
 	Matrix34 Inverse();
 
+	Vector3D getPosition() const;
+	Quaternion getRotation() const;
+
+	void translate(const Vector3D& position);
+	void rotate(const Quaternion& rotation);
+
+	void setPosition(const Vector3D& position);
+	void setRotation(const Quaternion& rotation);
+
 	// Set the matrix base on a quaternion and position
-	void SetOrientationAndPosition(const Quaternion& q, const Vector3D& p);
+	void SetRotationAndPosition(const Quaternion& q, const Vector3D& p);
 
 	//Transform a position
 	Vector3D TransformPosition(const Vector3D& vector);
@@ -48,3 +59,4 @@ public:
 
 
 };
+

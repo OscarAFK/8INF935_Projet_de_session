@@ -11,6 +11,8 @@ private:
 	float m_rotation[3] = { 0.0f, 0.0f, 0.0f };
 	float m_scale[3] = { 1.0f, 1.0f, 1.0f };
 
+	//Matrix34 transformMatrix;
+
 public:
 
 	Transform(Entity* owner);

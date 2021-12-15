@@ -1,9 +1,9 @@
 #include "PlaneCollider.h"
 
-void PlaneCollider::Initialize(Vector3D normal, Vector3D offset)
+void PlaneCollider::Initialize(Vector3D normal, Matrix34 offset)
 {
     m_normal = normal;
-    setOffset(offset);
+    m_offset = offset;
 }
 
 Vector3D PlaneCollider::getNormal() const

@@ -1,6 +1,7 @@
 #include "Matrix33.h"
 
 #pragma region Constructors
+
 Matrix33::Matrix33(float values[9])
 {
     for (int i = 0; i < 9; i++) {
@@ -114,7 +115,21 @@ Matrix33 Matrix33::Transpose()
     return newMat;
 }
 
-void Matrix33::SetOrientation(const Quaternion& q)
+void Matrix33::rotate(const Quaternion& rotation)
+{
+    SetRotation(getRotation() * rotation);
+}
+
+Quaternion Matrix33::getRotation() const
+{
+    float w = sqrt(1 + getValueAt(0, 0) + getValueAt(1, 1) + getValueAt(2, 2)) / 2;
+    float x = (getValueAt(2, 1) - getValueAt(1, 2)) / (4 * w);
+    float y = (getValueAt(0, 2) - getValueAt(2, 0)) / (4 * w);
+    float z = (getValueAt(1, 0) - getValueAt(0, 1)) / (4 * w);
+    return Quaternion(w, x, y, z);
+}
+
+void Matrix33::SetRotation(const Quaternion& q)
 {
     float x2 = q.getI() * q.getI();
     float y2 = q.getJ() * q.getJ();

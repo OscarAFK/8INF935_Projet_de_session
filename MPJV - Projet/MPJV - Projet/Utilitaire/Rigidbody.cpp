@@ -130,7 +130,7 @@ Vector3D Rigidbody::GetVelocity()
 
 void Rigidbody::CalculateDerivedData()
 {
-	m_transformMatrix.SetOrientationAndPosition(m_orientation, m_position);
+	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 	ComputeTenseurInertiaWorld(m_inverseTenseurInertieWorld);
 }
 

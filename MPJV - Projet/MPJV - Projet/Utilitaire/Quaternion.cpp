@@ -2,12 +2,27 @@
 
 #pragma region Constructors
 Quaternion::Quaternion(float w, float i, float j, float k) : m_values{ w,i,j,k }
-{
-}
+{}
 
 Quaternion::Quaternion(const Quaternion& other) :
     m_values{ other.m_values[0], other.m_values[1], other.m_values[2], other.m_values[3] }
 {}
+
+Quaternion::Quaternion(const Vector3D& euler)
+{
+    // Abbreviations for the various angular functions
+    double cy = cos(euler.getZ() * 0.5);
+    double sy = sin(euler.getZ() * 0.5);
+    double cp = cos(euler.getY() * 0.5);
+    double sp = sin(euler.getY() * 0.5);
+    double cr = cos(euler.getX() * 0.5);
+    double sr = sin(euler.getX() * 0.5);
+
+    m_values[0] = cr * cp * cy + sr * sp * sy;
+    m_values[1] = sr * cp * cy - cr * sp * sy;
+    m_values[2] = cr * sp * cy + sr * cp * sy;
+    m_values[3] = cr * cp * sy - sr * sp * cy;
+}
 
 #pragma endregion
 

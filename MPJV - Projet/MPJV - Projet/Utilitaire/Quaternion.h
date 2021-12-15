@@ -10,9 +10,10 @@ private:
 
 public:
 	//Constructor
-	Quaternion() = default;
+	Quaternion() : m_values{1, 0, 0, 0} {}
 	Quaternion(float w, float i, float j, float k);
 	Quaternion(const Quaternion& other);
+	Quaternion(const Vector3D& euler);
 
 	//Destructor
 	~Quaternion() = default;

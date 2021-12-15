@@ -94,18 +94,61 @@ Matrix34 Matrix34::Inverse()
     return Matrix34(sousMat, sousVect);
 }
 
-void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
+void Matrix34::translate(const Vector3D& position)
+{
+    m_values[3] += position.getX();
+    m_values[7] += position.getY();
+    m_values[11] += position.getZ();
+}
+
+void Matrix34::rotate(const Quaternion& rotation)
 {
     Matrix33 tmpMat = Matrix33();
-    tmpMat.SetOrientation(q);
+    tmpMat.rotate(rotation);
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             m_values[i + j * 4] = tmpMat.getValueAt(i, j);
         }
     }
-    m_values[3] = p.getX();
-    m_values[7] = p.getY();
-    m_values[11] = p.getZ();
+}
+
+Vector3D Matrix34::getPosition() const
+{
+    return Vector3D(m_values[3], m_values[7], m_values[11]);
+}
+
+Quaternion Matrix34::getRotation() const
+{
+    float w = sqrt(1 + getValueAt(0, 0) + getValueAt(1, 1) + getValueAt(2, 2)) / 2;
+    float x = (getValueAt(2, 1) - getValueAt(1, 2)) / (4 * w);
+    float y = (getValueAt(0, 2) - getValueAt(2, 0)) / (4 * w);
+    float z = (getValueAt(1, 0) - getValueAt(0, 1)) / (4 * w);
+    return Quaternion(w, x, y, z);
+}
+
+void Matrix34::setPosition(const Vector3D& position)
+{
+    m_values[3] = position.getX();
+    m_values[7] = position.getY();
+    m_values[11] = position.getZ();
+}
+
+void Matrix34::setRotation(const Quaternion& rotation)
+{
+    Matrix33 tmpMat = Matrix33();
+    tmpMat.SetRotation(rotation);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            m_values[i + j * 4] = tmpMat.getValueAt(i, j);
+        }
+    }
+}
+
+
+void Matrix34::SetRotationAndPosition(const Quaternion& rotation, const Vector3D& position)
+{
+    setRotation(rotation);
+    setPosition(position);
 }
 
 Vector3D Matrix34::TransformPosition(const Vector3D& vector)
