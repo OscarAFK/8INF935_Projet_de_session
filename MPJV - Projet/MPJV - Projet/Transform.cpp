@@ -122,7 +122,7 @@ void Transform::renderComponentUI()
 	float rot[3];
 	std::vector<float> rot2 = m_displayRotation.getValues();
 	std::copy(rot2.begin(), rot2.end(), rot);
-	ImGui::Text(rotationLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(rotationStr.c_str(), rot, 0.01f);
+	ImGui::Text(rotationLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(rotationStr.c_str(), rot, 1.0f);
 	setRotation(Vector3D(rot));
 	//m_rotation = Vector3D(rot);
 
@@ -133,7 +133,7 @@ void Transform::renderComponentUI()
 	float scale[3];
 	std::vector<float> scale2 = m_scale.getValues();
 	std::copy(scale2.begin(), scale2.end(), scale);
-	ImGui::Text(scaleLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(scaleStr.c_str(), scale, 0.01f);
+	ImGui::Text(scaleLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(scaleStr.c_str(), scale, 0.1f);
 	m_scale = Vector3D(scale);
 
 	//std::cout << m_position.to_string();//, m_rotation.ToEuler().to_string(), m_scale.to_string());
