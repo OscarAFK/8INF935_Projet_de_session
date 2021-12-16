@@ -5,9 +5,6 @@
 Transform::Transform(Entity* owner) : Component(owner)
 {
 	m_name = "Transform";
-	//m_position = Vector3D(0, 0, 0);
-	//m_rotation = Quaternion(1, 0, 0, 0);
-	//m_scale = Vector3D(1, 1, 1);
 }
 
 void Transform::setPosition(Vector3D position)
@@ -26,28 +23,35 @@ Vector3D Transform::getPosition() const{
 
 void Transform::setRotation(Vector3D eulerRotation)
 {
-	m_rotation = eulerRotation;
+	m_orientation.SetByEulerRotation(eulerRotation * 2 * M_PI / 360.0f);
+	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
 }
 
 void Transform::rotate(Vector3D eulerRotation)
 {
-	//m_rotation = Quaternion(m_rotation.ToEuler() + eulerRotation);
-	m_rotation += eulerRotation;
+	m_orientation.SetByEulerRotation(m_orientation.ToEuler() + eulerRotation * 2 * M_PI / 360.0f);
+	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
 }
 
 void Transform::setRotation(Quaternion rotation)
 {
-	m_rotation = rotation.ToEuler();
+	m_orientation = rotation;
+	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
 }
 
 void Transform::rotate(Quaternion rotation)
 {
-	//m_rotation = Quaternion(m_rotation * rotation);
-	m_rotation += rotation.ToEuler();
+	m_orientation *= rotation;
+	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
 }
 
-Vector3D Transform::getRotation() const{
-	return m_rotation;
+Quaternion Transform::getRotation() const{
+	return m_orientation;
+}
+
+Vector3D Transform::getDisplayRotation() const
+{
+	return m_displayRotation;
 }
 
 void Transform::setScale(Vector3D scale){
@@ -67,7 +71,7 @@ Vector3D Transform::getScale() const{
 Matrix34 Transform::getTransformMatrix() const
 {
 	Matrix34 transform = Matrix34();
-	transform.SetRotationAndPosition(m_rotation, m_position);
+	transform.SetRotationAndPosition(m_orientation, m_position);
 	return transform;
 }
 
@@ -116,10 +120,12 @@ void Transform::renderComponentUI()
 	}*/
 
 	float rot[3];
-	std::vector<float> rot2 = m_rotation.getValues();
+	std::vector<float> rot2 = m_displayRotation.getValues();
 	std::copy(rot2.begin(), rot2.end(), rot);
 	ImGui::Text(rotationLabelString.c_str()); ImGui::SameLine(); ImGui::DragFloat3(rotationStr.c_str(), rot, 0.01f);
-	m_rotation = Vector3D(rot);
+	setRotation(Vector3D(rot));
+	//m_rotation = Vector3D(rot);
+
 	/*if (m_owner->getComponent<Rigidbody>() != nullptr && (m_rotation[0] != oldRot[0] || m_rotation[1] != oldRot[1] || m_rotation[2] != oldRot[2])) {
 		m_owner->getComponent<Rigidbody>()->SetOrientation(Vector3D(m_rotation) * (2 * M_PI) / 360);
 	}*/

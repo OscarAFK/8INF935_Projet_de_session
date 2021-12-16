@@ -10,18 +10,7 @@ Quaternion::Quaternion(const Quaternion& other) :
 
 Quaternion::Quaternion(const Vector3D& euler)
 {
-    // Abbreviations for the various angular functions
-    double cy = cos(euler.getZ() * 0.5);
-    double sy = sin(euler.getZ() * 0.5);
-    double cp = cos(euler.getY() * 0.5);
-    double sp = sin(euler.getY() * 0.5);
-    double cr = cos(euler.getX() * 0.5);
-    double sr = sin(euler.getX() * 0.5);
-
-    m_values[0] = cr * cp * cy + sr * sp * sy;
-    m_values[1] = sr * cp * cy - cr * sp * sy;
-    m_values[2] = cr * sp * cy + sr * cp * sy;
-    m_values[3] = cr * cp * sy - sr * sp * cy;
+    SetByEulerRotation(euler);
 }
 
 #pragma endregion
