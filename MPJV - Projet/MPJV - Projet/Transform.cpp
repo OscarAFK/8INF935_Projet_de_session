@@ -24,7 +24,13 @@ Vector3D Transform::getPosition() const{
 void Transform::setRotation(Vector3D eulerRotation)
 {
 	m_orientation.SetByEulerRotation(eulerRotation * 2 * M_PI / 360.0f);
-	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
+	//m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
+	std::vector<float> values = eulerRotation.getValues();
+	for (int i = 0; i < 3; i++) {
+		if (values[i] > 180) values[i] -= 180;
+		else if (values[i] < -180) values[i] += 180;
+	}
+	m_displayRotation = values.data();
 }
 
 void Transform::rotate(Vector3D eulerRotation)
