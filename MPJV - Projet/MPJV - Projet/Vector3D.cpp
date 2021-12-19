@@ -34,6 +34,13 @@ std::vector<float> Vector3D::getValues() const
 	return { m_x, m_y,m_z };
 }
 
+float Vector3D::getMax() const
+{
+	float max = m_x > m_y ? m_x : m_y;
+	max = max > m_z ? max : m_z;
+	return max;
+}
+
 #pragma endregion
 
 #pragma region Mutators

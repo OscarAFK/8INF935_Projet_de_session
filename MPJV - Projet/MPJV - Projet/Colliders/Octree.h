@@ -2,6 +2,7 @@
 #include "../Vector3D.h"
 #include "../Entity.h"
 #include "SphereCollider.h"
+#include "CollisionDetector.h"
 
 struct OctreeObject {
 	OctreeObject(Entity * entity);
@@ -19,6 +20,7 @@ struct OctreeNode {
 
 	int	getChildIndex(const Vector3D& objectPos);	
 	void InsertObject(OctreeObject * obj);
-	void TestAllCollisions();
+	void TestAllCollisions(CollisionData *collisionData);
+	void TestCollision(OctreeObject *a, OctreeObject *b, CollisionData* collisionData);
 	OctreeNode* BuildOctree(Vector3D center, float halfWidth, int maxDepth);
 };

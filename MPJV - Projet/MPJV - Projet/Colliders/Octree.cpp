@@ -1,9 +1,18 @@
 #include "Octree.h"
+#include "BoxCollider.h"
 
 OctreeObject::OctreeObject(Entity* entity)
 {
 	m_center = entity->getComponent<Transform>()->getPosition();
-	m_radius = entity->getComponent<SphereCollider>()->getRadius();
+	if (entity->getComponent<Collider>()->getShape() == colliderShapes::SPHERE) {
+		m_radius = entity->getComponent<SphereCollider>()->getRadius();
+	}
+	else if (entity->getComponent<Collider>()->getShape() == colliderShapes::BOX) {
+		m_radius = entity->getComponent<BoxCollider>()->getHalfSize().getMax() * 1.41421356f;		//Le chiffre 1.41421356 est une approximation de racine de 2
+	}
+	else {	//Si c'est un plan alors la rayon est nul
+		m_radius = 0;
+	}
 	m_entity = entity;
 }
 
@@ -66,7 +75,7 @@ void OctreeNode::InsertObject(OctreeObject* obj)
 	}
 }
 
-void OctreeNode::TestAllCollisions()
+void OctreeNode::TestAllCollisions(CollisionData* collisionData)
 {
 	const int MAX_DEPTH = 40;
 	static OctreeNode* ancestorStack[MAX_DEPTH];
@@ -78,14 +87,61 @@ void OctreeNode::TestAllCollisions()
 		for (a = ancestorStack[n]->m_objectList; a; a->m_nextObject) {
 			for (b = m_objectList; b; b->m_nextObject) {
 				if (a == b) break;
-				//TestCollision(a, b);			//Fonction à implémenter lors de la narrow phase, qui retournera une collision. On pourra alors rajouter cette collision à une liste, et la retournée à la sortie de cette fonction.
+				TestCollision(a, b, collisionData);			//Fonction à implémenter lors de la narrow phase, qui retournera une collision. On pourra alors rajouter cette collision à une liste, et la retournée à la sortie de cette fonction.
 			}
 		}
 	}
 	for (int i = 0; i < 8; i++) {
-		if (m_childrens[i]) m_childrens[i]->TestAllCollisions();
+		if (m_childrens[i]) m_childrens[i]->TestAllCollisions(collisionData);
 	}
 	depth--;
+}
+
+void OctreeNode::TestCollision(OctreeObject* a, OctreeObject *b, CollisionData* collisionData)
+{
+	int shapeA = a->m_entity->getComponent<Collider>()->getShape();
+	int shapeB = b->m_entity->getComponent<Collider>()->getShape();
+	if (shapeA == colliderShapes::SPHERE) {
+		if (shapeB == colliderShapes::SPHERE) {
+			CollisionDetector::sphereAndSphere(*a->m_entity->getComponent<SphereCollider>(),*b->m_entity->getComponent<SphereCollider>(),collisionData);
+			return;
+		}else if (shapeB == colliderShapes::PLANE) {
+			CollisionDetector::sphereAndPlane(*a->m_entity->getComponent<SphereCollider>(), *b->m_entity->getComponent<PlaneCollider>(), collisionData);
+			return;
+		}
+		else if (shapeB == colliderShapes::BOX) {
+			CollisionDetector::sphereAndBox(*a->m_entity->getComponent<SphereCollider>(), *b->m_entity->getComponent<BoxCollider>(), collisionData);
+			return;
+		}
+	}
+	if (shapeA == colliderShapes::PLANE) {
+		if (shapeB == colliderShapes::SPHERE) {
+			CollisionDetector::sphereAndPlane(*b->m_entity->getComponent<SphereCollider>(), *a->m_entity->getComponent<PlaneCollider>(), collisionData);
+			return;
+		}
+		else if (shapeB == colliderShapes::PLANE) {
+			//ça ce n'est pas dans le bouquin, pas implémenté//CollisionDetector::planeAndPlane(*a->m_entity->getComponent<PlaneCollider>(), *b->m_entity->getComponent<PlaneCollider>(), collisionData);
+			return;
+		}
+		else if (shapeB == colliderShapes::BOX) {
+			CollisionDetector::boxAndPlane(*b->m_entity->getComponent<BoxCollider>(), *a->m_entity->getComponent<PlaneCollider>(), collisionData);
+			return;
+		}
+	}
+	if (shapeA == colliderShapes::BOX) {
+		if (shapeB == colliderShapes::SPHERE) {
+			CollisionDetector::sphereAndBox(*b->m_entity->getComponent<SphereCollider>(), *a->m_entity->getComponent<BoxCollider>(), collisionData);
+			return;
+		}
+		else if (shapeB == colliderShapes::PLANE) {
+			CollisionDetector::boxAndPlane(*a->m_entity->getComponent<BoxCollider>(), *b->m_entity->getComponent<PlaneCollider>(), collisionData);
+			return;
+		}
+		else if (shapeB == colliderShapes::BOX) {
+			CollisionDetector::boxAndBox(*a->m_entity->getComponent<BoxCollider>(), *b->m_entity->getComponent<BoxCollider>(), collisionData);
+			return;
+		}
+	}
 }
 
 

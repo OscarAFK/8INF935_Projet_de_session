@@ -18,6 +18,7 @@ public:
 	float getY() const;
 	float getZ() const;
 	std::vector<float> getValues() const;
+	float getMax() const;
 
 	void setX(const float value);
 	void setY(const float value);
