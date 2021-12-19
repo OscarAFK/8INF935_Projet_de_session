@@ -14,6 +14,8 @@ public:
 	Vector3D(float values[3]);
 	~Vector3D() = default;
 
+	static Vector3D zero();
+
 	float getX() const;
 	float getY() const;
 	float getZ() const;

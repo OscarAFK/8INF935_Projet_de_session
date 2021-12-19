@@ -14,6 +14,11 @@ Vector3D::Vector3D(float values[3]) :
 
 #pragma region Accessors
 
+Vector3D Vector3D::zero()
+{
+	return Vector3D(0,0,0);
+}
+
 float Vector3D::getX() const
 {
 	return m_x;

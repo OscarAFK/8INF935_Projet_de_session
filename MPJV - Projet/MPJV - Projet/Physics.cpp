@@ -1,5 +1,6 @@
 #include "Physics.h"
 #include <iostream>
+#include "Colliders/Octree.h"
 
 #pragma region Constructors
 Physics::Physics()
@@ -142,8 +143,12 @@ void Physics::addParticleContactGenerator(ParticleContactGenerator* contactGener
 
 void Physics::tick(std::vector<Entity*> entities)
 {
+    float distanceFarthest = 0;
+
     for (size_t i = 0; i < entities.size(); i++)
     {
+        float dist = entities[i]->transform->getPosition().getMax();
+        if (dist > distanceFarthest) distanceFarthest = dist;
         Rigidbody* rigidbody = entities[i]->getComponent<Rigidbody>();
         ForceGenerator* forceGenerator = entities[i]->getComponent<ForceGenerator>();
         if (rigidbody != nullptr)
@@ -152,5 +157,22 @@ void Physics::tick(std::vector<Entity*> entities)
             rigidbody->Integrate(0.1f);
         }
     }
+
+    //COLLISIONS
+    OctreeNode* entryNode;
+    //On créé un arbre centré en (0,0,0), ayant comme halfSize le position de l'objet le plus éloigné.
+    //Pour la profondeur, on sait qu'un octree peut contenir 8^profondeur entités, soit                 //ATTENTION: à changer, en faite c'est pas la bonne méthode.
+    //      nb_e = 8^p
+    //      ln(nb_e) = p * ln(8)
+    //      p = ln(nb_e)/ln(8)
+    entryNode->BuildOctree(Vector3D::zero(), distanceFarthest, log(entities.size())/ 2.07944f); //avec 2.07944 = ln(8)
+    for (size_t i = 0; i < entities.size(); i++)
+    {
+        OctreeObject * octreeObject = new OctreeObject(entities[i]);
+        entryNode->InsertObject(octreeObject);
+    }
+
+    CollisionData data;
+    entryNode->TestAllCollisions(&data);
 }
 #pragma endregion
