@@ -168,7 +168,7 @@ void Physics::tick(std::vector<Entity*> entities)
     }
     if (octreeObjects.size() == 0) return;
     OctreeNode* entryNode = new OctreeNode();
-    entryNode->BuildOctree(Vector3D::zero(), distanceFarthest, 5); //on prend une profondeur totalement arbitraire
+    entryNode = OctreeNode::BuildOctree(Vector3D::zero(), distanceFarthest, 2); //on prend une profondeur totalement arbitraire
     for (int i = 0; i < octreeObjects.size(); i++) {
         entryNode->InsertObject(octreeObjects[i]);
     }
@@ -179,7 +179,7 @@ void Physics::tick(std::vector<Entity*> entities)
     
     if (data.contactLeft < 50) {
         for (int i = 0; i < 50 - data.contactLeft; i++) {
-            (data.contact)->printInfoContact();
+            data.contact[i]->printInfoContact();
         }
     }
 }

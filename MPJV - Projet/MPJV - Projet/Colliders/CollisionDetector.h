@@ -6,7 +6,7 @@
 #include "BoxCollider.h"
 
 struct CollisionData{
-	Contact* contact;
+	std::vector<Contact*> contact;
 
 	int contactLeft;
 

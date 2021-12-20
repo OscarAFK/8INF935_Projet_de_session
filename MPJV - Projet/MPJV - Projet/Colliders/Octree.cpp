@@ -20,12 +20,13 @@ OctreeNode* OctreeNode::BuildOctree(Vector3D center, float halfWidth, int maxDep
 {
 	if (maxDepth <= 0) return nullptr;
 	else {
-		m_center = center;
-		m_halfWidth = halfWidth;
-		m_objectList = nullptr;
+		OctreeNode* returnNode = new OctreeNode();
+		returnNode->m_center = center;
+		returnNode->m_halfWidth = halfWidth;
+		returnNode->m_objectList = nullptr;
 
 		Vector3D offset;
-		float step = m_halfWidth * .5f;
+		float step = returnNode->m_halfWidth * .5f;
 
 		for (int i = 0; i < 8; i++) {
 			//Les opération de type ( i & a ) sont des comparaison de bit. On va appliquer un mask "a" à "i", et si le résultat
@@ -36,10 +37,10 @@ OctreeNode* OctreeNode::BuildOctree(Vector3D center, float halfWidth, int maxDep
 			offset.setX((i & 1) ? step : -step);	
 			offset.setY((i & 2) ? step : -step);
 			offset.setZ((i & 4) ? step : -step);
-			m_childrens[i] = BuildOctree(m_center + offset, step, maxDepth - 1);
+			returnNode->m_childrens[i] = BuildOctree(returnNode->m_center + offset, step, maxDepth - 1);
 		}
+		return returnNode;
 	}
-	return this;
 }
 
 OctreeNode::OctreeNode()
@@ -85,7 +86,7 @@ void OctreeNode::InsertObject(OctreeObject* obj)
 
 void OctreeNode::TestAllCollisions(CollisionData* collisionData)
 {
-	const int MAX_DEPTH = 6;
+	const int MAX_DEPTH = 3;
 	static OctreeNode* ancestorStack[MAX_DEPTH];
 	static int depth = 0;
 	if (depth >= MAX_DEPTH) return;
@@ -94,11 +95,11 @@ void OctreeNode::TestAllCollisions(CollisionData* collisionData)
 		OctreeObject* a = ancestorStack[n]->m_objectList;
 		bool aHasNextObject = true;
 		bool bHasNextObject = true;
-		while (aHasNextObject) {
+		while (aHasNextObject && a) {
 
 			OctreeObject* b = m_objectList;
 			bHasNextObject = true;
-			while (bHasNextObject) {
+			while (bHasNextObject && b) {
 				if (a == b)
 					break;
 				TestCollision(a, b, collisionData);

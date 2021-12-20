@@ -22,7 +22,8 @@ unsigned CollisionDetector::sphereAndSphere(const SphereCollider& one, const Sph
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	data->contact = contact;
+	data->contact.push_back(contact);
+	//data->contact = contact;
 	data->addContact(1);
 	return 1;
 }
@@ -47,7 +48,7 @@ unsigned CollisionDetector::sphereAndPlane(const SphereCollider& one, const Plan
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	data->contact = contact;
+	data->contact.push_back(contact);
 	data->addContact(1);
 	return 1;
 }
@@ -95,7 +96,7 @@ unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const Box
 	contact->m_rigidbodies[0] = box.getRigidbody();
 	contact->m_rigidbodies[1] = sphere.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	data->contact = contact;
+	data->contact.push_back(contact);
 	data->addContact(1);
 	return 1;
 }
@@ -122,8 +123,7 @@ unsigned CollisionDetector::boxAndPlane(const BoxCollider& box, const PlaneColli
 			contact->m_contactPoint += box.getVertex(i);
 			contact->m_contactNormal = plane.getNormal();
 			contact->m_penetration = plane.getPlaneOffset() - vertexDistance;
-
-			data->contact = contact;
+			data->contact.push_back(contact);
 			data->addContact(1);
 		}
 	}
@@ -159,6 +159,4 @@ bool CollisionDetector::overlapOnAxis(const BoxCollider& one, const BoxCollider&
 void CollisionData::addContact(int count)
 {
 	contactLeft -= count;
-
-	contact += count;
 }

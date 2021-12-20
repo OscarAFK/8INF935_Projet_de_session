@@ -24,5 +24,5 @@ struct OctreeNode {
 	void InsertObject(OctreeObject * obj);
 	void TestAllCollisions(CollisionData *collisionData);
 	void TestCollision(OctreeObject *a, OctreeObject *b, CollisionData* collisionData);
-	OctreeNode* BuildOctree(Vector3D center, float halfWidth, int maxDepth);
+	static OctreeNode* BuildOctree(Vector3D center, float halfWidth, int maxDepth);
 };
