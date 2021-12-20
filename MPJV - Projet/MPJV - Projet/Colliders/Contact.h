@@ -12,7 +12,7 @@ public:
 
 	void resolve(float duration);
 	
-	float calculateSeperatingVelocity();
+	float calculateSeperatingVelocity() const;
 
 	Rigidbody* m_rigidbodies[2];
 
