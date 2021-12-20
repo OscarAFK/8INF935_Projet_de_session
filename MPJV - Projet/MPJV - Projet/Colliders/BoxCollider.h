@@ -23,7 +23,7 @@ private:
 public:
 
 	BoxCollider(Entity* owner) : Collider(owner) { m_name = "Box Collider"; };
-	void Initialize(Vector3D halfSize = Vector3D(0.5f, 0.5f, 0.5f), Matrix34 offset = Matrix34());
+	void Initialize(Vector3D halfSize = Vector3D(0.5f, 0.5f, 0.5f), Matrix34 *offset = new Matrix34());
 
 	const Vector3D& getVertex(int i) const;
 	Vector3D* getVertices() const;

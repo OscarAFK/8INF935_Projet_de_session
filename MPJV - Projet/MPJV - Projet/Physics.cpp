@@ -176,11 +176,11 @@ void Physics::tick(std::vector<Entity*> entities)
     CollisionData data;
     data.contactLeft = 50;
     entryNode->TestAllCollisions(&data);
-    if (data.contactLeft != 50) {
-        std::cout << "cool";
-    }
-    if (data.contactLeft < 50) { 
-        std::cout << "Contact normal: " << data.contact->m_contactNormal.to_string() << std::endl;
+    
+    if (data.contactLeft < 50) {
+        for (int i = 0; i < 50 - data.contactLeft; i++) {
+            (data.contact)->printInfoContact();
+        }
     }
 }
 #pragma endregion

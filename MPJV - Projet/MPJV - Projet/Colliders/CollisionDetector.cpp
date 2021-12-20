@@ -3,8 +3,8 @@
 unsigned CollisionDetector::sphereAndSphere(const SphereCollider& one, const SphereCollider& two, CollisionData* data)
 {
 	if (data->contactLeft <= 0) return 0;
-	Vector3D positionOne = one.getOffset().getPosition(); //=============================================== calculer position en fonction de la transform+offset
-	Vector3D positionTwo = two.getOffset().getPosition(); //============================================== calculer position en fonction de la transform+offset
+	Vector3D positionOne = one.getOffset()->getPosition(); //=============================================== calculer position en fonction de la transform+offset
+	Vector3D positionTwo = two.getOffset()->getPosition(); //============================================== calculer position en fonction de la transform+offset
 
 	Vector3D midline = positionOne - positionTwo;
 	float size = midline.norm();
@@ -13,7 +13,7 @@ unsigned CollisionDetector::sphereAndSphere(const SphereCollider& one, const Sph
 
 	Vector3D normal = midline * (1/size);
 
-	Contact* contact = data->contact;
+	Contact* contact = new Contact();
 	contact->m_contactNormal = normal;
 
 	contact->m_contactPoint = positionOne + midline * 0.5f;
@@ -22,7 +22,8 @@ unsigned CollisionDetector::sphereAndSphere(const SphereCollider& one, const Sph
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	data->contactLeft--;
+	data->contact = contact;
+	data->addContact(1);
 	return 1;
 }
 
@@ -30,14 +31,14 @@ unsigned CollisionDetector::sphereAndPlane(const SphereCollider& one, const Plan
 {
 	if (data->contactLeft <= 0) return 0;
 
-	Vector3D positionOne = one.getOffset().getPosition();//============================================== calculer position en fonction de la transform+offset
+	Vector3D positionOne = one.getOffset()->getPosition();//============================================== calculer position en fonction de la transform+offset
 
 	float ballDistance = Vector3D::scalarProduct(two.getNormal(), positionOne) - one.getRadius() - two.getPlaneOffset();
 
 	if (ballDistance >= 0) return 0;
 
 	// Create the contact - it has a normal in the plane direction.
-	Contact* contact = data->contact;
+	Contact* contact = new Contact();
 	contact->m_contactNormal = two.getNormal();
 	contact->m_penetration = -ballDistance;
 	contact->m_contactPoint =
@@ -46,14 +47,15 @@ unsigned CollisionDetector::sphereAndPlane(const SphereCollider& one, const Plan
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	data->contactLeft--;
+	data->contact = contact;
+	data->addContact(1);
 	return 1;
 }
 
 unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const BoxCollider& box, CollisionData* data)
 {
 	if (data->contactLeft <= 0) return 0;
-	Vector3D relCenterSphere = box.getRigidbody()->getOwner()->transform->getTransformMatrix().Inverse().TransformPosition(sphere.getOffset().getPosition());//============================================== calculer position en fonction de la transform+offset
+	Vector3D relCenterSphere = box.getRigidbody()->getOwner()->transform->getTransformMatrix().Inverse().TransformPosition(sphere.getOffset()->getPosition());//============================================== calculer position en fonction de la transform+offset
 
 	//early check out
 	if (abs(relCenterSphere.getX()) - sphere.getRadius() > box.getHalfSize().getX() ||
@@ -84,8 +86,8 @@ unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const Box
 
 	Vector3D closestPtWorld = box.getRigidbody()->getOwner()->transform->getTransformMatrix().TransformPosition(closestPoint);//============================================== calculer position en fonction de la transform+offset
 
-	Contact* contact = data->contact;
-	contact->m_contactNormal = (sphere.getOffset().getPosition() - closestPtWorld);
+	Contact* contact = new Contact();
+	contact->m_contactNormal = (sphere.getOffset()->getPosition() - closestPtWorld);
 	contact->m_contactNormal = contact->m_contactNormal.normalize();
 	contact->m_contactPoint = closestPtWorld;
 	contact->m_penetration = sphere.getRadius() - sqrt(dist);
@@ -93,7 +95,8 @@ unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const Box
 	contact->m_rigidbodies[0] = box.getRigidbody();
 	contact->m_rigidbodies[1] = sphere.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-	data->contactLeft--;
+	data->contact = contact;
+	data->addContact(1);
 	return 1;
 }
 
@@ -113,12 +116,15 @@ unsigned CollisionDetector::boxAndPlane(const BoxCollider& box, const PlaneColli
 			// The contact point is halfway between the vertex and the
 			// plane - we multiply the direction by half the separation
 			// distance and add the vertex location.
-			Contact* contact = data->contact;
+			Contact* contact = new Contact();
 			contact->m_contactPoint = plane.getNormal();
 			contact->m_contactPoint *= (vertexDistance-plane.getPlaneOffset());
 			contact->m_contactPoint += box.getVertex(i);
 			contact->m_contactNormal = plane.getNormal();
 			contact->m_penetration = plane.getPlaneOffset() - vertexDistance;
+
+			data->contact = contact;
+			data->addContact(1);
 		}
 	}
 }
@@ -148,4 +154,11 @@ bool CollisionDetector::overlapOnAxis(const BoxCollider& one, const BoxCollider&
 	float distance = abs(Vector3D::scalarProduct(toCenter,axis));
 
 	return (distance < oneProject + twoProject);
+}
+
+void CollisionData::addContact(int count)
+{
+	contactLeft -= count;
+
+	contact += count;
 }

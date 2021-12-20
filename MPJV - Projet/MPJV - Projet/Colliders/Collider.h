@@ -9,15 +9,15 @@ class Collider : public Component
 {
 protected:
 	//Vector3D m_offset;
-	Matrix34 m_offset;
+	Matrix34 * m_offset;
 	Rigidbody* rigidbody;
 
 public:
 
 	Collider(Entity* owner) : Component(owner) { rigidbody = owner->getComponent<Rigidbody>(); 
-												m_offset = owner->transform->getTransformMatrix(); };
+												m_offset = owner->transform->getRefToTransformMatrix(); };
 	
-	const Matrix34& getOffset() const;
+	const Matrix34* getOffset() const;
 	Rigidbody* getRigidbody() const;
 
 	virtual colliderShapes getShape() const = 0;

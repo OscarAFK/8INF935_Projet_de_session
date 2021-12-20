@@ -26,3 +26,15 @@ float Contact::calculateSeperatingVelocity()
 	else
 		return Vector3D::scalarProduct(m_rigidbodies[0]->GetVelocity(), m_contactNormal);
 }
+
+void Contact::printInfoContact() const
+{
+	std::cout << "\t---Contact detecté---" << std::endl
+		<< "------------------" << std::endl
+		<< "Nom de l'objet 1: " << m_rigidbodies[0]->getOwner()->getName() << std::endl
+		<< "Nom de l'objet 2: " << m_rigidbodies[1]->getOwner()->getName() << std::endl
+		<< "Point de contact: " << m_contactPoint.to_string() << std::endl
+		<< "Normale du contact: " << m_contactNormal.to_string() << std::endl
+		<< "Penetration: " << m_penetration << std::endl
+		<< "Restitution: " << m_restitution << std::endl << std::endl;
+}

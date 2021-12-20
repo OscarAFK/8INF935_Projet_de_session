@@ -11,7 +11,7 @@ private:
 public:
 
 	PlaneCollider(Entity* owner) : Collider(owner) { m_name = "Plane Collider"; };
-	void Initialize(Vector3D normal = Vector3D(0, 1, 0), Matrix34 offset = Matrix34());
+	void Initialize(Vector3D normal = Vector3D(0, 1, 0), Matrix34 *offset = new Matrix34());
 
 	Vector3D getNormal() const;
 	float getPlaneOffset() const;

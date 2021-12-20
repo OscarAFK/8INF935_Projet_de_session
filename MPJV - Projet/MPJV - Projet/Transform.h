@@ -17,6 +17,7 @@ private:
 	Vector3D m_displayRotation = Vector3D(0, 0, 0);
 	//Vector3D m_rotation = Vector3D(0, 0, 0);
 	Vector3D m_scale = Vector3D(1, 1, 1);
+	Matrix34 m_transformMatrix;
 
 public:
 
@@ -34,6 +35,7 @@ public:
 	Vector3D getDisplayRotation() const;
 
 	Matrix34 getTransformMatrix() const;
+	Matrix34 *getRefToTransformMatrix();
 
 	Vector3D localToWorld(const Vector3D& local);
 	Vector3D worldToLocal(const Vector3D& world);

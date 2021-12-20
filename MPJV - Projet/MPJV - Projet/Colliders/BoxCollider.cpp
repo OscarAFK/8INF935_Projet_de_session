@@ -1,6 +1,6 @@
 #include "BoxCollider.h"
 
-void BoxCollider::Initialize(Vector3D halfSize, Matrix34 offset)
+void BoxCollider::Initialize(Vector3D halfSize, Matrix34 * offset)
 {
     m_halfSize = halfSize;
     m_offset = offset;
@@ -36,18 +36,20 @@ void BoxCollider::renderComponentUI()
 {
 	std::string hideLabelString = "##";
 
+	/*
 	std::string offsetStr;
 	offsetStr.append(hideLabelString);
 	offsetStr.append(std::to_string(m_owner->id));
 	offsetStr.append("Offset");
+	*/
 
 	std::string halfSizeStr;
 	halfSizeStr.append(hideLabelString);
 	halfSizeStr.append(std::to_string(m_owner->id));
 	halfSizeStr.append("Halfsize");
-
+	/*
 	float pos[3];
-	std::vector<float> pos2 = m_offset.getPosition().getValues();
+	std::vector<float> pos2 = m_offset->getPosition().getValues();
 
 	std::copy(pos2.begin(), pos2.end(), pos);
 
@@ -61,7 +63,7 @@ void BoxCollider::renderComponentUI()
 
 	ImGui::Text("Offset: "); ImGui::SameLine(); ImGui::DragFloat3(offsetStr.c_str(), rot, 0.1f);
 	m_offset.setRotation(Quaternion(Vector3D(rot)));
-
+	*/
 
 	float halfSize[3];
 	std::vector<float> halfSize2 = m_halfSize.getValues();

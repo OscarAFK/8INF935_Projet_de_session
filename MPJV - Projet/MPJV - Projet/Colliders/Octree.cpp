@@ -99,7 +99,8 @@ void OctreeNode::TestAllCollisions(CollisionData* collisionData)
 			OctreeObject* b = m_objectList;
 			bHasNextObject = true;
 			while (bHasNextObject) {
-				if (a == b) break;
+				if (a == b)
+					break;
 				TestCollision(a, b, collisionData);
 				if (b->m_nextObject != nullptr) b = b->m_nextObject;
 				else bHasNextObject = false;

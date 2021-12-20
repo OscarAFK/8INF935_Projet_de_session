@@ -1,6 +1,6 @@
 #include "Collider.h"
 
-const Matrix34& Collider::getOffset() const
+const Matrix34* Collider::getOffset() const
 {
     return m_offset;
 }

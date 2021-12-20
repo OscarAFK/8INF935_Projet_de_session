@@ -9,6 +9,8 @@ struct CollisionData{
 	Contact* contact;
 
 	int contactLeft;
+
+	void addContact(int count);
 };
 
 class CollisionDetector {

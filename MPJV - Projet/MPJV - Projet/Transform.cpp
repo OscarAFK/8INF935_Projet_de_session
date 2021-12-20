@@ -10,11 +10,13 @@ Transform::Transform(Entity* owner) : Component(owner)
 void Transform::setPosition(Vector3D position)
 {
 	m_position = position;
+	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 }
 
 void Transform::translate(Vector3D position)
 {
 	m_position += position;
+	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 }
 
 Vector3D Transform::getPosition() const{
@@ -31,24 +33,28 @@ void Transform::setRotation(Vector3D eulerRotation)
 		else if (values[i] < -180) values[i] += 180;
 	}
 	m_displayRotation = values.data();
+	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 }
 
 void Transform::rotate(Vector3D eulerRotation)
 {
 	m_orientation.SetByEulerRotation(m_orientation.ToEuler() + eulerRotation * 2 * M_PI / 360.0f);
 	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
+	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 }
 
 void Transform::setRotation(Quaternion rotation)
 {
 	m_orientation = rotation;
 	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
+	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 }
 
 void Transform::rotate(Quaternion rotation)
 {
 	m_orientation *= rotation;
 	m_displayRotation = m_orientation.ToEuler() * 360 / (2 * M_PI);
+	m_transformMatrix.SetRotationAndPosition(m_orientation, m_position);
 }
 
 Quaternion Transform::getRotation() const{
@@ -81,9 +87,9 @@ Matrix34 Transform::getTransformMatrix() const
 	return transform;
 }
 
-Matrix34* Transform::getRefToTransformMatrix() const
+Matrix34* Transform::getRefToTransformMatrix()
 {
-	return nullptr;
+	return &m_transformMatrix;
 }
 
 Vector3D Transform::localToWorld(const Vector3D& local)

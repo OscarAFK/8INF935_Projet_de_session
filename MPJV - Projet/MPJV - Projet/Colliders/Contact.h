@@ -25,6 +25,7 @@ public:
 	Vector3D m_contactNormal;
 	Vector3D m_contactPoint;
 
+	void printInfoContact() const;
 private:
 	//void resolveVelocity();
 	//void resolveInterpretation();
