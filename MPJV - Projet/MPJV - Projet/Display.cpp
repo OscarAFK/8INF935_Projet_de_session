@@ -2,6 +2,7 @@
 #include <map>
 #include "ShapeRenderer.h"
 #include "ForceGenerators/SpringForceGenerator.h"
+#include "Colliders/SphereCollider.h"
 
 #pragma region Constructors
 
@@ -466,6 +467,8 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 			(*entities).back()->addComponent<Rigidbody>();
 			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
 			(*entities).back()->getComponent<Rigidbody>()->AddForce(Vector3D(5, 0, 0));
+			(*entities).back()->addComponent<SphereCollider>();
+			(*entities).back()->getComponent<SphereCollider>()->setRadius(1);
 
 			(*entities).push_back(new Entity("Voiture 2"));
 			(*entities).back()->addComponent<ShapeRenderer>();
@@ -473,6 +476,8 @@ void Display::showDemoWindow(bool* p_open, std::vector<Entity*>* entities)
 			(*entities).back()->addComponent<Rigidbody>();
 			(*entities).back()->getComponent<Rigidbody>()->Initialize(1, 0.9, 0.9, tenseursFormesDeBase::Cuboide(1, Vector3D(1, 1, 1)));
 			(*entities).back()->getComponent<Rigidbody>()->AddForce(Vector3D(-5, 0, 0));
+			(*entities).back()->addComponent<SphereCollider>();
+			(*entities).back()->getComponent<SphereCollider>()->setRadius(1);
 		}
 
 		if (ImGui::Button("Simuler l'impact des deux derniere entites") && (*entities).size() >= 2)

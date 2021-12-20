@@ -14,7 +14,8 @@ protected:
 
 public:
 
-	Collider(Entity* owner) : Component(owner) { rigidbody = owner->getComponent<Rigidbody>(); m_offset = Matrix34(); };
+	Collider(Entity* owner) : Component(owner) { rigidbody = owner->getComponent<Rigidbody>(); 
+												m_offset = owner->transform->getTransformMatrix(); };
 	
 	const Matrix34& getOffset() const;
 	Rigidbody* getRigidbody() const;

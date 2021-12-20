@@ -185,3 +185,8 @@ Matrix33 Matrix34::ToMatrix33() const
     }
     return Matrix33(values);
 }
+
+Vector3D Matrix34::getAxisVector(int index) const
+{
+    return Vector3D(m_values[index], m_values[index+4], m_values[index+8]);
+}

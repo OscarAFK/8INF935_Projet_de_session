@@ -81,6 +81,11 @@ Matrix34 Transform::getTransformMatrix() const
 	return transform;
 }
 
+Matrix34* Transform::getRefToTransformMatrix() const
+{
+	return nullptr;
+}
+
 Vector3D Transform::localToWorld(const Vector3D& local)
 {
 	return getTransformMatrix() * local + m_position;

@@ -57,6 +57,8 @@ public:
 
 	Matrix33 ToMatrix33() const;
 
+	Vector3D getAxisVector(int index) const;
+
 
 };
 

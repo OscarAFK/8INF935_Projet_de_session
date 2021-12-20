@@ -36,4 +36,7 @@ public:
 	static unsigned boxAndBox(const BoxCollider& one,
 		const BoxCollider& two,
 		CollisionData* data);
+
+	static float transformToAxis(const BoxCollider& box, const Vector3D &axis);
+	static bool overlapOnAxis(const BoxCollider& one, const BoxCollider& two, const Vector3D &axis);
 };

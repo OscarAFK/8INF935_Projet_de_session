@@ -18,8 +18,12 @@ OctreeObject::OctreeObject(Entity* entity)
 
 OctreeNode* OctreeNode::BuildOctree(Vector3D center, float halfWidth, int maxDepth)
 {
-	if (maxDepth < 0) return nullptr;
+	if (maxDepth <= 0) return nullptr;
 	else {
+		m_center = center;
+		m_halfWidth = halfWidth;
+		m_objectList = nullptr;
+
 		Vector3D offset;
 		float step = m_halfWidth * .5f;
 
@@ -36,6 +40,10 @@ OctreeNode* OctreeNode::BuildOctree(Vector3D center, float halfWidth, int maxDep
 		}
 	}
 	return this;
+}
+
+OctreeNode::OctreeNode()
+{
 }
 
 int OctreeNode::getChildIndex(const Vector3D& objectPos)
@@ -77,18 +85,27 @@ void OctreeNode::InsertObject(OctreeObject* obj)
 
 void OctreeNode::TestAllCollisions(CollisionData* collisionData)
 {
-	const int MAX_DEPTH = 40;
+	const int MAX_DEPTH = 6;
 	static OctreeNode* ancestorStack[MAX_DEPTH];
 	static int depth = 0;
-
+	if (depth >= MAX_DEPTH) return;
 	ancestorStack[depth++] = this;
 	for (int n = 0; n < depth; n++) {
-		OctreeObject* a, * b;
-		for (a = ancestorStack[n]->m_objectList; a; a->m_nextObject) {
-			for (b = m_objectList; b; b->m_nextObject) {
+		OctreeObject* a = ancestorStack[n]->m_objectList;
+		bool aHasNextObject = true;
+		bool bHasNextObject = true;
+		while (aHasNextObject) {
+
+			OctreeObject* b = m_objectList;
+			bHasNextObject = true;
+			while (bHasNextObject) {
 				if (a == b) break;
-				TestCollision(a, b, collisionData);			//Fonction à implémenter lors de la narrow phase, qui retournera une collision. On pourra alors rajouter cette collision à une liste, et la retournée à la sortie de cette fonction.
+				TestCollision(a, b, collisionData);
+				if (b->m_nextObject != nullptr) b = b->m_nextObject;
+				else bHasNextObject = false;
 			}
+			if (a->m_nextObject != nullptr) a = a->m_nextObject;
+			else aHasNextObject = false;
 		}
 	}
 	for (int i = 0; i < 8; i++) {

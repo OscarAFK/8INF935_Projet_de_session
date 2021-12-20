@@ -22,6 +22,7 @@ unsigned CollisionDetector::sphereAndSphere(const SphereCollider& one, const Sph
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
+	data->contactLeft--;
 	return 1;
 }
 
@@ -45,6 +46,7 @@ unsigned CollisionDetector::sphereAndPlane(const SphereCollider& one, const Plan
 	contact->m_rigidbodies[0] = one.getRigidbody();
 	contact->m_rigidbodies[1] = two.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
+	data->contactLeft--;
 	return 1;
 }
 
@@ -91,8 +93,8 @@ unsigned CollisionDetector::sphereAndBox(const SphereCollider& sphere, const Box
 	contact->m_rigidbodies[0] = box.getRigidbody();
 	contact->m_rigidbodies[1] = sphere.getRigidbody();
 	//contact->m_restitution = data->m_restitution;
-
-	return 0;
+	data->contactLeft--;
+	return 1;
 }
 
 unsigned CollisionDetector::boxAndPlane(const BoxCollider& box, const PlaneCollider& plane, CollisionData* data)
@@ -124,5 +126,26 @@ unsigned CollisionDetector::boxAndPlane(const BoxCollider& box, const PlaneColli
 unsigned CollisionDetector::boxAndBox(const BoxCollider& one, const BoxCollider& two, CollisionData* data)
 {
 	if (data->contactLeft <= 0) return 0;
+	
+	
 	return 0;
+}
+
+float CollisionDetector::transformToAxis(const BoxCollider& box, const Vector3D& axis)
+{
+	return box.getHalfSize().getX() * abs(Vector3D::scalarProduct(axis,box.getOwner()->transform->getTransformMatrix().getAxisVector(0))) +
+			box.getHalfSize().getY() * abs(Vector3D::scalarProduct(axis,box.getOwner()->transform->getTransformMatrix().getAxisVector(1))) +
+			box.getHalfSize().getZ() * abs(Vector3D::scalarProduct(axis,box.getOwner()->transform->getTransformMatrix().getAxisVector(2)));
+}
+
+bool CollisionDetector::overlapOnAxis(const BoxCollider& one, const BoxCollider& two, const Vector3D& axis)
+{
+	float oneProject = transformToAxis(one, axis);
+	float twoProject = transformToAxis(two, axis);
+
+	Vector3D toCenter = one.getOwner()->transform->getTransformMatrix().getAxisVector(3) - one.getOwner()->transform->getTransformMatrix().getAxisVector(3);
+
+	float distance = abs(Vector3D::scalarProduct(toCenter,axis));
+
+	return (distance < oneProject + twoProject);
 }

@@ -159,20 +159,28 @@ void Physics::tick(std::vector<Entity*> entities)
     }
 
     //COLLISIONS
-    OctreeNode* entryNode;
-    //On créé un arbre centré en (0,0,0), ayant comme halfSize le position de l'objet le plus éloigné.
-    //Pour la profondeur, on sait qu'un octree peut contenir 8^profondeur entités, soit                 //ATTENTION: à changer, en faite c'est pas la bonne méthode.
-    //      nb_e = 8^p
-    //      ln(nb_e) = p * ln(8)
-    //      p = ln(nb_e)/ln(8)
-    entryNode->BuildOctree(Vector3D::zero(), distanceFarthest, log(entities.size())/ 2.07944f); //avec 2.07944 = ln(8)
+    std::vector<OctreeObject*> octreeObjects;
     for (size_t i = 0; i < entities.size(); i++)
     {
-        OctreeObject * octreeObject = new OctreeObject(entities[i]);
-        entryNode->InsertObject(octreeObject);
+        if (!entities[i]->getComponent<Collider>()) continue;
+        OctreeObject* octreeObject = new OctreeObject(entities[i]);
+        octreeObjects.push_back(octreeObject);
+    }
+    if (octreeObjects.size() == 0) return;
+    OctreeNode* entryNode = new OctreeNode();
+    entryNode->BuildOctree(Vector3D::zero(), distanceFarthest, 5); //on prend une profondeur totalement arbitraire
+    for (int i = 0; i < octreeObjects.size(); i++) {
+        entryNode->InsertObject(octreeObjects[i]);
     }
 
     CollisionData data;
+    data.contactLeft = 50;
     entryNode->TestAllCollisions(&data);
+    if (data.contactLeft != 50) {
+        std::cout << "cool";
+    }
+    if (data.contactLeft < 50) { 
+        std::cout << "Contact normal: " << data.contact->m_contactNormal.to_string() << std::endl;
+    }
 }
 #pragma endregion
