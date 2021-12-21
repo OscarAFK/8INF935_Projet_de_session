@@ -180,6 +180,7 @@ void Physics::tick(std::vector<Entity*> entities)
     if (data.contactLeft < 50) {
         for (int i = 0; i < 50 - data.contactLeft; i++) {
             data.contact[i]->printInfoContact();
+            exit(0);
         }
     }
 }
